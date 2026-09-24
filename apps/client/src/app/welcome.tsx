@@ -108,7 +108,7 @@ export default function WelcomeScreen() {
         <BrutalistButton
           title="I ALREADY HAVE AN ACCOUNT"
           variant="outline"
-          onPress={() => router.push('/sign-up')}
+          onPress={() => router.push('/sign-in')}
         />
         <Text style={styles.footerNotice}>ACCESSIBILITY-FIRST ARCHITECTURE</Text>
       </View>

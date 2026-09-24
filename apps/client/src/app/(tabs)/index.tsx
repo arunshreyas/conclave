@@ -14,7 +14,7 @@ import { api } from '@/services/api';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { getToken } = useAuth();
+  const { getToken, signOut, isSignedIn } = useAuth();
   const [userProfile, setUserProfile] = useState<any>(null);
 
   useEffect(() => {
@@ -34,6 +34,15 @@ export default function HomeScreen() {
     loadAuth();
   }, []);
 
+  const handleMenuPress = () => {
+    if (isSignedIn) {
+      signOut();
+      router.replace('/welcome');
+    } else {
+      router.push('/welcome');
+    }
+  };
+
   const userNameDisplay = userProfile?.name?.toUpperCase() || 'ARJUN';
 
   return (
@@ -46,9 +55,9 @@ export default function HomeScreen() {
         </View>
         <TouchableOpacity
           style={styles.menuBtn}
-          onPress={() => router.push('/welcome')}
+          onPress={handleMenuPress}
         >
-          <Text style={styles.menuBtnText}>MENU</Text>
+          <Text style={styles.menuBtnText}>{isSignedIn ? 'LOGOUT' : 'MENU'}</Text>
         </TouchableOpacity>
       </View>
 
