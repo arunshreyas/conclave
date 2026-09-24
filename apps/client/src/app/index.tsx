@@ -23,7 +23,7 @@ export default function IndexGateScreen() {
   }
 
   if (hasProfile === false) {
-    return <Redirect href="/sign-up" />;
+    return <Redirect href="/create-profile" />;
   }
 
   return <Redirect href="/(tabs)" />;

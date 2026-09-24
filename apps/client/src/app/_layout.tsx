@@ -47,6 +47,7 @@ export default function RootLayout() {
         <Stack.Screen name="welcome" options={{ headerShown: false }} />
         <Stack.Screen name="sign-in" options={{ headerShown: false }} />
         <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+        <Stack.Screen name="create-profile" options={{ headerShown: false }} />
         <Stack.Screen name="test" options={{ headerShown: false }} />
         <Stack.Screen name="ai-review" options={{ headerShown: false }} />
         <Stack.Screen name="crackr" options={{ headerShown: false }} />
