@@ -21,14 +21,16 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@repo/db": "*",
+    "@clerk/backend": "^3.19.0",
+    "@clerk/express": "^2.1.70",
     "@nestjs/common": "^11.0.1",
-    "@nestjs/mapped-types": "*",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^11.0.1",
     "@prisma/adapter-pg": "^7.10.0",
-    "dotenv": "^16.4.7",
     "@prisma/client": "^7.10.0",
+    "@repo/db": "*",
+    "dotenv": "^16.4.7",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

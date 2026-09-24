@@ -1,34 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { ClerkAuthGuard } from '../auth/clerk-auth.guard';
+import { CurrentClerkId } from '../auth/current-user.decorator';
 
 @Controller('user-profile')
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
   @Post()
-  create(@Body() createUserProfileDto: CreateUserProfileDto) {
-    return this.userProfileService.create(createUserProfileDto);
+  @UseGuards(ClerkAuthGuard)
+  create(
+    @CurrentClerkId() clerkId: string,
+    @Body() createUserProfileDto: CreateUserProfileDto,
+  ) {
+    return this.userProfileService.create(clerkId, createUserProfileDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userProfileService.findAll();
+  @Get('me')
+  @UseGuards(ClerkAuthGuard)
+  getMe(@CurrentClerkId() clerkId: string) {
+    return this.userProfileService.findByClerkId(clerkId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userProfileService.findOne(id);
+  @Get('check-username/:username')
+  checkUsername(@Param('username') username: string) {
+    return this.userProfileService.checkUsername(username);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserProfileDto: UpdateUserProfileDto) {
-    return this.userProfileService.update(id, updateUserProfileDto);
+  @Patch('me')
+  @UseGuards(ClerkAuthGuard)
+  updateMe(
+    @CurrentClerkId() clerkId: string,
+    @Body() updateUserProfileDto: UpdateUserProfileDto,
+  ) {
+    return this.userProfileService.updateByClerkId(clerkId, updateUserProfileDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userProfileService.remove(id);
+  @Delete('me')
+  @UseGuards(ClerkAuthGuard)
+  removeMe(@CurrentClerkId() clerkId: string) {
+    return this.userProfileService.removeByClerkId(clerkId);
   }
 }

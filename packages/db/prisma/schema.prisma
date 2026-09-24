@@ -9,14 +9,15 @@ datasource db {
 }
 
 model UserProfile {
-  id    String @id @default(uuid())
-  email String @unique
-  name  String
-  userName String @unique
-  birthday DateTime
-  school String 
-  grade String
-  stream String
+  id        String   @id @default(uuid())
+  clerkId   String   @unique
+  email     String   @unique
+  name      String
+  userName  String   @unique
+  birthday  DateTime
+  school    String 
+  grade     String
+  stream    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
