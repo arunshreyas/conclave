@@ -3,11 +3,25 @@ import { useAuth } from '@clerk/clerk-expo';
 import { api } from '@/services/api';
 
 export function useAuthStatus() {
-  const { isSignedIn, isLoaded, getToken, userId } = useAuth();
   const [loading, setLoading] = useState(true);
   const [hasProfile, setHasProfile] = useState<boolean | null>(null);
   const [profile, setProfile] = useState<any>(null);
   const [clerkUser, setClerkUser] = useState<any>(null);
+
+  let isSignedIn = false;
+  let isLoaded = true;
+  let getToken: any = async () => null;
+  let userId: string | null = null;
+
+  try {
+    const auth = useAuth();
+    isSignedIn = auth.isSignedIn ?? false;
+    isLoaded = auth.isLoaded ?? true;
+    getToken = auth.getToken;
+    userId = auth.userId ?? null;
+  } catch (e) {
+    // ClerkProvider not wrapped or invalid key mode
+  }
 
   const refetch = async () => {
     if (!isSignedIn) {

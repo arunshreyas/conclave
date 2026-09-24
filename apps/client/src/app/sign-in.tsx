@@ -15,7 +15,19 @@ import { BrutalistButton, BrutalistBadge } from '@/components/brutalist-ui';
 
 export default function SignInScreen() {
   const router = useRouter();
-  const { signIn, isLoaded, setActive } = useSignIn();
+
+  let signIn: any = null;
+  let isLoaded = false;
+  let setActive: any = null;
+
+  try {
+    const auth = useSignIn();
+    signIn = auth.signIn;
+    isLoaded = auth.isLoaded;
+    setActive = auth.setActive;
+  } catch (e) {
+    // ClerkProvider not mounted
+  }
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +41,7 @@ export default function SignInScreen() {
 
     setLoading(true);
     try {
-      if (isLoaded && signIn) {
+      if (isLoaded && signIn && setActive) {
         const completeSignIn = await signIn.create({
           identifier: email,
           password,
@@ -41,7 +53,7 @@ export default function SignInScreen() {
           return;
         }
       }
-      // Fallback for development if Clerk is in test mode
+      // Dev mode fallback
       router.replace('/(tabs)');
     } catch (err: any) {
       Alert.alert('Sign In Failed', err.errors?.[0]?.message || err.message || 'Invalid credentials');

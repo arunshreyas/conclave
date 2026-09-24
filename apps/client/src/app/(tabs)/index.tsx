@@ -14,7 +14,20 @@ import { api } from '@/services/api';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { getToken, signOut, isSignedIn } = useAuth();
+
+  let getToken: any = async () => null;
+  let signOut: any = async () => {};
+  let isSignedIn = false;
+
+  try {
+    const auth = useAuth();
+    getToken = auth.getToken;
+    signOut = auth.signOut;
+    isSignedIn = auth.isSignedIn ?? false;
+  } catch (e) {
+    // ClerkProvider not mounted
+  }
+
   const [userProfile, setUserProfile] = useState<any>(null);
 
   useEffect(() => {
@@ -35,7 +48,7 @@ export default function HomeScreen() {
   }, []);
 
   const handleMenuPress = () => {
-    if (isSignedIn) {
+    if (isSignedIn && signOut) {
       signOut();
       router.replace('/welcome');
     } else {
