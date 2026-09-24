@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "npm run db:generate --workspace @repo/db",
     "build": "nest build",
+    "dev": "nest start --watch",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

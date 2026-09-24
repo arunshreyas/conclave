@@ -9,6 +9,7 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@babel/core": "7.26.9",
     "prettier": "3.9.6",
     "turbo": "^2.11.3",
     "typescript": "^5.7.3"
@@ -25,5 +26,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "overrides": {
+    "@babel/core": "$@babel/core"
+  }
 }
