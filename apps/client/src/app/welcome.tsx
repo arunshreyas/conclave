@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { BrutalistButton, BrutalistBadge } from '@/components/brutalist-ui';
+import { BrutalistButton, BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
 
 const slides = [
   {
@@ -95,22 +95,39 @@ export default function WelcomeScreen() {
               ))}
             </View>
           </View>
+
+          {/* Authentication Access Dock Card */}
+          <BrutalistCard highlight style={styles.authCard}>
+            <BrutalistBadge label="CLERK AUTH // ACCESS MATRIX" variant="gold" />
+            <Text style={styles.authCardTitle}>AUTHENTICATION PORTAL</Text>
+            <Text style={styles.authCardSub}>
+              Sign in with your Clerk account or register your student profile matrix.
+            </Text>
+
+            <View style={styles.authBtnGroup}>
+              <BrutalistButton
+                title="SIGN IN WITH CLERK ACCOUNT"
+                variant="secondary"
+                onPress={() => router.push('/sign-in')}
+              />
+              <BrutalistButton
+                title="REGISTER NEW STUDENT PROFILE"
+                variant="primary"
+                onPress={() => router.push('/sign-up')}
+              />
+              <BrutalistButton
+                title="ENTER DASHBOARD (PREVIEW)"
+                variant="outline"
+                onPress={() => router.push('/(tabs)')}
+              />
+            </View>
+          </BrutalistCard>
         </View>
       </ScrollView>
 
       {/* Bottom Action Dock */}
       <View style={styles.footerDock}>
-        <BrutalistButton
-          title="GET STARTED"
-          variant="primary"
-          onPress={() => router.push('/sign-up')}
-        />
-        <BrutalistButton
-          title="I ALREADY HAVE AN ACCOUNT"
-          variant="outline"
-          onPress={() => router.push('/sign-in')}
-        />
-        <Text style={styles.footerNotice}>ACCESSIBILITY-FIRST ARCHITECTURE</Text>
+        <Text style={styles.footerNotice}>ACCESSIBILITY-FIRST ARCHITECTURE • CLERK SECURED</Text>
       </View>
     </SafeAreaView>
   );
@@ -242,10 +259,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#cdc6b7',
     lineHeight: 22,
-    marginBottom: 24,
+    marginBottom: 16,
   },
   carouselTracker: {
-    marginTop: 10,
+    marginTop: 4,
+    marginBottom: 20,
   },
   trackerHeader: {
     flexDirection: 'row',
@@ -280,6 +298,27 @@ const styles = StyleSheet.create({
     borderColor: '#4b463b',
     backgroundColor: 'transparent',
   },
+  authCard: {
+    marginTop: 12,
+    padding: 16,
+  },
+  authCardTitle: {
+    fontFamily: 'Epilogue, sans-serif',
+    fontSize: 20,
+    fontWeight: '900',
+    color: '#ffdad8',
+    marginVertical: 6,
+  },
+  authCardSub: {
+    fontFamily: 'Lexend, sans-serif',
+    fontSize: 12,
+    color: '#cdc6b7',
+    marginBottom: 14,
+    lineHeight: 18,
+  },
+  authBtnGroup: {
+    gap: 8,
+  },
   footerDock: {
     padding: 16,
     borderTopWidth: 1,
@@ -291,7 +330,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#cdc6b7',
     textAlign: 'center',
-    marginTop: 10,
     letterSpacing: 1.2,
   },
 });
