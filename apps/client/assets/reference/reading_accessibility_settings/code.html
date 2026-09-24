@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CRACKR — Reading &amp; Accessibility Engine</title>
+<!-- Google Fonts: Epilogue (Display & Headers) & Lexend (Body & Code) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&amp;family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-secondary-container": "#372700", primary: "#ffffff", "secondary-fixed": "#ffdf9f", "on-surface": "#ffdad8", error: "#ffb4ab", "on-secondary": "#402d00", "on-primary": "#39300b", "inverse-primary": "#6a5e35", "on-secondary-fixed-variant": "#5c4300", "on-surface-variant": "#cdc6b7", background: "#310004", "on-primary-container": "#70643b", "secondary-container": "#b68a15", "surface-container-high": "#5c010e", "inverse-surface": "#ffdad8", "on-secondary-fixed": "#261a00", "on-error": "#690005", "surface-container-low": "#410007", "on-primary-fixed-variant": "#514620", "surface-bright": "#72131c", "on-error-container": "#ffdad6", "tertiary-fixed": "#ffdcc5", "on-tertiary": "#4f2500", outline: "#969083", "surface-variant": "#6b0e18", "surface-container-lowest": "#270003", "on-tertiary-fixed-variant": "#703800", "primary-fixed-dim": "#d6c694", "on-tertiary-container": "#9a510b", "secondary-fixed-dim": "#f2bf4b", "error-container": "#93000a", surface: "#310004", secondary: "#f2bf4b", "surface-container": "#480009", "surface-container-highest": "#6b0e18", "primary-fixed": "#f3e2ae", "tertiary-fixed-dim": "#ffb782", "on-tertiary-fixed": "#301400", "outline-variant": "#4b463b", "primary-container": "#f3e2ae", "on-background": "#ffdad8", "on-primary-fixed": "#231b00", tertiary: "#ffffff", "surface-tint": "#d6c694", "tertiary-container": "#ffdcc5", "surface-dim": "#310004", "inverse-on-surface": "#650814", "tertiary-dim": "#8e94ff", "primary-dim": "#ff67ae", "secondary-dim": "#ea82cd", "error-dim": "#d73357"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"space-2xs": "0.125rem", "space-xs": "0.25rem", "space-sm": "0.5rem", gutter: "1rem", margin: "1rem", "space-2xl": "3rem", "space-xl": "2rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "margin-desktop": "2.5rem", "space-md": "1rem"}, fontFamily: {"body-lg": ["Lexend"], "label-code": ["Lexend"], "body-sm": ["Lexend"], "headline-sm": ["Epilogue"], "display-hero-mobile": ["Epilogue"], "headline-md": ["Epilogue"], "body-md": ["Lexend"], "display-hero": ["Epilogue"], "label-counter": ["Epilogue"], "headline-lg": ["Epilogue"], "headline-lg-mobile": ["Epilogue"], headline: ["Epilogue"], display: ["Epilogue"], body: ["Lexend"], label: ["Lexend"]}, fontSize: {"body-lg": ["17px", {lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "400"}], "label-code": ["11px", {lineHeight: "14px", letterSpacing: "0.14em", fontWeight: "600"}], "body-sm": ["13px", {lineHeight: "20px", letterSpacing: "0.015em", fontWeight: "300"}], "headline-sm": ["18px", {lineHeight: "24px", letterSpacing: "0em", fontWeight: "600"}], "display-hero-mobile": ["36px", {lineHeight: "40px", letterSpacing: "-0.03em", fontWeight: "800"}], "headline-md": ["22px", {lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-md": ["15px", {lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400"}], "display-hero": ["56px", {lineHeight: "60px", letterSpacing: "-0.04em", fontWeight: "800"}], "label-counter": ["14px", {lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700"}], "headline-lg": ["32px", {lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["26px", {lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "700"}]}}}};</script>
+<style>
+    /* Neo-brutalist custom range slider track and square thumb */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+      height: 28px;
+    }
+    input[type=range]:focus {
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 4px;
+      cursor: pointer;
+      background: #4f4447;
+      border: 1px solid #4f4447;
+      border-radius: 0px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      height: 20px;
+      width: 20px;
+      border-radius: 0px;
+      background: #eabaca;
+      border: 2px solid #161219;
+      box-shadow: 2px 2px 0px 0px #4f4447;
+      cursor: ew-resize;
+      -webkit-appearance: none;
+      margin-top: -9px;
+      transition: transform 0.05s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:active {
+      transform: scale(0.92);
+      box-shadow: 0px 0px 0px 0px #4f4447;
+    }
+    input[type=range]::-moz-range-track {
+      width: 100%;
+      height: 4px;
+      cursor: pointer;
+      background: #4f4447;
+      border: 1px solid #4f4447;
+      border-radius: 0px;
+    }
+    input[type=range]::-moz-range-thumb {
+      height: 20px;
+      width: 20px;
+      border-radius: 0px;
+      background: #eabaca;
+      border: 2px solid #161219;
+      box-shadow: 2px 2px 0px 0px #4f4447;
+      cursor: ew-resize;
+    }
+    /* Hide scrollbars for hyper-clean Swiss industrial view */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-lowest text-on-surface antialiased font-body-md min-h-screen flex flex-col justify-end selection:bg-primary selection:text-on-primary overflow-x-hidden">
+<!-- BACKGROUND CONTEXT SCREEN (Simulated Exam Session in background behind overlay) -->
+<div aria-hidden="true" class="fixed inset-0 pointer-events-none z-0 flex flex-col bg-background opacity-20 filter grayscale select-none">
+<div class="flex justify-between items-center w-full px-margin h-14 border-b border-outline-variant bg-background">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">terminal</span>
+<span class="text-headline-sm font-headline-sm font-bold tracking-tight text-on-surface uppercase">CRACKR</span>
+</div>
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">MENU</span>
+</div>
+<div class="p-4 space-y-4 font-body-sm">
+<div class="flex justify-between border-b border-outline-variant pb-2">
+<span class="font-label-code text-label-code text-primary">QUESTION 24 OF 75</span>
+<span class="font-label-code text-label-code text-on-surface-variant">PHY-JEE-ADV</span>
+</div>
+<p class="font-headline-sm text-headline-sm">CRACKR</p>
+<div class="grid grid-cols-2 gap-2 mt-4">
+<div class="border border-outline-variant p-3">OPTION A</div>
+<div class="border border-outline-variant p-3">OPTION B</div>
+</div>
+</div>
+</div>
+<!-- DARK DIM DIMMED MODAL OVERLAY -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-none z-40 transition-opacity"></div>
+<!-- NEO-BRUTALIST ACCESSIBILITY ENGINE BOTTOM SHEET CONTAINER -->
+<aside aria-labelledby="sheet-heading" aria-modal="true" class="relative z-50 w-full max-w-xl mx-auto bg-surface-container-lowest border-t border-x border-outline-variant shadow-[0px_-4px_0px_0px_#4f4447] flex flex-col max-h-[813px] overflow-hidden" role="dialog">
+<!-- SHEET DRAG HANDLE / SYSTEM BARRIER -->
+<div class="w-full flex items-center justify-center py-2 bg-surface-container-low border-b border-outline-variant">
+<div class="w-12 h-1 bg-outline-variant"></div>
+</div>
+<!-- SHEET HEADER -->
+<header class="px-space-md py-space-sm bg-surface-container-low border-b border-outline-variant flex items-start justify-between gap-space-sm">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 bg-primary inline-block"></span>
+<h2 class="font-label-code text-label-code text-primary tracking-widest uppercase" id="sheet-heading">ACCESSIBILITY &amp; READING ENGINE</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant tracking-normal">
+          Fine-tune typography, cognitive load filters, and speech synthesis.
+        </p>
+</div>
+<button aria-label="Close settings" class="h-9 w-9 bg-surface-container border border-outline-variant text-on-surface flex items-center justify-center hover:bg-surface-variant hover:text-primary active:translate-x-0.5 active:translate-y-0.5 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</header>
+<!-- SCROLLABLE DIAGNOSTIC CONTROLS MATRIX (Edge-to-Edge Hairline Ruled System) -->
+<div class="flex-1 overflow-y-auto no-scrollbar divide-y divide-outline-variant bg-surface-container-lowest">
+<!-- ITEM 1: TYPEFACE SELECTOR -->
+<section class="p-space-md space-y-space-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">
+            1.0 // TYPEFACE
+          </label>
+<span class="font-label-code text-[10px] text-primary tracking-widest">[SYSTEM RE-FLOW]</span>
+</div>
+<div class="grid grid-cols-3 gap-0 border border-outline-variant divide-x divide-outline-variant">
+<button class="py-2.5 px-2 text-center font-label-code text-label-code uppercase tracking-wider text-on-surface-variant bg-surface-container-low hover:bg-surface-container hover:text-on-surface active:bg-surface-variant transition-colors" type="button">
+            INTER
+          </button>
+<button class="py-2.5 px-2 text-center font-label-code text-label-code uppercase tracking-wider bg-primary text-on-primary font-bold shadow-[inset_0_0_0_1px_#eabaca]" type="button">
+            LEXEND (Dyslexia)
+          </button>
+<button class="py-2.5 px-2 text-center font-label-code text-label-code uppercase tracking-wider text-on-surface-variant bg-surface-container-low hover:bg-surface-container hover:text-on-surface active:bg-surface-variant transition-colors" type="button">
+            OPENDYSLEXIC
+          </button>
+</div>
+</section>
+<!-- ITEM 2: FONT SIZE SLIDER -->
+<section class="p-space-md space-y-space-sm bg-surface-container-low/40">
+<div class="flex justify-between items-center">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest" for="font-size-range">
+            2.0 // FONT SIZE: <span class="text-primary font-bold">18PX (Large)</span>
+</label>
+<div class="flex items-center gap-1">
+<span class="font-label-code text-[10px] text-on-surface-variant">14PX</span>
+<span class="font-label-code text-[10px] text-outline-variant">■■■■</span>
+<span class="font-label-code text-[10px] text-primary">24PX</span>
+</div>
+</div>
+<div class="px-1 py-1">
+<input class="w-full cursor-pointer accent-primary" id="font-size-range" max="24" min="14" step="1" type="range" value="18"/>
+</div>
+</section>
+<!-- ITEM 3: LINE HEIGHT & TRACKING -->
+<section class="p-space-md space-y-space-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">
+            3.0 // LINE HEIGHT &amp; TRACKING
+          </label>
+<span class="font-label-code text-[10px] text-on-surface-variant tracking-widest">[RELAXED VER]</span>
+</div>
+<div class="grid grid-cols-3 gap-0 border border-outline-variant divide-x divide-outline-variant">
+<button class="py-2.5 px-2 text-center font-label-code text-label-code uppercase tracking-wider text-on-surface-variant bg-surface-container-low hover:bg-surface-container hover:text-on-surface" type="button">
+            Standard (1.4x)
+          </button>
+<button class="py-2.5 px-2 text-center font-label-code text-label-code uppercase tracking-wider bg-primary text-on-primary font-bold shadow-[inset_0_0_0_1px_#eabaca]" type="button">
+            Relaxed (1.75x)
+          </button>
+<button class="py-2.5 px-2 text-center font-label-code text-label-code uppercase tracking-wider text-on-surface-variant bg-surface-container-low hover:bg-surface-container hover:text-on-surface" type="button">
+            Wide (2.0x)
+          </button>
+</div>
+</section>
+<!-- ITEM 4: COGNITIVE LOAD REDUCTION -->
+<section class="p-space-md bg-surface-container-low/30 flex items-start justify-between gap-space-md">
+<div class="space-y-1 flex-1">
+<div class="flex items-center gap-2">
+<span class="font-label-code text-label-code text-primary uppercase tracking-widest">4.0 //</span>
+<span class="font-label-code text-label-code text-on-surface uppercase tracking-wider font-bold">SIMPLIFY COMPLEX QUESTION TEXT</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Replaces dense paragraph phrasing with direct bulleted facts.
+          </p>
+</div>
+<!-- Brutalist Toggle Switch (Square Mechanical) -->
+<button aria-checked="true" class="shrink-0 relative w-12 h-6 bg-surface-container border border-primary p-0.5 transition-colors focus:outline-none" role="switch" type="button">
+<div class="w-4 h-4 bg-primary translate-x-6 transition-transform shadow-[1px_1px_0px_#161219]"></div>
+</button>
+</section>
+<!-- ITEM 5: TEXT-TO-SPEECH (TTS) VOICE SPEED -->
+<section class="p-space-md space-y-space-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">
+            5.0 // TTS SPEED: <span class="text-primary font-bold">1.0X (Natural Indian English)</span>
+</label>
+<span class="material-symbols-outlined text-[16px] text-primary">record_voice_over</span>
+</div>
+<div class="grid grid-cols-3 gap-0 border border-outline-variant divide-x divide-outline-variant">
+<button class="py-2 px-2 flex items-center justify-center gap-1 font-label-code text-label-code uppercase tracking-wider text-on-surface bg-surface-container-low hover:bg-surface-container active:translate-x-0.5 active:translate-y-0.5" type="button">
+<span class="material-symbols-outlined text-[14px]">remove</span>
+<span class="">0.25x</span>
+</button>
+<div class="py-2 px-2 flex items-center justify-center font-headline-sm font-bold text-primary bg-surface-container text-center">
+            1.0x
+          </div>
+<button class="py-2 px-2 flex items-center justify-center gap-1 font-label-code text-label-code uppercase tracking-wider text-on-surface bg-surface-container-low hover:bg-surface-container active:translate-x-0.5 active:translate-y-0.5" type="button">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span class="">0.25x</span>
+</button>
+</div>
+</section>
+<!-- ITEM 6: SPEECH-TO-TEXT (STT) ANSWERING -->
+<section class="p-space-md bg-surface-container-low/30 flex items-start justify-between gap-space-md">
+<div class="space-y-1 flex-1">
+<div class="flex items-center gap-2">
+<span class="font-label-code text-label-code text-primary uppercase tracking-widest">6.0 //</span>
+<span class="font-label-code text-label-code text-on-surface uppercase tracking-wider font-bold">VOICE MCQ SELECTION</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">mic</span>
+            Speak "Option A" to select.
+          </p>
+</div>
+<!-- Brutalist Toggle Switch (Square Mechanical - Active) -->
+<button aria-checked="true" class="shrink-0 relative w-12 h-6 bg-surface-container border border-primary p-0.5 transition-colors focus:outline-none" role="switch" type="button">
+<div class="w-4 h-4 bg-primary translate-x-6 transition-transform shadow-[1px_1px_0px_#161219]"></div>
+</button>
+</section>
+<!-- ITEM 7: HIGH-CONTRAST TINT PICKER -->
+<section class="p-space-md space-y-space-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">
+            7.0 // HIGH-CONTRAST TINT PICKER
+          </label>
+<span class="font-label-code text-[10px] text-primary tracking-widest">[AA 7.1:1 RATIO]</span>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<!-- Swatch 1 (Active) -->
+<button class="relative flex flex-col items-center border-2 border-primary bg-surface-container p-2 text-left" type="button">
+<div class="w-full h-8 bg-[#130f16] border border-outline-variant mb-1.5 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label-code text-[9px] uppercase tracking-tighter text-primary font-bold text-center leading-tight">Pitch Black</span>
+</button>
+<!-- Swatch 2 -->
+<button class="relative flex flex-col items-center border border-outline-variant bg-surface-container-low p-2 hover:border-outline text-left" type="button">
+<div class="w-full h-8 bg-[#1c1917] border border-outline-variant mb-1.5"></div>
+<span class="font-label-code text-[9px] uppercase tracking-tighter text-on-surface-variant text-center leading-tight">Warm Sepia</span>
+</button>
+<!-- Swatch 3 -->
+<button class="relative flex flex-col items-center border border-outline-variant bg-surface-container-low p-2 hover:border-outline text-left" type="button">
+<div class="w-full h-8 bg-[#0f172a] border border-outline-variant mb-1.5"></div>
+<span class="font-label-code text-[9px] uppercase tracking-tighter text-on-surface-variant text-center leading-tight">Deep Blue</span>
+</button>
+<!-- Swatch 4 -->
+<button class="relative flex flex-col items-center border border-outline-variant bg-surface-container-low p-2 hover:border-outline text-left" type="button">
+<div class="w-full h-8 bg-[#000000] border border-outline-variant mb-1.5"></div>
+<span class="font-label-code text-[9px] uppercase tracking-tighter text-on-surface-variant text-center leading-tight">Monochrome</span>
+</button>
+</div>
+</section>
+<!-- LIVE PREVIEW PANEL -->
+<section class="p-space-md bg-surface-container-low/60 space-y-2">
+<div class="flex items-center justify-between border-b border-outline-variant pb-1">
+<span class="font-label-code text-[10px] text-primary uppercase tracking-widest flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 bg-primary animate-pulse inline-block"></span>
+            LIVE STEM PREVIEW
+          </span>
+<span class="font-label-code text-[10px] text-on-surface-variant uppercase tracking-widest">
+            LEXEND · 18PX · RELAXED
+          </span>
+</div>
+<div class="p-3 bg-surface-container-lowest border border-outline-variant">
+<p class="font-body-lg text-[18px] leading-[30px] tracking-wide text-on-surface font-normal">
+            “Calculate the root-mean-square speed of nitrogen molecules at STP.”
+          </p>
+<div class="mt-2 pt-2 border-t border-outline-variant flex items-center justify-between text-on-surface-variant font-label-code text-[10px]">
+<span class="">M = 28.02 g/mol</span>
+<span class="text-primary">T = 273.15 K</span>
+</div>
+</div>
+</section>
+</div>
+<!-- STICKY ACTION FOOTER -->
+<footer class="p-space-md bg-surface-container-low border-t border-outline-variant">
+<button class="w-full py-3.5 px-4 bg-primary hover:bg-primary-fixed text-on-primary font-headline-sm text-headline-sm font-bold uppercase tracking-wider border border-on-surface shadow-[4px_4px_0px_0px_#4f4447] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-75 flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="">APPLY &amp; SAVE SETTINGS</span>
+</button>
+</footer>
+</aside>
+</body></html>

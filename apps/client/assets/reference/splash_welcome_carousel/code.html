@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CRACKR — Welcome</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800;900&amp;family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error": "#690005",
+            "on-tertiary-fixed-variant": "#703800",
+            "error-container": "#93000a",
+            "primary-fixed-dim": "#d6c694",
+            "on-tertiary": "#4f2500",
+            "on-background": "#ffdad8",
+            "error": "#ffb4ab",
+            "on-primary-container": "#70643b",
+            "surface-container-lowest": "#270003",
+            "outline": "#969083",
+            "inverse-primary": "#6a5e35",
+            "primary-container": "#f3e2ae",
+            "on-primary": "#39300b",
+            "surface": "#310004",
+            "on-primary-fixed-variant": "#514620",
+            "primary": "#c1b0c9",
+            "on-secondary-fixed": "#261a00",
+            "inverse-surface": "#ffdad8",
+            "on-surface-variant": "#cdc6b7",
+            "surface-bright": "#72131c",
+            "on-secondary": "#402d00",
+            "tertiary-container": "#ffdcc5",
+            "surface-variant": "#6b0e18",
+            "on-surface": "#eae5ed",
+            "surface-tint": "#d6c694",
+            "tertiary-fixed-dim": "#ffb782",
+            "surface-container-high": "#5c010e",
+            "outline-variant": "#4b463b",
+            "surface-container-highest": "#6b0e18",
+            "surface-dim": "#310004",
+            "secondary-container": "#624456",
+            "secondary-fixed-dim": "#f2bf4b",
+            "primary-fixed": "#f3e2ae",
+            "secondary": "#a27887",
+            "tertiary-fixed": "#ffdcc5",
+            "on-error-container": "#ffdad6",
+            "surface-container": "#480009",
+            "on-secondary-container": "#372700",
+            "background": "#130f16",
+            "inverse-on-surface": "#650814",
+            "tertiary": "#ffffff",
+            "secondary-fixed": "#ffdf9f",
+            "surface-container-low": "#410007",
+            "on-tertiary-fixed": "#301400",
+            "on-secondary-fixed-variant": "#5c4300",
+            "on-tertiary-container": "#9a510b",
+            "on-primary-fixed": "#231b00"
+          },
+          borderRadius: {
+            "DEFAULT": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "0px"
+          },
+          spacing: {
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "margin-desktop": "2.5rem",
+            "space-2xs": "0.125rem",
+            "margin": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-2xl": "3rem",
+            "gutter": "1rem"
+          },
+          fontFamily: {
+            "headline-lg-mobile": ["Epilogue"],
+            "body-lg": ["Lexend"],
+            "display-hero-mobile": ["Epilogue"],
+            "headline-sm": ["Epilogue"],
+            "label-code": ["Lexend"],
+            "headline-lg": ["Epilogue"],
+            "body-md": ["Lexend"],
+            "label-counter": ["Epilogue"],
+            "display-hero": ["Epilogue"],
+            "body-sm": ["Lexend"],
+            "headline-md": ["Epilogue"]
+          },
+          fontSize: {
+            "headline-lg-mobile": ["26px", { lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-lg": ["17px", { lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "display-hero-mobile": ["36px", { lineHeight: "40px", letterSpacing: "-0.03em", fontWeight: "800" }],
+            "headline-sm": ["18px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }],
+            "label-code": ["11px", { lineHeight: "14px", letterSpacing: "0.14em", fontWeight: "600" }],
+            "headline-lg": ["32px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "body-md": ["15px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400" }],
+            "label-counter": ["14px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700" }],
+            "display-hero": ["56px", { lineHeight: "60px", letterSpacing: "-0.04em", fontWeight: "800" }],
+            "body-sm": ["13px", { lineHeight: "20px", letterSpacing: "0.015em", fontWeight: "300" }],
+            "headline-md": ["22px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #130f16;
+      color: #eae5ed;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .hairline-b {
+      border-bottom: 1px solid rgba(193, 176, 201, 0.2);
+    }
+    .hairline-t {
+      border-top: 1px solid rgba(193, 176, 201, 0.2);
+    }
+    .hairline-r {
+      border-right: 1px solid rgba(193, 176, 201, 0.2);
+    }
+    .hairline-l {
+      border-left: 1px solid rgba(193, 176, 201, 0.2);
+    }
+    .hairline-all {
+      border: 1px solid rgba(193, 176, 201, 0.2);
+    }
+
+    .btn-brutal-primary {
+      box-shadow: 4px 4px 0px #a27887;
+      transition: transform 75ms ease, box-shadow 75ms ease;
+    }
+    .btn-brutal-primary:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px transparent;
+    }
+
+    .btn-brutal-outline {
+      box-shadow: 4px 4px 0px rgba(193, 176, 201, 0.25);
+      transition: transform 75ms ease, box-shadow 75ms ease;
+    }
+    .btn-brutal-outline:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px transparent;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex justify-center selection:bg-primary selection:text-background">
+<!-- Mobile Viewport Container (Fixed width emulation for mobile frame) -->
+<main class="w-full max-w-md min-h-screen flex flex-col justify-between hairline-l hairline-r bg-background relative overflow-hidden">
+<!-- Top Section: Header & Giant Wordmark -->
+<header class="w-full flex flex-col">
+<!-- Top Meta Bar -->
+<div class="h-12 px-margin flex items-center justify-between hairline-b">
+<div class="flex items-center gap-space-xs">
+<span class="inline-block w-2 h-2 bg-primary"></span>
+<span class="font-label-code text-label-code text-primary uppercase tracking-widest">EDITION 2025</span>
+</div>
+<div class="font-label-code text-label-code text-secondary tracking-widest uppercase">
+          01 / 03
+        </div>
+</div>
+<!-- Giant Editorial Wordmark -->
+<div class="w-full px-margin pt-space-md pb-space-sm hairline-b bg-[#130f16]">
+<h1 class="font-display-hero text-[64px] leading-none tracking-tighter text-on-surface font-extrabold uppercase select-none">
+          CRACKR
+        </h1>
+</div>
+</header>
+<!-- Center Stage: Carousel Slide 01 -->
+<section class="flex-1 flex flex-col justify-center px-margin py-space-md relative">
+<!-- Split-Plane Grid Index Presentation -->
+<div class="w-full hairline-all mb-space-lg flex items-stretch">
+<!-- Huge Display Numeral Box -->
+<div class="w-24 min-h-[96px] bg-[#1a141f] flex items-center justify-center hairline-r select-none">
+<span class="font-display-hero text-[72px] leading-none font-black text-primary tracking-tight">
+            01
+          </span>
+</div>
+<!-- Spec Detail Metadata in side cell -->
+<div class="flex-1 p-space-sm flex flex-col justify-between bg-background">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-label-code text-secondary uppercase">MODULE</span>
+<span class="material-symbols-outlined text-primary text-base" data-icon="record_voice_over">record_voice_over</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-primary tracking-tight uppercase">
+            VOICE ENGINE
+          </div>
+<div class="font-label-code text-[9px] leading-tight text-on-surface-variant uppercase tracking-wider">
+            STT DICTATION MATRIX
+          </div>
+</div>
+</div>
+<!-- Main Headline -->
+<div class="mb-space-md">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tight">
+          VOICE-ENABLED JEE PRACTICE FOR DYSLEXIA &amp; FOCUS.
+        </h2>
+</div>
+<!-- Hairline Accent Separation -->
+<div class="w-12 h-[2px] bg-primary mb-space-md"></div>
+<!-- Sub-copy Description -->
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        High-yield Physics, Chemistry, and Mathematics practice with natural speech-to-text input, adaptive dyslexia fonts, and zero-distraction layout.
+      </p>
+<!-- Carousel Multi-bar Progress Indicator -->
+<div class="w-full mt-space-xl">
+<div class="flex items-center justify-between mb-space-2xs">
+<span class="font-label-code text-[10px] text-secondary tracking-widest uppercase">CAROUSEL STEP</span>
+<span class="font-label-code text-[10px] text-primary tracking-widest uppercase font-semibold">STAGE 01</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<!-- Slide 1: Active (Solid primary fill) -->
+<div class="h-2 bg-primary"></div>
+<!-- Slide 2: Inactive (Empty with 1px hairline border) -->
+<div class="h-2 hairline-all bg-transparent"></div>
+<!-- Slide 3: Inactive (Empty with 1px hairline border) -->
+<div class="h-2 hairline-all bg-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Bottom Action Dock: Full Width Sharp Rectangular Buttons -->
+<footer class="w-full p-margin hairline-t bg-[#130f16] flex flex-col gap-space-sm z-10">
+<!-- Primary Action Button -->
+<button class="btn-brutal-primary w-full h-14 bg-primary text-[#130f16] hairline-all border-secondary font-headline-sm text-headline-sm font-bold uppercase tracking-wider flex items-center justify-center" type="button">
+        GET STARTED
+      </button>
+<!-- Secondary Action Button -->
+<button class="btn-brutal-outline w-full h-14 bg-transparent text-on-surface hairline-all border-primary font-headline-sm text-headline-sm font-semibold uppercase tracking-wider flex items-center justify-center hover:bg-[#1f1724]" type="button">
+        I ALREADY HAVE AN ACCOUNT
+      </button>
+<!-- Footer Sub-Label Verification -->
+<div class="pt-space-xs text-center">
+<span class="font-label-code text-[10px] text-on-surface-variant tracking-widest uppercase">
+          ACCESSIBILITY-FIRST ARCHITECTURE
+        </span>
+</div>
+</footer>
+</main>
+</body></html>

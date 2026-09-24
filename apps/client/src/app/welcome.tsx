@@ -1,0 +1,297 @@
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import { useRouter } from 'expo-router';
+import { BrutalistButton, BrutalistBadge } from '@/components/brutalist-ui';
+
+const slides = [
+  {
+    num: '01',
+    module: 'VOICE ENGINE',
+    subtitle: 'STT DICTATION MATRIX',
+    title: 'VOICE-ENABLED JEE PRACTICE FOR DYSLEXIA & FOCUS.',
+    desc: 'High-yield Physics, Chemistry, and Mathematics practice with natural speech-to-text input, adaptive dyslexia fonts, and zero-distraction layout.',
+  },
+  {
+    num: '02',
+    module: 'ACCESSIBILITY',
+    subtitle: 'OPENDYSLEXIC & COGNITIVE RE-FLOW',
+    title: 'ACCESSIBLE TESTING FOR EVERY LEARNER.',
+    desc: 'Customize typography spacing, high-contrast brutalist borders, and speech synthesis rates tailored for neurodivergent focus.',
+  },
+  {
+    num: '03',
+    module: 'SAHARA AI',
+    subtitle: 'CONCEPT MASTERY & REASONING',
+    title: 'INSTANT STEP-BY-STEP PROBLEM DECONSTRUCTION.',
+    desc: 'Never stay stuck. Get instant AI voice hints, trap alerts, and personalized problem sets targeted for IIT-JEE top ranks.',
+  },
+];
+
+export default function WelcomeScreen() {
+  const router = useRouter();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slide = slides[currentSlide];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Top Meta Bar */}
+        <View style={styles.topBar}>
+          <View style={styles.editionTag}>
+            <View style={styles.squareDot} />
+            <Text style={styles.editionText}>EDITION 2025</Text>
+          </View>
+          <Text style={styles.stepCounter}>0{currentSlide + 1} / 03</Text>
+        </View>
+
+        {/* Wordmark Header */}
+        <View style={styles.headerBox}>
+          <Text style={styles.wordmark}>CRACKR</Text>
+        </View>
+
+        {/* Center Stage Presentation */}
+        <View style={styles.mainStage}>
+          {/* Numerals Split Box */}
+          <View style={styles.splitBox}>
+            <View style={styles.numeralBox}>
+              <Text style={styles.numeralText}>{slide.num}</Text>
+            </View>
+            <View style={styles.specBox}>
+              <Text style={styles.moduleTag}>{slide.module}</Text>
+              <Text style={styles.specTitle}>{slide.module}</Text>
+              <Text style={styles.specSubtitle}>{slide.subtitle}</Text>
+            </View>
+          </View>
+
+          {/* Main Headline */}
+          <Text style={styles.headline}>{slide.title}</Text>
+          <View style={styles.hairlineAccent} />
+          <Text style={styles.descText}>{slide.desc}</Text>
+
+          {/* Carousel Progress Indicators */}
+          <View style={styles.carouselTracker}>
+            <View style={styles.trackerHeader}>
+              <Text style={styles.trackerLabel}>CAROUSEL STEP</Text>
+              <Text style={styles.trackerStage}>STAGE 0{currentSlide + 1}</Text>
+            </View>
+            <View style={styles.trackerBars}>
+              {slides.map((_, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => setCurrentSlide(index)}
+                  style={[
+                    styles.trackerBar,
+                    index === currentSlide ? styles.trackerBarActive : styles.trackerBarInactive,
+                  ]}
+                />
+              ))}
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Bottom Action Dock */}
+      <View style={styles.footerDock}>
+        <BrutalistButton
+          title="GET STARTED"
+          variant="primary"
+          onPress={() => router.push('/sign-up')}
+        />
+        <BrutalistButton
+          title="I ALREADY HAVE AN ACCOUNT"
+          variant="outline"
+          onPress={() => router.push('/sign-up')}
+        />
+        <Text style={styles.footerNotice}>ACCESSIBILITY-FIRST ARCHITECTURE</Text>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#310004',
+  },
+  scrollContent: {
+    paddingBottom: 20,
+  },
+  topBar: {
+    height: 48,
+    borderBottomWidth: 1,
+    borderColor: '#4b463b',
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  editionTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  squareDot: {
+    width: 8,
+    height: 8,
+    backgroundColor: '#ffffff',
+  },
+  editionText: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 11,
+    color: '#ffffff',
+    letterSpacing: 1.5,
+    fontWeight: '700',
+  },
+  stepCounter: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 11,
+    color: '#f2bf4b',
+    letterSpacing: 1.5,
+    fontWeight: '700',
+  },
+  headerBox: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderColor: '#4b463b',
+    backgroundColor: '#130f16',
+  },
+  wordmark: {
+    fontFamily: 'Epilogue, sans-serif',
+    fontSize: 48,
+    fontWeight: '900',
+    color: '#ffdad8',
+    letterSpacing: -1,
+  },
+  mainStage: {
+    padding: 16,
+  },
+  splitBox: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#4b463b',
+    marginBottom: 20,
+  },
+  numeralBox: {
+    width: 90,
+    backgroundColor: '#1a141f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRightWidth: 1,
+    borderColor: '#4b463b',
+    paddingVertical: 12,
+  },
+  numeralText: {
+    fontFamily: 'Epilogue, sans-serif',
+    fontSize: 52,
+    fontWeight: '900',
+    color: '#ffffff',
+  },
+  specBox: {
+    flex: 1,
+    padding: 12,
+    justifyContent: 'center',
+    backgroundColor: '#310004',
+  },
+  moduleTag: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#f2bf4b',
+    fontWeight: '700',
+    letterSpacing: 1,
+  },
+  specTitle: {
+    fontFamily: 'Epilogue, sans-serif',
+    fontSize: 16,
+    color: '#ffffff',
+    fontWeight: '700',
+    marginTop: 2,
+  },
+  specSubtitle: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 9,
+    color: '#cdc6b7',
+    marginTop: 2,
+    letterSpacing: 0.8,
+  },
+  headline: {
+    fontFamily: 'Epilogue, sans-serif',
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#ffdad8',
+    lineHeight: 28,
+    marginBottom: 12,
+    textTransform: 'uppercase',
+  },
+  hairlineAccent: {
+    width: 48,
+    height: 2,
+    backgroundColor: '#ffffff',
+    marginBottom: 12,
+  },
+  descText: {
+    fontFamily: 'Lexend, sans-serif',
+    fontSize: 14,
+    color: '#cdc6b7',
+    lineHeight: 22,
+    marginBottom: 24,
+  },
+  carouselTracker: {
+    marginTop: 10,
+  },
+  trackerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  trackerLabel: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#f2bf4b',
+    letterSpacing: 1,
+  },
+  trackerStage: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#ffffff',
+    letterSpacing: 1,
+  },
+  trackerBars: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  trackerBar: {
+    flex: 1,
+    height: 8,
+  },
+  trackerBarActive: {
+    backgroundColor: '#ffffff',
+  },
+  trackerBarInactive: {
+    borderWidth: 1,
+    borderColor: '#4b463b',
+    backgroundColor: 'transparent',
+  },
+  footerDock: {
+    padding: 16,
+    borderTopWidth: 1,
+    borderColor: '#4b463b',
+    backgroundColor: '#130f16',
+  },
+  footerNotice: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#cdc6b7',
+    textAlign: 'center',
+    marginTop: 10,
+    letterSpacing: 1.2,
+  },
+});

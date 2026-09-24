@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CRACKR - Registration</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&amp;family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error": "#690005",
+            "on-tertiary-fixed-variant": "#703800",
+            "error-container": "#93000a",
+            "primary-fixed-dim": "#d6c694",
+            "on-tertiary": "#4f2500",
+            "on-background": "#ffdad8",
+            "error": "#ffb4ab",
+            "on-primary-container": "#70643b",
+            "surface-container-lowest": "#270003",
+            "outline": "#969083",
+            "inverse-primary": "#6a5e35",
+            "primary-container": "#f3e2ae",
+            "on-primary": "#39300b",
+            "surface": "#310004",
+            "on-primary-fixed-variant": "#514620",
+            "primary": "#ffffff",
+            "on-secondary-fixed": "#261a00",
+            "inverse-surface": "#ffdad8",
+            "on-surface-variant": "#cdc6b7",
+            "surface-bright": "#72131c",
+            "on-secondary": "#402d00",
+            "tertiary-container": "#ffdcc5",
+            "surface-variant": "#6b0e18",
+            "on-surface": "#ffdad8",
+            "surface-tint": "#d6c694",
+            "tertiary-fixed-dim": "#ffb782",
+            "surface-container-high": "#5c010e",
+            "outline-variant": "#4b463b",
+            "surface-container-highest": "#6b0e18",
+            "surface-dim": "#310004",
+            "secondary-container": "#b68a15",
+            "secondary-fixed-dim": "#f2bf4b",
+            "primary-fixed": "#f3e2ae",
+            "secondary": "#f2bf4b",
+            "tertiary-fixed": "#ffdcc5",
+            "on-error-container": "#ffdad6",
+            "surface-container": "#480009",
+            "on-secondary-container": "#372700",
+            "background": "#310004",
+            "inverse-on-surface": "#650814",
+            "tertiary": "#ffffff",
+            "secondary-fixed": "#ffdf9f",
+            "surface-container-low": "#410007",
+            "on-tertiary-fixed": "#301400",
+            "on-secondary-fixed-variant": "#5c4300",
+            "on-tertiary-container": "#9a510b",
+            "on-primary-fixed": "#231b00"
+          },
+          "borderRadius": {
+            "DEFAULT": "0px",
+            "none": "0px",
+            "sm": "0px",
+            "md": "0px",
+            "lg": "0px",
+            "xl": "0px",
+            "full": "0px"
+          },
+          "spacing": {
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "margin-desktop": "2.5rem",
+            "space-2xs": "0.125rem",
+            "margin": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-2xl": "3rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Epilogue"],
+            "body-lg": ["Lexend"],
+            "display-hero-mobile": ["Epilogue"],
+            "headline-sm": ["Epilogue"],
+            "label-code": ["Lexend"],
+            "headline-lg": ["Epilogue"],
+            "body-md": ["Lexend"],
+            "label-counter": ["Epilogue"],
+            "display-hero": ["Epilogue"],
+            "body-sm": ["Lexend"],
+            "headline-md": ["Epilogue"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["17px", { "lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "display-hero-mobile": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+            "label-code": ["11px", { "lineHeight": "14px", "letterSpacing": "0.14em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "label-counter": ["14px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "700" }],
+            "display-hero": ["56px", { "lineHeight": "60px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0.015em", "fontWeight": "300" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    * {
+      border-radius: 0px !important;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus {
+      -webkit-text-fill-color: #ffdad8;
+      -webkit-box-shadow: 0 0 0px 1000px #310004 inset;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+    .brutalist-btn-shadow {
+      box-shadow: 4px 4px 0px #4b463b;
+    }
+    .brutalist-btn-shadow:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #4b463b;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-secondary selection:text-on-secondary">
+<!-- Top Bar: Minimal Architectural Header -->
+<header class="w-full h-14 border-b border-outline-variant px-margin flex items-center justify-between bg-background sticky top-0 z-40">
+<button aria-label="Go Back" class="flex items-center justify-center w-8 h-8 text-on-surface hover:text-secondary active:translate-x-0.5 active:translate-y-0.5 transition-transform" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex items-center">
+<span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface uppercase">CRACKR</span>
+</div>
+<div class="w-8 h-8 flex items-center justify-end">
+<span class="font-label-code text-label-code text-secondary tracking-widest uppercase font-semibold">02</span>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="w-full flex-1 px-margin py-space-lg flex flex-col justify-start max-w-md mx-auto">
+<!-- Editorial Diagnostic Badge -->
+<div class="flex items-center gap-space-xs mb-space-sm">
+<span class="w-1.5 h-1.5 bg-secondary"></span>
+<span class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest font-semibold">
+        NEW ASPIRANT // REGISTRATION
+      </span>
+</div>
+<!-- Oversized Editorial Headline -->
+<div class="mb-space-xl border-l-2 border-secondary pl-space-sm">
+<h1 class="font-display-hero-mobile text-display-hero-mobile font-extrabold text-on-surface tracking-tight leading-none uppercase">
+        JOIN THE<br/>SPRINT.
+      </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-xs">
+        Phase II high-intensity mock portal. Academic syllabus tracking enabled.
+      </p>
+</div>
+<!-- Registration Form -->
+<form class="flex flex-col space-y-space-lg" onsubmit="event.preventDefault();">
+<!-- Field: FULL NAME -->
+<div class="flex flex-col group">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest mb-space-2xs group-focus-within:text-secondary transition-colors" for="full_name">
+          FULL NAME
+        </label>
+<div class="relative flex items-center">
+<input autocomplete="name" class="w-full bg-transparent border-0 border-b border-outline-variant py-space-sm px-0 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-0 focus:border-secondary transition-colors uppercase tracking-wider" id="full_name" name="full_name" placeholder="E.G. AARAV SHARMA" required="" type="text"/>
+<span class="material-symbols-outlined text-outline-variant text-base absolute right-0 pointer-events-none group-focus-within:text-secondary" data-icon="badge">badge</span>
+</div>
+</div>
+<!-- Field: EMAIL ADDRESS -->
+<div class="flex flex-col group">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest mb-space-2xs group-focus-within:text-secondary transition-colors" for="email_address">
+          EMAIL ADDRESS
+        </label>
+<div class="relative flex items-center">
+<input autocomplete="email" class="w-full bg-transparent border-0 border-b border-outline-variant py-space-sm px-0 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-0 focus:border-secondary transition-colors lowercase tracking-normal" id="email_address" name="email_address" placeholder="ASPIRANT@DOMAINGROUP.IN" required="" type="email"/>
+<span class="material-symbols-outlined text-outline-variant text-base absolute right-0 pointer-events-none group-focus-within:text-secondary" data-icon="alternate_email">alternate_email</span>
+</div>
+</div>
+<!-- Field: CREATE PASSWORD -->
+<div class="flex flex-col group">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest mb-space-2xs group-focus-within:text-secondary transition-colors" for="password">
+          CREATE PASSWORD
+        </label>
+<div class="relative flex items-center">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant py-space-sm pr-14 pl-0 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-0 focus:border-secondary transition-colors" id="password" name="password" placeholder="••••••••••••" required="" type="password"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 font-label-code text-label-code text-on-surface-variant hover:text-secondary px-space-xs py-space-2xs border border-outline-variant uppercase transition-colors" id="togglePassword" onclick="toggleVisibility('password', this)" type="button">
+            SHOW
+          </button>
+</div>
+</div>
+<!-- Field: CONFIRM PASSWORD -->
+<div class="flex flex-col group">
+<label class="font-label-code text-label-code text-on-surface-variant uppercase tracking-widest mb-space-2xs group-focus-within:text-secondary transition-colors" for="confirm_password">
+          CONFIRM PASSWORD
+        </label>
+<div class="relative flex items-center">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant py-space-sm px-0 font-body-md text-body-md text-on-surface placeholder:text-outline-variant focus:ring-0 focus:border-secondary transition-colors" id="confirm_password" name="confirm_password" placeholder="••••••••••••" required="" type="password"/>
+<span class="material-symbols-outlined text-outline-variant text-base absolute right-0 pointer-events-none group-focus-within:text-secondary" data-icon="lock">lock</span>
+</div>
+</div>
+<!-- Terms Checkbox (Sharp Brutalist Square) -->
+<div class="pt-space-xs">
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input class="mt-1 w-4 h-4 rounded-none border border-outline-variant bg-surface-container text-secondary focus:ring-0 focus:ring-offset-0 transition-colors" id="terms" required="" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-tight">
+            I agree to NTA JEE curriculum guidelines &amp; terms
+          </span>
+</label>
+</div>
+<!-- Primary Solid Button -->
+<div class="pt-space-sm">
+<button class="w-full bg-secondary text-on-secondary hover:bg-secondary-fixed active:bg-secondary border border-secondary font-headline-sm text-headline-sm font-bold uppercase tracking-wider py-space-md flex items-center justify-center gap-space-sm brutalist-btn-shadow transition-transform duration-70" type="submit">
+<span>CREATE ACCOUNT</span>
+<span class="material-symbols-outlined font-bold text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Divider Rule -->
+<div class="relative flex items-center justify-center my-space-md">
+<div class="w-full border-t border-outline-variant"></div>
+<span class="absolute bg-background px-space-md font-label-code text-label-code text-on-surface-variant uppercase tracking-widest">
+          OR CONTINUE WITH
+        </span>
+</div>
+<!-- Outline Button: Google Provider -->
+<div>
+<button class="w-full bg-transparent border border-outline-variant hover:border-on-surface hover:bg-surface-container active:translate-x-0.5 active:translate-y-0.5 text-on-surface font-headline-sm text-headline-sm font-semibold uppercase tracking-wider py-space-md flex items-center justify-center gap-space-sm transition-all" type="button">
+<!-- Minimalist Google Monochromatic SVG Icon -->
+<svg aria-hidden="true" class="w-4 h-4 fill-current text-on-surface" viewbox="0 0 24 24">
+<path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.344-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"></path>
+</svg>
+<span>CONTINUE WITH GOOGLE</span>
+</button>
+</div>
+</form>
+</main>
+<!-- Bottom Prompt & System Footnote -->
+<footer class="w-full border-t border-outline-variant py-space-md px-margin text-center bg-background mt-space-xl">
+<p class="font-body-md text-body-md text-on-surface-variant">
+      Already registered? 
+      <a class="text-secondary font-headline-sm text-body-md font-bold uppercase tracking-wider hover:underline ml-space-2xs inline-block" href="#login">
+        Log in
+      </a>
+</p>
+<div class="mt-space-xs">
+<span class="font-label-code text-label-code text-outline-variant tracking-widest uppercase">
+        NTA STANDARDS // SECURE TERMINAL
+      </span>
+</div>
+</footer>
+<!-- Inline Micro-interaction Script -->
+<script>
+    function toggleVisibility(inputId, btnElement) {
+      const field = document.getElementById(inputId);
+      if (!field) return;
+      if (field.type === 'password') {
+        field.type = 'text';
+        btnElement.textContent = 'HIDE';
+        btnElement.classList.add('text-secondary', 'border-secondary');
+      } else {
+        field.type = 'password';
+        btnElement.textContent = 'SHOW';
+        btnElement.classList.remove('text-secondary', 'border-secondary');
+      }
+    }
+  </script>
+</body></html>

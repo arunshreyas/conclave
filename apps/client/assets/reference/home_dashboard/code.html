@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CRACKR [CR—01] — JEE Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&amp;family=Lexend:wght@300;400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@100..900&amp;family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-secondary-container": "#372700", primary: "#ffffff", "secondary-fixed": "#ffdf9f", "on-surface": "#ffdad8", error: "#ffb4ab", "on-secondary": "#402d00", "on-primary": "#39300b", "inverse-primary": "#6a5e35", "on-secondary-fixed-variant": "#5c4300", "on-surface-variant": "#cdc6b7", background: "#310004", "on-primary-container": "#70643b", "secondary-container": "#b68a15", "surface-container-high": "#5c010e", "inverse-surface": "#ffdad8", "on-secondary-fixed": "#261a00", "on-error": "#690005", "surface-container-low": "#410007", "on-primary-fixed-variant": "#514620", "surface-bright": "#72131c", "on-error-container": "#ffdad6", "tertiary-fixed": "#ffdcc5", "on-tertiary": "#4f2500", outline: "#969083", "surface-variant": "#6b0e18", "surface-container-lowest": "#270003", "on-tertiary-fixed-variant": "#703800", "primary-fixed-dim": "#d6c694", "on-tertiary-container": "#9a510b", "secondary-fixed-dim": "#f2bf4b", "error-container": "#93000a", surface: "#310004", secondary: "#f2bf4b", "surface-container": "#480009", "surface-container-highest": "#6b0e18", "primary-fixed": "#f3e2ae", "tertiary-fixed-dim": "#ffb782", "on-tertiary-fixed": "#301400", "outline-variant": "#4b463b", "primary-container": "#f3e2ae", "on-background": "#ffdad8", "on-primary-fixed": "#231b00", tertiary: "#ffffff", "surface-tint": "#d6c694", "tertiary-container": "#ffdcc5", "surface-dim": "#310004", "inverse-on-surface": "#650814", "tertiary-dim": "#8e94ff", "primary-dim": "#ff67ae", "secondary-dim": "#ea82cd", "error-dim": "#d73357"}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"space-2xs": "0.125rem", "space-xs": "0.25rem", "space-sm": "0.5rem", gutter: "1rem", margin: "1rem", "space-2xl": "3rem", "space-xl": "2rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "margin-desktop": "2.5rem", "space-md": "1rem"}, fontFamily: {"body-lg": ["Lexend"], "label-code": ["Lexend"], "body-sm": ["Lexend"], "headline-sm": ["Epilogue"], "display-hero-mobile": ["Epilogue"], "headline-md": ["Epilogue"], "body-md": ["Lexend"], "display-hero": ["Epilogue"], "label-counter": ["Epilogue"], "headline-lg": ["Epilogue"], "headline-lg-mobile": ["Epilogue"], headline: ["Epilogue"], display: ["Epilogue"], body: ["Lexend"], label: ["Lexend"]}, fontSize: {"body-lg": ["17px", {lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "400"}], "label-code": ["11px", {lineHeight: "14px", letterSpacing: "0.14em", fontWeight: "600"}], "body-sm": ["13px", {lineHeight: "20px", letterSpacing: "0.015em", fontWeight: "300"}], "headline-sm": ["18px", {lineHeight: "24px", letterSpacing: "0em", fontWeight: "600"}], "display-hero-mobile": ["36px", {lineHeight: "40px", letterSpacing: "-0.03em", fontWeight: "800"}], "headline-md": ["22px", {lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "600"}], "body-md": ["15px", {lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400"}], "display-hero": ["56px", {lineHeight: "60px", letterSpacing: "-0.04em", fontWeight: "800"}], "label-counter": ["14px", {lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "700"}], "headline-lg": ["32px", {lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-lg-mobile": ["26px", {lineHeight: "32px", letterSpacing: "-0.02em", fontWeight: "700"}]}}}};</script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .brutalist-shadow {
+      box-shadow: 4px 4px 0px 0px #4f4447;
+    }
+    .brutalist-shadow-primary {
+      box-shadow: 4px 4px 0px 0px #b08594;
+    }
+    .stipple-pattern {
+      background-image: radial-gradient(#b08594 1.5px, transparent 1.5px);
+      background-size: 6px 6px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24 antialiased selection:bg-primary selection:text-on-primary font-body-md text-body-md">
+<!-- TopAppBar Component (from Shared Components JSON) -->
+<header class="sticky top-0 z-40 flex justify-between items-center w-full px-margin h-14 border-b border-outline-variant bg-background">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="terminal">terminal</span>
+<span class="text-headline-sm font-headline-sm font-bold tracking-tight text-on-surface uppercase">CRACKR</span>
+</div>
+<div class="flex items-center">
+<button class="px-space-sm py-space-xs border border-outline-variant text-label-code font-label-code tracking-widest uppercase hover:bg-surface-container hover:text-primary active:translate-x-0.5 active:translate-y-0.5 transition-transform duration-75 text-on-surface-variant">
+        MENU
+      </button>
+</div>
+</header>
+<!-- Main Canvas Container: Strict Swiss Hairline Architecture -->
+<main class="w-full max-w-md mx-auto divide-y divide-outline-variant">
+<!-- Hero Identity Module -->
+<section class="p-margin bg-background">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="text-label-code font-label-code text-outline uppercase tracking-widest">[SYS_LOG // COHORT 2025]</span>
+<span class="inline-flex items-center gap-1.5 px-space-xs py-space-2xs bg-surface-container-high border border-outline-variant text-label-code font-label-code text-primary">
+<span class="w-1.5 h-1.5 bg-primary animate-pulse inline-block"></span>
+          SYS.LIVE
+        </span>
+</div>
+<h1 class="text-display-hero-mobile font-display-hero-mobile uppercase text-on-surface mt-space-xs tracking-tight">
+        READY FOR JEE, ARJUN.
+      </h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-space-2xs">
+        Phase: Final Sprint • Target: IIT Bombay [CSE] • 41 Days
+      </p>
+</section>
+<!-- Two-Column Metric Split Block -->
+<section class="grid grid-cols-2 divide-x divide-outline-variant bg-surface-container-lowest">
+<!-- Left Cell: Day Streak -->
+<div class="p-margin flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-outline">
+<span class="text-label-code font-label-code uppercase tracking-widest">DAY STREAK</span>
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="local_fire_department">local_fire_department</span>
+</div>
+<div class="text-display-hero-mobile font-display-hero-mobile text-secondary mt-space-xs leading-none">
+            14
+          </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant">
+<span class="text-label-code font-label-code text-on-surface-variant uppercase tracking-widest block">
+            TOP 2% CONSISTENCY
+          </span>
+</div>
+</div>
+<!-- Right Cell: Total XP -->
+<div class="p-margin flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-outline">
+<span class="text-label-code font-label-code uppercase tracking-widest">TOTAL XP</span>
+<span class="material-symbols-outlined text-sm text-primary" data-icon="bolt">bolt</span>
+</div>
+<div class="text-display-hero-mobile font-display-hero-mobile text-primary mt-space-xs leading-none">
+            4,850
+          </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant">
+<span class="text-label-code font-label-code text-primary-fixed-dim uppercase tracking-widest block">
+            LVL 18 — ADVANCED MASTER
+          </span>
+</div>
+</div>
+</section>
+<!-- Daily Goal & Pixel-Dot Progress Telemetry -->
+<section class="p-margin bg-background">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="text-label-code font-label-code text-outline uppercase tracking-widest">DAILY GOAL RATIO</span>
+<span class="text-label-counter font-label-counter text-on-surface tracking-wide">
+          18 / 25 QUESTIONS TODAY
+        </span>
+</div>
+<!-- Stippled & Block Matrix Progression Track -->
+<div class="h-6 w-full border border-outline-variant bg-surface-container-lowest p-0.5 flex gap-1">
+<!-- 18 completed items (72%) -->
+<div class="h-full bg-secondary-container relative flex-1 flex items-center justify-end px-1 border-r border-outline-variant" style="flex: 18;">
+<span class="text-label-code font-label-code text-secondary text-[9px] tracking-tighter">72%</span>
+</div>
+<!-- 7 remaining stippled items -->
+<div class="h-full stipple-pattern opacity-60 relative" style="flex: 7;"></div>
+</div>
+<div class="flex justify-between items-center mt-space-xs text-label-code font-label-code text-outline">
+<span class="">00 Q</span>
+<span class="">+7 Q TO HIT TARGET</span>
+<span class="">25 Q</span>
+</div>
+</section>
+<!-- Active Resume Card (JEE Advanced Full Mock 03) -->
+<section class="p-margin bg-surface-container-low">
+<div class="border border-outline-variant bg-background p-margin brutalist-shadow">
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-xs mb-space-sm">
+<span class="text-label-code font-label-code text-primary uppercase tracking-widest flex items-center gap-1">
+<span class="w-2 h-2 bg-error"></span>
+            CONTINUE LAST TEST
+          </span>
+<span class="text-label-code font-label-code text-outline uppercase">MOCK // ADV—03</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface uppercase tracking-tight">
+          JEE ADVANCED FULL MOCK 03
+        </h3>
+<div class="flex items-center gap-2 mt-space-xs text-label-code font-label-code text-on-surface-variant uppercase">
+<span class="px-space-xs py-space-2xs bg-surface-container border border-outline-variant text-on-surface">
+            Q 14/30
+          </span>
+<span class="text-outline">•</span>
+<span class="px-space-xs py-space-2xs bg-surface-container border border-outline-variant text-secondary">
+            01:18 REMAINING
+          </span>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-outline-variant">
+<button class="w-full flex items-center justify-between bg-primary text-on-primary px-space-md py-space-sm border border-on-surface font-headline-sm text-headline-sm uppercase tracking-wider brutalist-shadow active:translate-x-1 active:translate-y-1 transition-all duration-75">
+<span class="">RESUME TEST -&gt;</span>
+<span class="material-symbols-outlined text-lg" data-icon="play_arrow">play_arrow</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Split Flat Colour Block (Secondary #5e4052 solid panel) -->
+<section class="p-margin bg-secondary-container text-on-surface border-y border-outline-variant">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="px-space-xs py-space-2xs bg-surface-container-lowest text-primary text-label-code font-label-code tracking-widest uppercase border border-outline-variant">
+          AI RECOMMENDATION
+        </span>
+<span class="text-label-code font-label-code text-on-secondary-container">ERR_DELTA_0.42</span>
+</div>
+<h2 class="text-headline-md font-headline-md uppercase tracking-tight mt-space-sm text-on-surface">
+        Electromagnetism Weak Point Detected
+      </h2>
+<p class="text-body-sm font-body-sm text-on-secondary-container mt-space-xs leading-relaxed">
+        You missed 4 induction problems this week. High probability JEE Advanced topic.
+      </p>
+<div class="mt-space-md">
+<button class="w-full bg-background text-on-surface border border-outline px-space-md py-space-sm font-headline-sm text-headline-sm uppercase tracking-wider hover:bg-surface-container active:translate-x-1 active:translate-y-1 transition-all duration-75 text-center">
+          PRACTICE 10 QUESTIONS
+        </button>
+</div>
+</section>
+<!-- Quick-Action Hairline Grid (2x2 Matrix) -->
+<section class="bg-background">
+<div class="p-margin pb-space-xs flex justify-between items-center">
+<span class="text-label-code font-label-code text-outline uppercase tracking-widest">RAPID ACCESS PALETTE</span>
+<span class="text-label-code font-label-code text-outline">04 MODULES</span>
+</div>
+<div class="grid grid-cols-2 divide-x divide-y divide-outline-variant border-y border-outline-variant">
+<!-- Cell 1: Mistake Sheet -->
+<button class="p-space-md text-left bg-background hover:bg-surface-container-high transition-colors active:bg-surface-container">
+<div class="flex items-center justify-between text-error mb-space-sm">
+<span class="material-symbols-outlined text-lg" data-icon="bookmark_border">bookmark_border</span>
+<span class="text-label-code font-label-code uppercase tracking-widest text-outline">CR-01</span>
+</div>
+<div class="text-headline-sm font-headline-sm uppercase text-on-surface tracking-tight">
+            MISTAKE SHEET
+          </div>
+<div class="text-label-code font-label-code text-error mt-space-xs uppercase">
+            23 to master
+          </div>
+</button>
+<!-- Cell 2: 1v1 Multiplayer -->
+<button class="p-space-md text-left bg-background hover:bg-surface-container-high transition-colors active:bg-surface-container">
+<div class="flex items-center justify-between text-secondary mb-space-sm">
+<span class="material-symbols-outlined text-lg" data-icon="sports_esports">sports_esports</span>
+<span class="text-label-code font-label-code uppercase tracking-widest text-secondary animate-pulse">● LIVE</span>
+</div>
+<div class="text-headline-sm font-headline-sm uppercase text-on-surface tracking-tight">
+            1V1 MULTIPLAYER
+          </div>
+<div class="text-label-code font-label-code text-on-surface-variant mt-space-xs uppercase">
+            Live Match
+          </div>
+</button>
+<!-- Cell 3: Saved Papers -->
+<button class="p-space-md text-left bg-background hover:bg-surface-container-high transition-colors active:bg-surface-container">
+<div class="flex items-center justify-between text-primary mb-space-sm">
+<span class="material-symbols-outlined text-lg" data-icon="folder_zip">folder_zip</span>
+<span class="text-label-code font-label-code uppercase tracking-widest text-outline">ARC</span>
+</div>
+<div class="text-headline-sm font-headline-sm uppercase text-on-surface tracking-tight">
+            SAVED PAPERS
+          </div>
+<div class="text-label-code font-label-code text-on-surface-variant mt-space-xs uppercase">
+            12 archives
+          </div>
+</button>
+<!-- Cell 4: Accessibility -->
+<button class="p-space-md text-left bg-background hover:bg-surface-container-high transition-colors active:bg-surface-container">
+<div class="flex items-center justify-between text-tertiary mb-space-sm">
+<span class="material-symbols-outlined text-lg" data-icon="settings_accessibility">settings_accessibility</span>
+<span class="text-label-code font-label-code uppercase tracking-widest text-tertiary">ON</span>
+</div>
+<div class="text-headline-sm font-headline-sm uppercase text-on-surface tracking-tight">
+            ACCESSIBILITY
+          </div>
+<div class="text-label-code font-label-code text-on-surface-variant mt-space-xs uppercase">
+            Audio &amp; Dyslexia mode ON
+          </div>
+</button>
+</div>
+</section>
+<!-- Mini Weekly Activity Bar Chart Telemetry -->
+<section class="p-margin bg-surface-container-lowest">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="text-label-code font-label-code text-outline uppercase tracking-widest">WEEKLY SOLVE DENSITY</span>
+<span class="text-label-code font-label-code text-primary uppercase">AVG 42.4 Q/DAY</span>
+</div>
+<div class="border border-outline-variant bg-background p-space-md">
+<!-- Monospaced Bar Telemetry Matrix -->
+<div class="flex items-end justify-between h-28 gap-2 pt-2 border-b border-outline-variant pb-2">
+<!-- Mon -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<div class="w-full bg-outline-variant" style="height: 35%;"></div>
+<span class="text-[10px] font-label-code text-outline">M</span>
+</div>
+<!-- Tue -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<div class="w-full bg-secondary-container" style="height: 60%;"></div>
+<span class="text-[10px] font-label-code text-outline">T</span>
+</div>
+<!-- Wed -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<div class="w-full bg-secondary-container" style="height: 45%;"></div>
+<span class="text-[10px] font-label-code text-outline">W</span>
+</div>
+<!-- Thu -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<div class="w-full bg-primary" style="height: 90%;"></div>
+<span class="text-[10px] font-label-code text-outline">T</span>
+</div>
+<!-- Fri -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<div class="w-full bg-secondary-container" style="height: 70%;"></div>
+<span class="text-[10px] font-label-code text-outline">F</span>
+</div>
+<!-- Sat -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<div class="w-full bg-primary-container" style="height: 80%;"></div>
+<span class="text-[10px] font-label-code text-outline">S</span>
+</div>
+<!-- Sun (Today) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<div class="w-full bg-primary relative" style="height: 55%;">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary"></div>
+</div>
+<span class="text-[10px] font-label-code text-primary font-bold">S</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-space-xs text-label-code font-label-code text-outline">
+<span class="">T-MINUS 7D TELEMETRY</span>
+<span class="text-on-surface">TOTAL: 297 QUESTIONS</span>
+</div>
+</div>
+</section>
+<!-- Diagnostic Footnote -->
+<footer class="p-margin text-center bg-background border-t border-outline-variant">
+<span class="text-label-code font-label-code text-outline uppercase tracking-widest block">
+        CRACKR OS v4.11.2 // NTA HIGH ACCURACY PROTOCOL
+      </span>
+</footer>
+</main>
+<!-- BottomNavBar Component (from Shared Components JSON) -->
+<!-- Contextual Active: 'Home' is active top-level screen -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex items-stretch h-16 bg-background border-t border-outline-variant divide-x divide-outline-variant">
+<!-- Home (ACTIVE) -->
+<a class="flex flex-1 flex-col items-center justify-center bg-primary text-on-primary py-space-xs" href="#home">
+<span class="material-symbols-outlined text-xl" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-code font-label-code uppercase tracking-widest mt-1 text-[10px]">Home</span>
+</a>
+<!-- Practice -->
+<a class="flex flex-1 flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high py-space-xs transition-colors" href="#practice">
+<span class="material-symbols-outlined text-xl" data-icon="tune">tune</span>
+<span class="text-label-code font-label-code uppercase tracking-widest mt-1 text-[10px]">Practice</span>
+</a>
+<!-- Progress -->
+<a class="flex flex-1 flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high py-space-xs transition-colors" href="#progress">
+<span class="material-symbols-outlined text-xl" data-icon="analytics">analytics</span>
+<span class="text-label-code font-label-code uppercase tracking-widest mt-1 text-[10px]">Progress</span>
+</a>
+<!-- Play -->
+<a class="flex flex-1 flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high py-space-xs transition-colors" href="#play">
+<span class="material-symbols-outlined text-xl" data-icon="sports_esports">sports_esports</span>
+<span class="text-label-code font-label-code uppercase tracking-widest mt-1 text-[10px]">Play</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-1 flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high py-space-xs transition-colors" href="#profile">
+<span class="material-symbols-outlined text-xl" data-icon="person">person</span>
+<span class="text-label-code font-label-code uppercase tracking-widest mt-1 text-[10px]">Profile</span>
+</a>
+</nav>
+</body></html>
