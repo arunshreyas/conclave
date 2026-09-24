@@ -5,12 +5,11 @@ import { tokenCache } from '@/utils/tokenCache';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet } from 'react-native';
 
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || process.env.CLERK_PUBLISHABLE_KEY;
 
 const isValidClerkKey = Boolean(
   publishableKey &&
   (publishableKey.startsWith('pk_test_') || publishableKey.startsWith('pk_live_')) &&
-  publishableKey.length > 30 &&
   !publishableKey.includes('dummy')
 );
 
