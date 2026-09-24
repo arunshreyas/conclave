@@ -1,0 +1,22 @@
+// packages/db/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model UserProfile {
+  id    String @id @default(uuid())
+  email String @unique
+  name  String
+  userName String @unique
+  birthday DateTime
+  school String 
+  grade String
+  stream String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
