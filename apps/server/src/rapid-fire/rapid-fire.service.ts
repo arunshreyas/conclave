@@ -24,26 +24,25 @@ export class RapidFireService {
     let filterSubject = dto.subject;
     let filterTopic = dto.topic;
 
-    if (mode === 'WEAK_TOPICS') {
+    if (mode === 'WEAK_TOPICS' || mode === 'ADAPTIVE') {
       const weakTopics = await this.questionsService.getUserWeakTopics(userId);
       if (weakTopics.length > 0) {
-        filterSubject = weakTopics[0].subject;
-        filterTopic = weakTopics[0].topic;
-      }
-    }
+        // Prioritize student's weakest topics (<65% accuracy or low attempt count)
+        const targetTopics = weakTopics.map((w) => w.topic).filter(Boolean);
+        const targetSubjects = Array.from(new Set(weakTopics.map((w) => w.subject).filter(Boolean)));
 
-    const where: any = {};
-    if (filterSubject && filterSubject !== 'Mixed' && filterSubject !== 'ALL') {
-      where.subject = filterSubject;
-    }
-    if (filterTopic && filterTopic !== 'Mixed') {
-      where.OR = [{ chapter: filterTopic }, { topics: { has: filterTopic } }];
+        where.OR = [
+          { chapter: { in: targetTopics } },
+          { topics: { hasSome: targetTopics } },
+          { subject: { in: targetSubjects } },
+        ];
+      }
     }
 
     // Get candidate questions from DB
     const candidates = await this.prisma.questions.findMany({
       where,
-      take: limit * 3, // over-sample for randomization
+      take: limit * 4, // over-sample for adaptive shuffling
     });
 
     if (candidates.length === 0) {
@@ -314,5 +313,9 @@ export class RapidFireService {
         questionDetails: qMap.get(sq.questionId) || null,
       })),
     };
+  }
+
+  async getUserWeakTopicsAnalytics(userId: string) {
+    return this.questionsService.getUserWeakTopics(userId);
   }
 }

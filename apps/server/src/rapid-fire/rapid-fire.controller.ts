@@ -44,6 +44,11 @@ export class RapidFireController {
     return this.rapidFireService.finishSession(userId, sessionId);
   }
 
+  @Get('weak-topics/analytics')
+  async getWeakTopics(@CurrentUserId() userId: string) {
+    return this.rapidFireService.getUserWeakTopicsAnalytics(userId);
+  }
+
   @Get(':sessionId')
   async getSession(
     @CurrentUserId() userId: string,

@@ -185,6 +185,10 @@ export const api = {
     return this.fetchWithAuth(`/rapid-fire/${sessionId}`);
   },
 
+  async getWeakTopicsAnalytics() {
+    return this.fetchWithAuth('/rapid-fire/weak-topics/analytics');
+  },
+
   // Questions API
   async getSubjectsMetadata() {
     return this.fetchWithAuth('/questions/subjects');

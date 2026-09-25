@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'expo-router';
 import { BrutalistButton, BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
 import { api } from '@/services/api';
+import { formatMathText, normalizeOptions } from '@/utils/textFormatter';
 
 export default function PaperExamScreen() {
   const router = useRouter();
@@ -273,10 +274,7 @@ export default function PaperExamScreen() {
   // 3. Active Exam View
   const questionsList = paper?.questions || [];
   const currentQ = questionsList[currentIndex];
-  const optionsObj = currentQ?.options || {};
-  const optionsList = Array.isArray(optionsObj)
-    ? optionsObj.map((opt, i) => ({ key: String.fromCharCode(65 + i), text: String(opt) }))
-    : Object.entries(optionsObj).map(([k, v]) => ({ key: k.toUpperCase(), text: String(v) }));
+  const optionsList = normalizeOptions(currentQ?.options);
 
   const isCurrentMarked = markedForReview[currentQ?.questionId];
   const currentSelectedAns = userAnswers[currentQ?.questionId];

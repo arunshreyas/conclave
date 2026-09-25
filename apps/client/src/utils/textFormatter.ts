@@ -22,7 +22,7 @@ export function formatMathText(text: string | null | undefined): string {
 
 /**
  * Normalizes option object / list from DB.
- * If option text is literally just "(a)", "(b)", etc., formats it as "Option (A)", "Option (B)", etc.
+ * Strips redundant prefixes like "(a) ", "(b) ", "c) ", etc.
  */
 export function normalizeOptions(options: any): Array<{ key: string; text: string }> {
   if (!options) return [];
@@ -32,30 +32,29 @@ export function normalizeOptions(options: any): Array<{ key: string; text: strin
   if (Array.isArray(options)) {
     rawList = options.map((opt, i) => ({
       key: String.fromCharCode(65 + i),
-      text: String(opt).trim(),
+      text: String(opt || '').trim(),
     }));
   } else if (typeof options === 'object') {
     rawList = Object.entries(options).map(([k, v]) => ({
-      key: k.toUpperCase().trim(),
-      text: String(v).trim(),
+      key: String(k).toUpperCase().trim(),
+      text: String(v || '').trim(),
     }));
   }
 
   return rawList.map((item) => {
-    const cleanText = item.text.replace(/[()]/g, '').trim().toUpperCase();
-    const cleanKey = item.key.replace(/[()]/g, '').trim().toUpperCase();
+    let rawText = item.text.trim();
 
-    // If the option text is redundant e.g. Key "A", Text "(a)" or "A"
-    if (cleanText === cleanKey || cleanText === `OPTION ${cleanKey}` || cleanText === `(${cleanKey.toLowerCase()})` || cleanText === cleanKey.toLowerCase()) {
-      return {
-        key: item.key,
-        text: `Option (${item.key})`,
-      };
+    // Strip leading prefixes like "(a) ", "(A) ", "a) ", "A) ", "(1) ", "1. ", "a. ", "Option A: "
+    let cleanedText = rawText.replace(/^[\s\(\[\{]*(?:[a-dA-D1-4][\.\)\]\}:]|\bOption\s+[A-Da-d1-4][\.\)\]\}:]?)\s*/i, '').trim();
+
+    // If stripping left text empty, fallback to rawText
+    if (!cleanedText) {
+      cleanedText = rawText;
     }
 
     return {
       key: item.key,
-      text: formatMathText(item.text),
+      text: formatMathText(cleanedText),
     };
   });
 }
