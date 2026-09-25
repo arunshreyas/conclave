@@ -18,7 +18,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException('Email is already registered.');
+      throw new ConflictException('Email is already taken. Please sign in instead.');
     }
 
     const passwordHash = await bcrypt.hash(password, 10);

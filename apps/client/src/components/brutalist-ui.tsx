@@ -28,11 +28,11 @@ export const BrutalistButton: React.FC<ButtonProps> = ({
   const getBackgroundColor = () => {
     switch (variant) {
       case 'primary':
-        return '#ffffff';
+        return '#06B6D4'; // Vibrant Cyan
       case 'secondary':
-        return '#f2bf4b';
+        return '#F59E0B'; // Warm Amber
       case 'accent':
-        return '#5c010e';
+        return '#4F46E5'; // Indigo
       case 'outline':
       default:
         return 'transparent';
@@ -42,14 +42,12 @@ export const BrutalistButton: React.FC<ButtonProps> = ({
   const getTextColor = () => {
     switch (variant) {
       case 'primary':
-        return '#130f16';
       case 'secondary':
-        return '#261a00';
       case 'accent':
-        return '#ffffff';
+        return '#0B0F19';
       case 'outline':
       default:
-        return '#ffdad8';
+        return '#F3F4F6';
     }
   };
 
@@ -62,7 +60,7 @@ export const BrutalistButton: React.FC<ButtonProps> = ({
         styles.button,
         {
           backgroundColor: getBackgroundColor(),
-          borderColor: variant === 'secondary' ? '#f2bf4b' : '#4b463b',
+          borderColor: variant === 'outline' ? '#374151' : getBackgroundColor(),
           opacity: disabled ? 0.6 : 1,
         },
         style,
@@ -90,7 +88,7 @@ export const BrutalistCard: React.FC<{
     <View
       style={[
         styles.card,
-        highlight && { borderColor: '#f2bf4b' },
+        highlight && { borderColor: '#F59E0B' },
         style,
       ]}
     >
@@ -104,18 +102,18 @@ export const BrutalistBadge: React.FC<{
   variant?: 'code' | 'live' | 'gold';
   style?: ViewStyle;
 }> = ({ label, variant = 'code', style }) => {
-  let bgColor = '#270003';
-  let textColor = '#cdc6b7';
-  let borderColor = '#4b463b';
+  let bgColor = '#1E293B';
+  let textColor = '#94A3B8';
+  let borderColor = '#334155';
 
   if (variant === 'live') {
-    bgColor = '#5c010e';
-    textColor = '#ffffff';
-    borderColor = '#ffdad8';
+    bgColor = '#064E3B';
+    textColor = '#34D399';
+    borderColor = '#10B981';
   } else if (variant === 'gold') {
-    bgColor = '#261a00';
-    textColor = '#f2bf4b';
-    borderColor = '#f2bf4b';
+    bgColor = '#451A03';
+    textColor = '#FBBF24';
+    borderColor = '#F59E0B';
   }
 
   return (
@@ -127,46 +125,41 @@ export const BrutalistBadge: React.FC<{
 
 const styles = StyleSheet.create({
   button: {
-    height: 52,
+    height: 48,
     borderWidth: 1,
-    borderRadius: 0,
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 16,
     marginVertical: 4,
-    shadowColor: '#4b463b',
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 0.9,
-    shadowRadius: 0,
-    elevation: 3,
   },
   buttonText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 14,
+    fontFamily: 'System',
+    fontSize: 13,
     fontWeight: '800',
-    letterSpacing: 1.2,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
   },
   card: {
     borderWidth: 1,
-    borderColor: '#4b463b',
-    backgroundColor: '#310004',
+    borderColor: '#1F2937',
+    backgroundColor: '#111827',
     padding: 16,
-    borderRadius: 0,
-    marginVertical: 8,
+    borderRadius: 14,
+    marginVertical: 6,
   },
   badge: {
     borderWidth: 1,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 0,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
     alignSelf: 'flex-start',
   },
   badgeText: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 1,
+    fontWeight: '800',
+    letterSpacing: 0.5,
     textTransform: 'uppercase',
   },
 });

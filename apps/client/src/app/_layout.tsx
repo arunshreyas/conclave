@@ -8,11 +8,11 @@ const customDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    background: '#310004',
-    card: '#310004',
-    text: '#ffdad8',
-    border: '#4b463b',
-    primary: '#ffffff',
+    background: '#0B0F19',
+    card: '#111827',
+    text: '#F3F4F6',
+    border: '#1F2937',
+    primary: '#06B6D4',
   },
 };
 

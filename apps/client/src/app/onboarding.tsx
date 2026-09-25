@@ -7,7 +7,6 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -31,20 +30,26 @@ export default function OnboardingScreen() {
   const [grade, setGrade] = useState('12th');
   const [stream, setStream] = useState('JEE Advanced');
 
-  // Checks & Loading State
+  // Checks, Error Banners & Loading State
   const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
   const [checkingUsername, setCheckingUsername] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Live Username Validation Check
   const handleCheckUsername = async () => {
+    setErrorMsg(null);
     const username = userName.trim();
     if (!username) {
-      Alert.alert('Missing Username', 'Please enter a username to check availability.');
+      setErrorMsg('Please enter a username to check availability.');
+      return;
+    }
+    if (username.length < 3) {
+      setErrorMsg('Username must be at least 3 characters long.');
       return;
     }
     if (!/^[a-zA-Z0-9_]{3,24}$/.test(username)) {
-      Alert.alert('Invalid Format', 'Username must be 3-24 characters (letters, numbers, underscores).');
+      setErrorMsg('Username can only contain letters, numbers, and underscores (3-24 chars).');
       return;
     }
 
@@ -52,6 +57,9 @@ export default function OnboardingScreen() {
     try {
       const res = await authenticatedApi.checkUsername(username);
       setUsernameAvailable(res.available);
+      if (!res.available) {
+        setErrorMsg('Username is already taken. Please choose another.');
+      }
     } catch {
       setUsernameAvailable(null);
     } finally {
@@ -61,19 +69,28 @@ export default function OnboardingScreen() {
 
   // Step 1 Validation
   const handleGoToAcademics = () => {
+    setErrorMsg(null);
     const profileName = name.trim();
     const profileUsername = userName.trim();
 
     if (!profileName) {
-      Alert.alert('Required Field', 'Please enter your Full Name.');
+      setErrorMsg('Please enter your Full Name.');
+      return;
+    }
+    if (profileName.length < 2) {
+      setErrorMsg('Name must be at least 2 characters long.');
       return;
     }
     if (!profileUsername) {
-      Alert.alert('Required Field', 'Please enter a Username.');
+      setErrorMsg('Please choose a Username.');
+      return;
+    }
+    if (profileUsername.length < 3) {
+      setErrorMsg('Username must be at least 3 characters long.');
       return;
     }
     if (!/^[a-zA-Z0-9_]{3,24}$/.test(profileUsername)) {
-      Alert.alert('Invalid Username', 'Username must be 3-24 alphanumeric characters or underscores.');
+      setErrorMsg('Username can only contain letters, numbers, and underscores.');
       return;
     }
     setCurrentStep(1);
@@ -81,8 +98,9 @@ export default function OnboardingScreen() {
 
   // Step 2 Validation
   const handleGoToReview = () => {
+    setErrorMsg(null);
     if (!school.trim()) {
-      Alert.alert('Required Field', 'Please enter your School or Institution name.');
+      setErrorMsg('Please enter your School or Institution name.');
       return;
     }
     setCurrentStep(2);
@@ -90,6 +108,7 @@ export default function OnboardingScreen() {
 
   // Final Submit Action
   const handleSubmitProfile = async () => {
+    setErrorMsg(null);
     const profileName = name.trim();
     const profileUsername = userName.trim();
 
@@ -109,7 +128,7 @@ export default function OnboardingScreen() {
     } catch (err: any) {
       if (err?.status === 401) return;
       const msg = err?.data?.message || err?.message || 'Failed to create student profile.';
-      Alert.alert('Profile Creation Failed', Array.isArray(msg) ? msg.join('\n') : msg);
+      setErrorMsg(Array.isArray(msg) ? msg.join(', ') : msg);
     } finally {
       setLoading(false);
     }
@@ -129,7 +148,7 @@ export default function OnboardingScreen() {
     <SafeAreaView style={styles.container}>
       {/* Top Header Dock */}
       <View style={styles.topBar}>
-        <BrutalistBadge label="JWT SECURED // CONCLAVE" variant="gold" />
+        <BrutalistBadge label="JWT SECURED // CRACKR" variant="gold" />
         <Text style={styles.topBarTitle}>STUDENT ONBOARDING</Text>
       </View>
 
@@ -152,6 +171,12 @@ export default function OnboardingScreen() {
           </View>
         </View>
 
+        {errorMsg && (
+          <View style={styles.errorBanner}>
+            <Text style={styles.errorBannerText}>⚠️ {errorMsg}</Text>
+          </View>
+        )}
+
         {/* STEP 0: PERSONAL IDENTITY */}
         {currentStep === 0 && (
           <View style={styles.stepContent}>
@@ -159,7 +184,7 @@ export default function OnboardingScreen() {
               <BrutalistBadge label="PHASE 01 // IDENTITY" variant="live" />
               <Text style={styles.heroTitle}>CREATE YOUR IDENTITY</Text>
               <Text style={styles.heroSubtitle}>
-                Set up your student profile name and unique username to access Crack JEE mock tests and voice dictation tools.
+                Set up your student profile name and unique username to access Crackr JEE mock tests and voice tools.
               </Text>
             </View>
 
@@ -184,9 +209,12 @@ export default function OnboardingScreen() {
                 <TextInput
                   style={styles.input}
                   placeholder="e.g. Arjun Sharma"
-                  placeholderTextColor="#969083"
+                  placeholderTextColor="#94A3B8"
                   value={name}
-                  onChangeText={setName}
+                  onChangeText={(txt) => {
+                    setName(txt);
+                    if (errorMsg) setErrorMsg(null);
+                  }}
                 />
               </View>
 
@@ -198,7 +226,7 @@ export default function OnboardingScreen() {
                     <Text
                       style={[
                         styles.statusText,
-                        { color: usernameAvailable ? '#f2bf4b' : '#ffb4ab' },
+                        { color: usernameAvailable ? '#10B981' : '#EF4444' },
                       ]}
                     >
                       {usernameAvailable ? '[AVAILABLE ✓]' : '[TAKEN ✗]'}
@@ -209,12 +237,13 @@ export default function OnboardingScreen() {
                   <TextInput
                     style={[styles.input, { flex: 1 }]}
                     placeholder="e.g. arjun_jee25"
-                    placeholderTextColor="#969083"
+                    placeholderTextColor="#94A3B8"
                     autoCapitalize="none"
                     value={userName}
                     onChangeText={(text) => {
                       setUserName(text);
                       setUsernameAvailable(null);
+                      if (errorMsg) setErrorMsg(null);
                     }}
                   />
                   <TouchableOpacity
@@ -223,14 +252,14 @@ export default function OnboardingScreen() {
                     disabled={checkingUsername}
                   >
                     {checkingUsername ? (
-                      <ActivityIndicator size="small" color="#f2bf4b" />
+                      <ActivityIndicator size="small" color="#06B6D4" />
                     ) : (
                       <Text style={styles.checkBtnText}>CHECK</Text>
                     )}
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.hintText}>
-                  3-24 characters. Letters, numbers, and underscores only.
+                  At least 3 characters. Letters, numbers, and underscores only.
                 </Text>
               </View>
             </BrutalistCard>
@@ -263,9 +292,12 @@ export default function OnboardingScreen() {
                 <TextInput
                   style={styles.input}
                   placeholder="e.g. Delhi Public School, R.K. Puram"
-                  placeholderTextColor="#969083"
+                  placeholderTextColor="#94A3B8"
                   value={school}
-                  onChangeText={setSchool}
+                  onChangeText={(txt) => {
+                    setSchool(txt);
+                    if (errorMsg) setErrorMsg(null);
+                  }}
                 />
               </View>
 
@@ -311,7 +343,7 @@ export default function OnboardingScreen() {
                 <TextInput
                   style={styles.input}
                   placeholder="2007-05-15"
-                  placeholderTextColor="#969083"
+                  placeholderTextColor="#94A3B8"
                   value={birthday}
                   onChangeText={setBirthday}
                 />
@@ -342,15 +374,15 @@ export default function OnboardingScreen() {
               <BrutalistBadge label="PHASE 03 // LAUNCH PASS" variant="live" />
               <Text style={styles.heroTitle}>CONFIRM STUDENT CARD</Text>
               <Text style={styles.heroSubtitle}>
-                Review your official Crack Student Access Pass before activating your personalized JEE portal.
+                Review your official Crackr Student Access Pass before activating your personalized JEE portal.
               </Text>
             </View>
 
-            {/* Official Student Pass Brutalist Display */}
+            {/* Official Student Pass Display */}
             <BrutalistCard highlight style={styles.studentPassCard}>
               <View style={styles.passHeader}>
                 <View style={styles.passChipDot} />
-                <Text style={styles.passHeaderTitle}>CRACK STUDENT ACCESS PASS</Text>
+                <Text style={styles.passHeaderTitle}>CRACKR STUDENT ACCESS PASS</Text>
                 <BrutalistBadge label="VERIFIED" variant="gold" />
               </View>
 
@@ -369,7 +401,7 @@ export default function OnboardingScreen() {
               </View>
 
               <View style={styles.passFooter}>
-                <Text style={styles.passFooterText}>JWT AUTHENTICATED • CONCLAVE EDITION 2025</Text>
+                <Text style={styles.passFooterText}>JWT AUTHENTICATED • CRACKR EDITION 2026</Text>
               </View>
             </BrutalistCard>
 
@@ -397,31 +429,31 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#310004',
+    backgroundColor: '#0B0F19',
   },
   topBar: {
-    height: 48,
+    height: 52,
     borderBottomWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#130f16',
+    backgroundColor: '#111827',
   },
   topBarTitle: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 11,
-    color: '#f2bf4b',
+    color: '#06B6D4',
     letterSpacing: 1.5,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   scrollContent: {
     padding: 16,
     paddingBottom: 32,
   },
   stepperContainer: {
-    marginBottom: 20,
+    marginBottom: 16,
   },
   stepperHeader: {
     flexDirection: 'row',
@@ -429,93 +461,107 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   stepTitleLabel: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 10,
-    color: '#f2bf4b',
+    color: '#06B6D4',
     letterSpacing: 1.2,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   stepCounterText: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 10,
-    color: '#ffffff',
-    fontWeight: '700',
+    color: '#F3F4F6',
+    fontWeight: '800',
   },
   stepperTrack: {
     height: 6,
-    backgroundColor: '#270003',
-    borderWidth: 1,
-    borderColor: '#4b463b',
+    backgroundColor: '#1F2937',
+    borderRadius: 4,
+    overflow: 'hidden',
   },
   stepperFill: {
     height: '100%',
-    backgroundColor: '#f2bf4b',
+    backgroundColor: '#06B6D4',
+  },
+  errorBanner: {
+    padding: 12,
+    backgroundColor: '#7F1D1D',
+    borderWidth: 1,
+    borderColor: '#EF4444',
+    borderRadius: 10,
+    marginBottom: 16,
+  },
+  errorBannerText: {
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#FECACA',
+    fontWeight: '700',
   },
   stepContent: {
     gap: 16,
   },
   heroSection: {
-    marginBottom: 8,
+    marginBottom: 4,
   },
   heroTitle: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 24,
     fontWeight: '900',
-    color: '#ffdad8',
-    marginVertical: 8,
+    color: '#F3F4F6',
+    marginVertical: 6,
     textTransform: 'uppercase',
   },
   heroSubtitle: {
-    fontFamily: 'Lexend, sans-serif',
+    fontFamily: 'System',
     fontSize: 13,
-    color: '#cdc6b7',
+    color: '#94A3B8',
     lineHeight: 20,
   },
   avatarPreviewRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
+    padding: 14,
     borderWidth: 1,
-    borderColor: '#4b463b',
-    backgroundColor: '#270003',
+    borderColor: '#1F2937',
+    backgroundColor: '#111827',
+    borderRadius: 12,
     gap: 14,
   },
   avatarBox: {
     width: 56,
     height: 56,
-    backgroundColor: '#f2bf4b',
-    borderWidth: 1,
-    borderColor: '#ffffff',
+    backgroundColor: '#06B6D4',
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
   avatarText: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 22,
     fontWeight: '900',
-    color: '#130f16',
+    color: '#0B0F19',
   },
   avatarMeta: {
     flex: 1,
   },
   avatarMetaTag: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 9,
-    color: '#f2bf4b',
+    color: '#06B6D4',
     letterSpacing: 1,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   avatarName: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 16,
     fontWeight: '800',
-    color: '#ffdad8',
+    color: '#F3F4F6',
     marginTop: 2,
   },
   avatarUsername: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 12,
-    color: '#cdc6b7',
+    color: '#94A3B8',
   },
   cardForm: {
     padding: 16,
@@ -530,31 +576,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 10,
-    color: '#cdc6b7',
+    color: '#94A3B8',
     letterSpacing: 1.2,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   statusText: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 10,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   hintText: {
-    fontFamily: 'Lexend, sans-serif',
+    fontFamily: 'System',
     fontSize: 11,
-    color: '#969083',
+    color: '#64748B',
     marginTop: 2,
   },
   input: {
     height: 48,
     borderWidth: 1,
-    borderColor: '#4b463b',
-    backgroundColor: '#270003',
+    borderColor: '#1F2937',
+    backgroundColor: '#0B0F19',
+    borderRadius: 10,
     paddingHorizontal: 14,
-    color: '#ffdad8',
-    fontFamily: 'Lexend, sans-serif',
+    color: '#F3F4F6',
+    fontFamily: 'System',
     fontSize: 14,
   },
   inputRow: {
@@ -565,16 +612,17 @@ const styles = StyleSheet.create({
     height: 48,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: '#4b463b',
-    backgroundColor: '#480009',
+    borderColor: '#1F2937',
+    backgroundColor: '#1E293B',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   checkBtnText: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 11,
-    color: '#f2bf4b',
-    fontWeight: '700',
+    color: '#06B6D4',
+    fontWeight: '800',
   },
   chipRow: {
     flexDirection: 'row',
@@ -584,25 +632,26 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 44,
     borderWidth: 1,
-    borderColor: '#4b463b',
-    backgroundColor: '#270003',
+    borderColor: '#1F2937',
+    backgroundColor: '#0B0F19',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 4,
   },
   chipActive: {
-    backgroundColor: '#ffffff',
-    borderColor: '#ffffff',
+    backgroundColor: '#F3F4F6',
+    borderColor: '#F3F4F6',
   },
   chipText: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 10,
-    color: '#cdc6b7',
-    fontWeight: '700',
+    color: '#94A3B8',
+    fontWeight: '800',
     textAlign: 'center',
   },
   chipTextActive: {
-    color: '#130f16',
+    color: '#0B0F19',
   },
   actionDock: {
     marginTop: 12,
@@ -614,10 +663,11 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   studentPassCard: {
-    padding: 16,
-    backgroundColor: '#1a141f',
-    borderColor: '#f2bf4b',
+    padding: 18,
+    backgroundColor: '#111827',
+    borderColor: '#06B6D4',
     borderWidth: 2,
+    borderRadius: 16,
   },
   passHeader: {
     flexDirection: 'row',
@@ -625,19 +675,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
     marginBottom: 16,
   },
   passChipDot: {
     width: 10,
     height: 10,
-    backgroundColor: '#f2bf4b',
+    backgroundColor: '#06B6D4',
+    borderRadius: 5,
   },
   passHeaderTitle: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 11,
-    color: '#ffffff',
-    fontWeight: '700',
+    color: '#F3F4F6',
+    fontWeight: '800',
     letterSpacing: 1.2,
   },
   passBody: {
@@ -648,54 +699,55 @@ const styles = StyleSheet.create({
   passAvatarBox: {
     width: 64,
     height: 64,
-    backgroundColor: '#f2bf4b',
+    backgroundColor: '#06B6D4',
+    borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ffffff',
   },
   passAvatarText: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 26,
     fontWeight: '900',
-    color: '#130f16',
+    color: '#0B0F19',
   },
   passDetails: {
     flex: 1,
   },
   passName: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 20,
     fontWeight: '900',
-    color: '#ffdad8',
+    color: '#F3F4F6',
   },
   passUsername: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 12,
-    color: '#f2bf4b',
+    color: '#06B6D4',
     marginTop: 2,
+    fontWeight: '700',
   },
   passDivider: {
     height: 1,
-    backgroundColor: '#4b463b',
+    backgroundColor: '#1F2937',
     marginVertical: 8,
   },
   passMetaText: {
-    fontFamily: 'Lexend, sans-serif',
+    fontFamily: 'System',
     fontSize: 12,
-    color: '#cdc6b7',
+    color: '#94A3B8',
     marginTop: 2,
   },
   passFooter: {
     paddingTop: 12,
     borderTopWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
     alignItems: 'center',
   },
   passFooterText: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 9,
-    color: '#969083',
+    color: '#64748B',
     letterSpacing: 1,
+    fontWeight: '700',
   },
 });

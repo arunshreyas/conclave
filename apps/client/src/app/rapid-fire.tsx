@@ -13,12 +13,13 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { BrutalistButton, BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
 import { api } from '@/services/api';
 import { speechUtils } from '@/utils/speech';
+import { formatMathText, normalizeOptions } from '@/utils/textFormatter';
 
 export default function RapidFireScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ mode?: string; subject?: string; topic?: string }>();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [questions, setQuestions] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -138,9 +139,7 @@ export default function RapidFireScreen() {
 
   const handleSpeakQuestion = () => {
     if (currentQ) {
-      const textToRead = `${currentQ.question}. ${
-        currentQ.options ? Object.entries(currentQ.options).map(([k, v]) => `Option ${k}: ${v}`).join('. ') : ''
-      }`;
+      const textToRead = `${formatMathText(currentQ.question)}.`;
       speechUtils.speak(textToRead);
     }
   };
@@ -168,7 +167,7 @@ export default function RapidFireScreen() {
           <TouchableOpacity onPress={() => router.back()}>
             <Text style={styles.backBtn}>← BACK</Text>
           </TouchableOpacity>
-          <Text style={styles.title}>RAPID FIRE // SETUP</Text>
+          <Text style={styles.title}>RAPID FIRE // GAME MODE</Text>
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -231,7 +230,7 @@ export default function RapidFireScreen() {
   if (loading) {
     return (
       <SafeAreaView style={[styles.container, styles.center]}>
-        <ActivityIndicator size="large" color="#f2bf4b" />
+        <ActivityIndicator size="large" color="#06B6D4" />
         <Text style={styles.loadingText}>PREPARING QUESTIONS FROM SUPABASE PYQ DATABASE...</Text>
       </SafeAreaView>
     );
@@ -254,7 +253,7 @@ export default function RapidFireScreen() {
               </View>
               <View style={styles.scoreBox}>
                 <Text style={styles.scoreLabel}>ACCURACY</Text>
-                <Text style={[styles.scoreNum, { color: '#f2bf4b' }]}>
+                <Text style={[styles.scoreNum, { color: '#06B6D4' }]}>
                   {finishSummary?.accuracy || Math.round((score / questions.length) * 100)}%
                 </Text>
               </View>
@@ -282,10 +281,7 @@ export default function RapidFireScreen() {
   }
 
   // 4. Active Question View
-  const optionsObj = currentQ?.options || {};
-  const optionsList = Array.isArray(optionsObj)
-    ? optionsObj.map((opt, i) => ({ key: String.fromCharCode(65 + i), text: String(opt) }))
-    : Object.entries(optionsObj).map(([k, v]) => ({ key: k.toUpperCase(), text: String(v) }));
+  const optionsList = normalizeOptions(currentQ?.options);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -327,7 +323,7 @@ export default function RapidFireScreen() {
           <Text style={styles.qSubjectTag}>
             {currentQ?.subject} {currentQ?.chapter ? `// ${currentQ.chapter}` : ''}
           </Text>
-          <Text style={styles.qText}>{currentQ?.question}</Text>
+          <Text style={styles.qText}>{formatMathText(currentQ?.question)}</Text>
         </BrutalistCard>
 
         {/* Options Grid */}
@@ -356,14 +352,14 @@ export default function RapidFireScreen() {
             return (
               <TouchableOpacity
                 key={opt.key}
-                style={btnStyle}
+                style={btnStyle as any}
                 disabled={!!selectedAnswer || answering}
                 onPress={() => handleSelectOption(opt.key)}
               >
                 <View style={styles.optBadge}>
                   <Text style={styles.optKey}>{opt.key}</Text>
                 </View>
-                <Text style={textStyle}>{opt.text}</Text>
+                <Text style={textStyle as any}>{opt.text}</Text>
               </TouchableOpacity>
             );
           })}
@@ -371,7 +367,7 @@ export default function RapidFireScreen() {
 
         {/* Immediate Feedback & Solution Box */}
         {answerFeedback && (
-          <View style={styles.feedbackBox}>
+          <View style={[styles.feedbackBox, answerFeedback.isCorrect ? styles.fbGreen : styles.fbRed]}>
             <View style={styles.feedbackHeader}>
               <Text style={[styles.feedbackTitle, answerFeedback.isCorrect ? styles.txtGreen : styles.txtRed]}>
                 {answerFeedback.isCorrect ? '✓ CORRECT! +10 XP' : '✗ INCORRECT'}
@@ -379,7 +375,7 @@ export default function RapidFireScreen() {
             </View>
 
             {answerFeedback.solution && (
-              <Text style={styles.solutionText}>Solution: {answerFeedback.solution}</Text>
+              <Text style={styles.solutionText}>Solution: {formatMathText(answerFeedback.solution)}</Text>
             )}
 
             <TouchableOpacity style={styles.nextBtn} onPress={handleNextQuestion}>
@@ -397,7 +393,7 @@ export default function RapidFireScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#310004',
+    backgroundColor: '#0B0F19',
   },
   center: {
     justifyContent: 'center',
@@ -405,38 +401,38 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   topBar: {
-    height: 48,
+    height: 52,
     borderBottomWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#310004',
+    backgroundColor: '#111827',
   },
   backBtn: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#f2bf4b',
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#06B6D4',
     fontWeight: '700',
   },
   title: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#ffdad8',
-    fontWeight: '700',
-    letterSpacing: 1.2,
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#F3F4F6',
+    fontWeight: '800',
+    letterSpacing: 1,
   },
   scrollContent: {
     padding: 16,
     paddingBottom: 40,
   },
   setupHeading: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 10,
-    color: '#f2bf4b',
-    letterSpacing: 1.5,
-    fontWeight: '700',
+    fontFamily: 'System',
+    fontSize: 11,
+    color: '#06B6D4',
+    letterSpacing: 1.2,
+    fontWeight: '800',
     marginTop: 16,
     marginBottom: 8,
   },
@@ -447,23 +443,24 @@ const styles = StyleSheet.create({
   modeCard: {
     flex: 1,
     paddingVertical: 14,
-    backgroundColor: '#270003',
+    backgroundColor: '#111827',
     borderWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
+    borderRadius: 12,
     alignItems: 'center',
   },
   modeCardActive: {
-    backgroundColor: '#f2bf4b',
-    borderColor: '#ffffff',
+    backgroundColor: '#06B6D4',
+    borderColor: '#22D3EE',
   },
   modeText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 10,
-    color: '#ffdad8',
+    fontFamily: 'System',
+    fontSize: 11,
+    color: '#F3F4F6',
     fontWeight: '700',
   },
   modeTextActive: {
-    color: '#130f16',
+    color: '#0B0F19',
   },
   subjectRow: {
     flexDirection: 'row',
@@ -473,21 +470,22 @@ const styles = StyleSheet.create({
   subjectBtn: {
     paddingVertical: 10,
     paddingHorizontal: 14,
-    backgroundColor: '#270003',
+    backgroundColor: '#111827',
     borderWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
+    borderRadius: 10,
   },
   subjectBtnActive: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#F3F4F6',
   },
   subjectBtnText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 10,
-    color: '#cdc6b7',
+    fontFamily: 'System',
+    fontSize: 11,
+    color: '#94A3B8',
     fontWeight: '700',
   },
   subjectBtnTextActive: {
-    color: '#130f16',
+    color: '#0B0F19',
   },
   countRow: {
     flexDirection: 'row',
@@ -496,47 +494,50 @@ const styles = StyleSheet.create({
   countBtn: {
     flex: 1,
     paddingVertical: 12,
-    backgroundColor: '#270003',
+    backgroundColor: '#111827',
     borderWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
+    borderRadius: 12,
     alignItems: 'center',
   },
   countBtnActive: {
-    backgroundColor: '#f2bf4b',
+    backgroundColor: '#F59E0B',
+    borderColor: '#FBBF24',
   },
   countBtnText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 12,
-    color: '#ffdad8',
+    fontFamily: 'System',
+    fontSize: 13,
+    color: '#F3F4F6',
     fontWeight: '700',
   },
   countBtnTextActive: {
-    color: '#130f16',
+    color: '#0B0F19',
   },
   startDock: {
     marginTop: 28,
   },
   loadingText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#f2bf4b',
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#06B6D4',
     marginTop: 16,
     textAlign: 'center',
+    fontWeight: '700',
   },
   gameHeader: {
-    height: 48,
+    height: 52,
     borderBottomWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#270003',
+    backgroundColor: '#111827',
   },
   quitBtn: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#ffb4ab',
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#EF4444',
     fontWeight: '700',
   },
   headerStats: {
@@ -544,24 +545,24 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   streakBadge: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#f2bf4b',
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#F59E0B',
     fontWeight: '800',
   },
   xpBadge: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#ffffff',
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#06B6D4',
     fontWeight: '800',
   },
   progressTrack: {
     height: 4,
-    backgroundColor: '#270003',
+    backgroundColor: '#1F2937',
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#f2bf4b',
+    backgroundColor: '#06B6D4',
   },
   gameContent: {
     padding: 16,
@@ -574,9 +575,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   qCounterText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 10,
-    color: '#cdc6b7',
+    fontFamily: 'System',
+    fontSize: 11,
+    color: '#94A3B8',
     fontWeight: '700',
   },
   actionIcons: {
@@ -584,31 +585,33 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   iconBtn: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderWidth: 1,
-    borderColor: '#4b463b',
-    backgroundColor: '#270003',
+    borderColor: '#334155',
+    backgroundColor: '#1E293B',
+    borderRadius: 8,
   },
   iconBtnText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 9,
-    color: '#f2bf4b',
+    fontFamily: 'System',
+    fontSize: 10,
+    color: '#06B6D4',
     fontWeight: '700',
   },
   qSubjectTag: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 10,
-    color: '#f2bf4b',
-    fontWeight: '700',
+    fontFamily: 'System',
+    fontSize: 11,
+    color: '#06B6D4',
+    fontWeight: '800',
     marginBottom: 6,
+    textTransform: 'uppercase',
   },
   qText: {
-    fontFamily: 'Epilogue, sans-serif',
-    fontSize: 16,
+    fontFamily: 'System',
+    fontSize: 17,
     fontWeight: '700',
-    color: '#ffdad8',
-    lineHeight: 24,
+    color: '#F3F4F6',
+    lineHeight: 26,
   },
   optionsContainer: {
     marginTop: 16,
@@ -617,104 +620,114 @@ const styles = StyleSheet.create({
   optionBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
-    backgroundColor: '#270003',
+    padding: 14,
+    backgroundColor: '#111827',
     borderWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
+    borderRadius: 12,
   },
   optionCorrect: {
-    backgroundColor: '#1b371b',
-    borderColor: '#4CAF50',
+    backgroundColor: '#064E3B',
+    borderColor: '#10B981',
   },
   optionIncorrect: {
-    backgroundColor: '#480009',
-    borderColor: '#F44336',
+    backgroundColor: '#7F1D1D',
+    borderColor: '#EF4444',
   },
   optBadge: {
-    width: 28,
-    height: 28,
+    width: 32,
+    height: 32,
     borderWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#374151',
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
-    backgroundColor: '#310004',
+    backgroundColor: '#1F2937',
   },
   optKey: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 12,
-    color: '#f2bf4b',
+    fontFamily: 'System',
+    fontSize: 13,
+    color: '#06B6D4',
     fontWeight: '800',
   },
   optionText: {
     flex: 1,
-    fontFamily: 'Lexend, sans-serif',
-    fontSize: 13,
-    color: '#ffdad8',
-    lineHeight: 18,
+    fontFamily: 'System',
+    fontSize: 14,
+    color: '#E5E7EB',
+    lineHeight: 20,
   },
   optionTextCorrect: {
-    color: '#81C784',
+    color: '#A7F3D0',
     fontWeight: '700',
   },
   optionTextIncorrect: {
-    color: '#E57373',
+    color: '#FECACA',
     fontWeight: '700',
   },
   feedbackBox: {
     marginTop: 20,
-    padding: 14,
+    padding: 16,
     borderWidth: 1,
-    borderColor: '#4b463b',
-    backgroundColor: '#270003',
+    borderRadius: 12,
+  },
+  fbGreen: {
+    backgroundColor: '#064E3B',
+    borderColor: '#10B981',
+  },
+  fbRed: {
+    backgroundColor: '#7F1D1D',
+    borderColor: '#EF4444',
   },
   feedbackHeader: {
     marginBottom: 6,
   },
   feedbackTitle: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 16,
     fontWeight: '900',
-    letterSpacing: 0.5,
   },
   txtGreen: {
-    color: '#4CAF50',
+    color: '#34D399',
   },
   txtRed: {
-    color: '#F44336',
+    color: '#FCA5A5',
   },
   solutionText: {
-    fontFamily: 'Lexend, sans-serif',
-    fontSize: 12,
-    color: '#cdc6b7',
+    fontFamily: 'System',
+    fontSize: 13,
+    color: '#F3F4F6',
     marginVertical: 8,
-    lineHeight: 18,
+    lineHeight: 20,
   },
   nextBtn: {
-    height: 42,
-    backgroundColor: '#f2bf4b',
+    height: 44,
+    backgroundColor: '#06B6D4',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
   },
   nextBtnText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#130f16',
+    fontFamily: 'System',
+    fontSize: 12,
+    color: '#0B0F19',
     fontWeight: '900',
-    letterSpacing: 1,
+    letterSpacing: 0.8,
   },
   finishedCard: {
-    padding: 20,
-    backgroundColor: '#270003',
+    padding: 24,
+    backgroundColor: '#111827',
     borderWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#1F2937',
+    borderRadius: 16,
   },
   finishedTitle: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 24,
     fontWeight: '900',
-    color: '#f2bf4b',
+    color: '#F59E0B',
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -726,41 +739,45 @@ const styles = StyleSheet.create({
   scoreBox: {
     flex: 1,
     padding: 14,
-    backgroundColor: '#310004',
+    backgroundColor: '#1F2937',
     borderWidth: 1,
-    borderColor: '#4b463b',
+    borderColor: '#374151',
+    borderRadius: 12,
     alignItems: 'center',
   },
   scoreLabel: {
-    fontFamily: 'Lexend, monospace',
+    fontFamily: 'System',
     fontSize: 10,
-    color: '#cdc6b7',
+    color: '#94A3B8',
+    fontWeight: '700',
   },
   scoreNum: {
-    fontFamily: 'Epilogue, sans-serif',
+    fontFamily: 'System',
     fontSize: 28,
     fontWeight: '900',
-    color: '#ffffff',
+    color: '#F3F4F6',
     marginTop: 4,
   },
   xpCard: {
-    padding: 14,
-    backgroundColor: '#382b00',
+    padding: 16,
+    backgroundColor: '#451A03',
     borderWidth: 1,
-    borderColor: '#f2bf4b',
+    borderColor: '#F59E0B',
+    borderRadius: 12,
     alignItems: 'center',
     marginBottom: 20,
   },
   xpLabel: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 10,
-    color: '#f2bf4b',
+    fontFamily: 'System',
+    fontSize: 11,
+    color: '#FBBF24',
+    fontWeight: '800',
   },
   xpNum: {
-    fontFamily: 'Epilogue, sans-serif',
-    fontSize: 24,
+    fontFamily: 'System',
+    fontSize: 26,
     fontWeight: '900',
-    color: '#ffffff',
+    color: '#FFFFFF',
     marginTop: 2,
   },
   btnStack: {
