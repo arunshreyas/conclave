@@ -7,12 +7,19 @@ datasource db {
 }
 
 model User {
-  id           String       @id @default(uuid())
-  email        String       @unique
-  passwordHash String
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  profile      UserProfile?
+  id                  String               @id @default(uuid())
+  email               String               @unique
+  passwordHash        String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  profile             UserProfile?
+  gamification        GamificationProfile?
+  attempts            QuestionAttempt[]
+  quizSessions        QuizSession[]
+  papers              Paper[]
+  paperAttempts       PaperAttempt[]
+  savedQuestions      SavedQuestion[]
+  documents           Document[]
 }
 
 model UserProfile {
@@ -27,6 +34,157 @@ model UserProfile {
   updatedAt DateTime  @updatedAt
   userId    String    @unique
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GamificationProfile {
+  id            String    @id @default(uuid())
+  userId        String    @unique
+  xp            Int       @default(0)
+  level         Int       @default(1)
+  currentStreak Int       @default(0)
+  longestStreak Int       @default(0)
+  lastActiveDate DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model QuestionAttempt {
+  id             String   @id @default(uuid())
+  userId         String
+  questionId     String   @db.Uuid
+  selectedAnswer String
+  correctAnswer  String
+  isCorrect      Boolean
+  timeTakenSec   Int      @default(0)
+  mode           String   @default("RAPID_FIRE") // RAPID_FIRE | PAPER | PRACTICE
+  subject        String
+  chapter        String?
+  topic          String?
+  difficulty     String?
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, subject])
+  @@index([userId, isCorrect])
+}
+
+model QuizSession {
+  id             String                @id @default(uuid())
+  userId         String
+  mode           String                @default("RAPID_FIRE") // RAPID_FIRE | WEAK_TOPICS | MIXED
+  subject        String?
+  topic          String?
+  totalQuestions Int
+  score          Int                   @default(0)
+  xpEarned       Int                   @default(0)
+  streakMax      Int                   @default(0)
+  status         String                @default("IN_PROGRESS") // IN_PROGRESS | COMPLETED
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  user           User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions      QuizSessionQuestion[]
+
+  @@index([userId])
+}
+
+model QuizSessionQuestion {
+  id           String      @id @default(uuid())
+  sessionId    String
+  questionId   String      @db.Uuid
+  orderIndex   Int
+  userAnswer   String?
+  isCorrect    Boolean?
+  timeTakenSec Int?
+  session      QuizSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, orderIndex])
+}
+
+model Paper {
+  id              String         @id @default(uuid())
+  userId          String
+  title           String
+  subject         String?
+  chapter         String?
+  durationMinutes Int            @default(45)
+  totalQuestions  Int            @default(30)
+  difficulty      String         @default("MIXED")
+  syllabusTopics  String[]
+  createdAt       DateTime       @default(now())
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions       PaperQuestion[]
+  attempts        PaperAttempt[]
+
+  @@index([userId])
+}
+
+model PaperQuestion {
+  id         String   @id @default(uuid())
+  paperId    String
+  questionId String   @db.Uuid
+  orderIndex Int
+  marks      Int      @default(4)
+  paper      Paper    @relation(fields: [paperId], references: [id], onDelete: Cascade)
+
+  @@unique([paperId, orderIndex])
+}
+
+model PaperAttempt {
+  id           String   @id @default(uuid())
+  paperId      String
+  userId       String
+  score        Int      @default(0)
+  totalMarks   Int      @default(0)
+  accuracy     Float    @default(0)
+  timeSpentSec Int      @default(0)
+  answersJson  Json?
+  breakdown    Json?
+  createdAt    DateTime @default(now())
+  paper        Paper    @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model SavedQuestion {
+  id         String   @id @default(uuid())
+  userId     String
+  questionId String   @db.Uuid
+  notes      String?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+}
+
+model Document {
+  id                String          @id @default(uuid())
+  userId            String
+  title             String
+  fileUrl           String?
+  fileType          String          @default("pdf") // pdf | txt | image
+  docType           String          @default("NOTES") // NOTES | SYLLABUS
+  status            String          @default("PROCESSED") // PENDING | PROCESSING | PROCESSED | FAILED
+  extractedText     String?         @db.Text
+  extractedSyllabus Json?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chunks            DocumentChunk[]
+
+  @@index([userId])
+}
+
+model DocumentChunk {
+  id         String                 @id @default(uuid())
+  documentId String
+  content    String                 @db.Text
+  chunkIndex Int
+  embedding  Unsupported("vector")?
+  document   Document               @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

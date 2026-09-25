@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,84 +7,69 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
-
-const topics = [
-  {
-    id: 'p1',
-    subject: 'PHYSICS',
-    code: 'PHY-102',
-    title: 'Rotational Motion & Rigid Body Dynamics',
-    questions: 45,
-    tag: 'JEE ADVANCED',
-    highYield: true,
-  },
-  {
-    id: 'c1',
-    subject: 'CHEMISTRY',
-    code: 'CHE-204',
-    title: 'Organic Mechanisms & Reaction Pathways',
-    questions: 60,
-    tag: 'JEE MAIN + ADV',
-    highYield: true,
-  },
-  {
-    id: 'm1',
-    subject: 'MATHEMATICS',
-    code: 'MAT-301',
-    title: 'Definite Integration & Differential Equations',
-    questions: 50,
-    tag: 'JEE ADVANCED',
-    highYield: false,
-  },
-  {
-    id: 'p2',
-    subject: 'PHYSICS',
-    code: 'PHY-201',
-    title: 'Electromagnetic Induction & AC Circuits',
-    questions: 40,
-    tag: 'JEE MAIN',
-    highYield: false,
-  },
-  {
-    id: 'c2',
-    subject: 'CHEMISTRY',
-    code: 'CHE-105',
-    title: 'Chemical Equilibrium & Thermodynamics',
-    questions: 35,
-    tag: 'JEE MAIN',
-    highYield: true,
-  },
-];
+import { BrutalistBadge, BrutalistCard, BrutalistButton } from '@/components/brutalist-ui';
+import { api } from '@/services/api';
 
 export default function PracticeBrowserScreen() {
   const router = useRouter();
   const [filter, setFilter] = useState('ALL');
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [chaptersList, setChaptersList] = useState<any[]>([]);
 
-  const filteredTopics = topics.filter((t) => {
-    const matchesFilter = filter === 'ALL' || t.subject === filter;
-    const matchesSearch = t.title.toLowerCase().includes(search.toLowerCase()) ||
-                          t.code.toLowerCase().includes(search.toLowerCase());
-    return matchesFilter && matchesSearch;
+  useEffect(() => {
+    loadMetadata();
+  }, []);
+
+  const loadMetadata = async () => {
+    try {
+      setLoading(true);
+      const data = await api.getSubjectsMetadata();
+      setChaptersList(data.chapters || []);
+    } catch (err) {
+      console.warn('Metadata error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filtered = chaptersList.filter((c) => {
+    const matchesSubj = filter === 'ALL' || c.subject?.toUpperCase() === filter;
+    const matchesSearch = (c.chapter || '').toLowerCase().includes(search.toLowerCase());
+    return matchesSubj && matchesSearch;
   });
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Header */}
       <View style={styles.topBar}>
-        <Text style={styles.title}>PRACTICE BROWSER // MATRIX</Text>
-        <Text style={styles.subTitle}>5 MODULES</Text>
+        <Text style={styles.title}>PRACTICE BROWSER // PYQ MATRIX</Text>
+        <Text style={styles.subTitle}>{filtered.length} MODULES</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Quick Launch Header Buttons */}
+        <View style={styles.quickLaunchBox}>
+          <BrutalistButton
+            title="🔥 LAUNCH SPEED DRILL (RAPID FIRE)"
+            variant="primary"
+            onPress={() => router.push('/rapid-fire')}
+          />
+          <BrutalistButton
+            title="📝 GENERATE CUSTOM EXAM PAPER"
+            variant="secondary"
+            onPress={() => router.push('/paper-exam')}
+          />
+        </View>
+
         {/* Search Bar */}
         <View style={styles.searchBox}>
           <TextInput
             style={styles.searchInput}
-            placeholder="SEARCH TOPIC OR SPEC CODE (e.g. PHY-102)..."
+            placeholder="SEARCH CHAPTER OR TOPIC (e.g. Rotational, Optics)..."
             placeholderTextColor="#969083"
             value={search}
             onChangeText={setSearch}
@@ -97,50 +82,48 @@ export default function PracticeBrowserScreen() {
             <TouchableOpacity
               key={subj}
               onPress={() => setFilter(subj)}
-              style={[
-                styles.filterTab,
-                filter === subj && styles.filterTabActive,
-              ]}
+              style={[styles.filterTab, filter === subj && styles.filterTabActive]}
             >
-              <Text
-                style={[
-                  styles.filterText,
-                  filter === subj && styles.filterTextActive,
-                ]}
-              >
-                {subj}
-              </Text>
+              <Text style={[styles.filterText, filter === subj && styles.filterTextActive]}>{subj}</Text>
             </TouchableOpacity>
           ))}
         </View>
 
         {/* Topic Matrix Grid */}
-        <View style={styles.topicsGrid}>
-          {filteredTopics.map((topic) => (
-            <BrutalistCard key={topic.id} highlight={topic.highYield}>
-              <View style={styles.cardTop}>
-                <BrutalistBadge label={topic.code} variant="code" />
-                <View style={styles.tagRow}>
-                  {topic.highYield && (
-                    <BrutalistBadge label="HIGH YIELD" variant="gold" />
-                  )}
-                  <BrutalistBadge label={topic.tag} variant="live" />
+        {loading ? (
+          <ActivityIndicator color="#f2bf4b" style={{ marginVertical: 20 }} />
+        ) : filtered.length === 0 ? (
+          <View style={styles.emptyCard}>
+            <Text style={styles.emptyText}>No matching PYQ chapters found.</Text>
+          </View>
+        ) : (
+          <View style={styles.topicsGrid}>
+            {filtered.map((item, idx) => (
+              <BrutalistCard key={`${item.subject}-${item.chapter}-${idx}`}>
+                <View style={styles.cardTop}>
+                  <BrutalistBadge label={item.subject?.toUpperCase()} variant="gold" />
+                  <BrutalistBadge label={`${item.count} PYQs`} variant="live" />
                 </View>
-              </View>
 
-              <Text style={styles.topicSubject}>{topic.subject}</Text>
-              <Text style={styles.topicTitle}>{topic.title}</Text>
-              <Text style={styles.questionCount}>{topic.questions} PRACTICE PROBLEMS</Text>
+                <Text style={styles.topicSubject}>{item.subject}</Text>
+                <Text style={styles.topicTitle}>{item.chapter || 'General Practice Set'}</Text>
+                <Text style={styles.questionCount}>{item.count} Questions in Vector Database</Text>
 
-              <TouchableOpacity
-                style={styles.solveBtn}
-                onPress={() => router.push('/test')}
-              >
-                <Text style={styles.solveBtnText}>START SOLVING MODULE →</Text>
-              </TouchableOpacity>
-            </BrutalistCard>
-          ))}
-        </View>
+                <TouchableOpacity
+                  style={styles.solveBtn}
+                  onPress={() =>
+                    router.push({
+                      pathname: '/rapid-fire',
+                      params: { mode: 'RAPID_FIRE', subject: item.subject, topic: item.chapter },
+                    })
+                  }
+                >
+                  <Text style={styles.solveBtnText}>SOLVE THIS MODULE →</Text>
+                </TouchableOpacity>
+              </BrutalistCard>
+            ))}
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -177,6 +160,10 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 16,
     paddingBottom: 40,
+  },
+  quickLaunchBox: {
+    gap: 8,
+    marginBottom: 16,
   },
   searchBox: {
     marginBottom: 12,
@@ -225,10 +212,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  tagRow: {
-    flexDirection: 'row',
-    gap: 4,
-  },
   topicSubject: {
     fontFamily: 'Lexend, monospace',
     fontSize: 10,
@@ -263,5 +246,17 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: '800',
     letterSpacing: 1,
+  },
+  emptyCard: {
+    padding: 24,
+    backgroundColor: '#270003',
+    borderWidth: 1,
+    borderColor: '#4b463b',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 11,
+    color: '#cdc6b7',
   },
 });

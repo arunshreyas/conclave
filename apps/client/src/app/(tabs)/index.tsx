@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,27 +6,59 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { BrutalistButton, BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
 import { useAuthStatus } from '@/hooks/useAuthStatus';
 import { authService } from '@/services/auth.service';
+import { api } from '@/services/api';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { isSignedIn, profile: userProfile, refetch } = useAuthStatus();
+  const { isSignedIn, profile: userProfile, refetch: refetchAuth } = useAuthStatus();
+
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [dashData, setDashData] = useState<any | null>(null);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      loadDashboard();
+    } else {
+      setLoading(false);
+    }
+  }, [isSignedIn]);
+
+  const loadDashboard = async () => {
+    try {
+      const data = await api.getDashboard();
+      setDashData(data);
+    } catch (err: any) {
+      console.warn('Dashboard load error:', err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    loadDashboard();
+  };
 
   const handleMenuPress = async () => {
     if (isSignedIn) {
       await authService.signOut();
-      await refetch();
+      await refetchAuth();
       router.replace('/welcome');
     } else {
       router.push('/welcome');
     }
   };
 
-  const userNameDisplay = userProfile?.name?.toUpperCase() || 'STUDENT';
+  const userNameDisplay = dashData?.userName || userProfile?.name?.toUpperCase() || 'STUDENT';
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,121 +68,137 @@ export default function HomeScreen() {
           <Text style={styles.terminalIcon}>&gt;_</Text>
           <Text style={styles.headerTitle}>CRACKR</Text>
         </View>
-        <TouchableOpacity
-          style={styles.menuBtn}
-          onPress={handleMenuPress}
-        >
-          <Text style={styles.menuBtnText}>{isSignedIn ? 'LOGOUT' : 'MENU'}</Text>
-        </TouchableOpacity>
+        <View style={styles.headerRight}>
+          <TouchableOpacity style={styles.iconBtn} onPress={() => router.push('/settings')}>
+            <Text style={styles.iconBtnText}>⚙️ SETTINGS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuBtn} onPress={handleMenuPress}>
+            <Text style={styles.menuBtnText}>{isSignedIn ? 'LOGOUT' : 'MENU'}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Identity Module */}
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#f2bf4b" />}
+      >
+        {/* Identity & Status Banner */}
         <View style={styles.heroSection}>
           <View style={styles.sysRow}>
-            <Text style={styles.sysLogText}>[SYS_LOG // COHORT 2025]</Text>
-            <BrutalistBadge label="SYS.LIVE" variant="live" />
+            <Text style={styles.sysLogText}>[SYS_LOG // {dashData?.grade || 'CLASS 12'}]</Text>
+            <BrutalistBadge label={`LVL ${dashData?.level || 1}`} variant="live" />
           </View>
-          <Text style={styles.heroTitle}>READY FOR JEE, {userNameDisplay}.</Text>
+          <Text style={styles.heroTitle}>WELCOME BACK, {userNameDisplay}.</Text>
           <Text style={styles.heroSub}>
-            Phase: Final Sprint • Target: IIT Bombay [CSE] • 41 Days
+            Stream: {dashData?.stream || 'JEE Main'} • School: {dashData?.school || 'Crackr Platform'}
           </Text>
         </View>
 
-        {/* Metrics Grid */}
+        {/* Real Stats Grid */}
         <View style={styles.metricsGrid}>
           {/* Day Streak */}
           <View style={styles.metricCard}>
             <Text style={styles.metricLabel}>DAY STREAK</Text>
-            <Text style={styles.metricValue}>14</Text>
-            <Text style={styles.metricSub}>TOP 2% CONSISTENCY</Text>
+            <Text style={styles.metricValue}>🔥 {dashData?.streak ?? 0}</Text>
+            <Text style={styles.metricSub}>BEST: {dashData?.longestStreak ?? 0} DAYS</Text>
           </View>
 
-          {/* Accuracy */}
+          {/* XP Score */}
+          <View style={styles.metricCard}>
+            <Text style={styles.metricLabel}>TOTAL XP</Text>
+            <Text style={[styles.metricValue, { color: '#ffffff' }]}>⭐ {dashData?.xp ?? 0}</Text>
+            <Text style={styles.metricSub}>LEVEL {dashData?.level || 1} MASTERY</Text>
+          </View>
+
+          {/* Questions Solved & Accuracy */}
           <View style={styles.metricCard}>
             <Text style={styles.metricLabel}>ACCURACY</Text>
-            <Text style={[styles.metricValue, { color: '#ffffff' }]}>88%</Text>
-            <Text style={styles.metricSub}>+4.2% THIS WEEK</Text>
+            <Text style={[styles.metricValue, { color: '#f2bf4b' }]}>{dashData?.overallAccuracy ?? 0}%</Text>
+            <Text style={styles.metricSub}>{dashData?.totalQuestionsSolved ?? 0} SOLVED</Text>
           </View>
         </View>
 
-        {/* Quick Launcher Dock */}
+        {/* Weak Topic Alert Box */}
+        {dashData?.weakTopics && dashData.weakTopics.length > 0 && (
+          <View style={styles.weakAlertBox}>
+            <View style={styles.weakAlertHeader}>
+              <Text style={styles.weakAlertTitle}>⚠ ADAPTIVE WEAK TOPIC DETECTED</Text>
+              <BrutalistBadge label={`${dashData.weakTopics[0].accuracy}% ACCURACY`} variant="code" />
+            </View>
+            <Text style={styles.weakAlertTopic}>{dashData.weakTopics[0].topic}</Text>
+            <Text style={styles.weakAlertDesc}>
+              Performance history indicates lower accuracy in {dashData.weakTopics[0].topic}. Solve a 10-question Rapid Fire set to improve!
+            </Text>
+            <TouchableOpacity
+              style={styles.weakAlertBtn}
+              onPress={() =>
+                router.push({
+                  pathname: '/rapid-fire',
+                  params: { mode: 'WEAK_TOPICS', topic: dashData.weakTopics[0].topic },
+                })
+              }
+            >
+              <Text style={styles.weakAlertBtnText}>PRACTICE WEAK TOPIC NOW →</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Quick Practice Launcher Dock */}
         <View style={styles.launchDock}>
-          <Text style={styles.sectionHeader}>{'// QUICK PRACTICE LAUNCHER'}</Text>
+          <Text style={styles.sectionHeader}>{'// PRODUCT SYSTEM DOCK'}</Text>
           <BrutalistButton
-            title="LAUNCH CRACKR SPEED DRILL"
+            title="🔥 LAUNCH RAPID FIRE DRILL"
             variant="secondary"
-            onPress={() => router.push('/crackr')}
+            onPress={() => router.push('/rapid-fire')}
           />
           <BrutalistButton
-            title="START INTERACTIVE VOICE TEST"
+            title="📝 GENERATE CUSTOM EXAM PAPER"
             variant="primary"
-            onPress={() => router.push('/test')}
+            onPress={() => router.push('/paper-exam')}
           />
           <BrutalistButton
-            title="SAHARA AI VOICE TUTOR"
+            title="📚 UPLOAD SYLLABUS & NOTES"
             variant="accent"
-            onPress={() => router.push('/sahara')}
+            onPress={() => router.push('/upload')}
+          />
+          <BrutalistButton
+            title="🔖 BOOKMARKS & QUESTION HISTORY"
+            variant="outline"
+            onPress={() => router.push('/history')}
           />
         </View>
 
-        {/* Subject Modules */}
+        {/* Subject Mastery Matrix */}
         <View style={styles.modulesSection}>
-          <Text style={styles.sectionHeader}>{'// JEE SUBJECT MASTERY MATRIX'}</Text>
+          <Text style={styles.sectionHeader}>{'// SUBJECT MASTERY MATRIX'}</Text>
 
-          {/* Physics Card */}
-          <BrutalistCard>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTag}>01 // PHYSICS</Text>
-              <Text style={styles.cardPct}>84%</Text>
-            </View>
-            <Text style={styles.cardTitle}>Rotational Dynamics & Electrodynamics</Text>
-            <View style={styles.progressBarBg}>
-              <View style={[styles.progressBarFill, { width: '84%' }]} />
-            </View>
-            <TouchableOpacity
-              style={styles.cardBtn}
-              onPress={() => router.push('/crackr')}
-            >
-              <Text style={styles.cardBtnText}>PRACTICE MODULE →</Text>
-            </TouchableOpacity>
-          </BrutalistCard>
-
-          {/* Chemistry Card */}
-          <BrutalistCard>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTag}>02 // CHEMISTRY</Text>
-              <Text style={styles.cardPct}>92%</Text>
-            </View>
-            <Text style={styles.cardTitle}>Organic Reaction Mechanisms & Coordination</Text>
-            <View style={styles.progressBarBg}>
-              <View style={[styles.progressBarFill, { width: '92%', backgroundColor: '#f2bf4b' }]} />
-            </View>
-            <TouchableOpacity
-              style={styles.cardBtn}
-              onPress={() => router.push('/crackr')}
-            >
-              <Text style={styles.cardBtnText}>PRACTICE MODULE →</Text>
-            </TouchableOpacity>
-          </BrutalistCard>
-
-          {/* Mathematics Card */}
-          <BrutalistCard>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTag}>03 // MATHEMATICS</Text>
-              <Text style={styles.cardPct}>78%</Text>
-            </View>
-            <Text style={styles.cardTitle}>Integral Calculus & Vectors 3D</Text>
-            <View style={styles.progressBarBg}>
-              <View style={[styles.progressBarFill, { width: '78%' }]} />
-            </View>
-            <TouchableOpacity
-              style={styles.cardBtn}
-              onPress={() => router.push('/crackr')}
-            >
-              <Text style={styles.cardBtnText}>PRACTICE MODULE →</Text>
-            </TouchableOpacity>
-          </BrutalistCard>
+          {(dashData?.subjectPerformance || [
+            { subject: 'Physics', accuracy: 0, questionsSolved: 0 },
+            { subject: 'Chemistry', accuracy: 0, questionsSolved: 0 },
+            { subject: 'Mathematics', accuracy: 0, questionsSolved: 0 },
+          ]).map((subj: any, idx: number) => (
+            <BrutalistCard key={subj.subject}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTag}>0{idx + 1} // {subj.subject.toUpperCase()}</Text>
+                <Text style={styles.cardPct}>{subj.accuracy}%</Text>
+              </View>
+              <Text style={styles.cardTitle}>{subj.subject} PYQ Question Bank Mastery</Text>
+              <View style={styles.progressBarBg}>
+                <View style={[styles.progressBarFill, { width: `${Math.max(5, subj.accuracy)}%` }]} />
+              </View>
+              <TouchableOpacity
+                style={styles.cardBtn}
+                onPress={() =>
+                  router.push({
+                    pathname: '/rapid-fire',
+                    params: { mode: 'RAPID_FIRE', subject: subj.subject },
+                  })
+                }
+              >
+                <Text style={styles.cardBtnText}>PRACTICE {subj.subject.toUpperCase()} →</Text>
+              </TouchableOpacity>
+            </BrutalistCard>
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -190,6 +238,22 @@ const styles = StyleSheet.create({
     color: '#ffdad8',
     letterSpacing: 1,
   },
+  headerRight: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  iconBtn: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderWidth: 1,
+    borderColor: '#4b463b',
+  },
+  iconBtnText: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#f2bf4b',
+    fontWeight: '700',
+  },
   menuBtn: {
     paddingHorizontal: 10,
     paddingVertical: 4,
@@ -226,7 +290,7 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     fontFamily: 'Epilogue, sans-serif',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '900',
     color: '#ffdad8',
     textTransform: 'uppercase',
@@ -246,32 +310,76 @@ const styles = StyleSheet.create({
   },
   metricCard: {
     flex: 1,
-    padding: 14,
+    padding: 10,
     backgroundColor: '#270003',
     borderRightWidth: 1,
     borderColor: '#4b463b',
   },
   metricLabel: {
     fontFamily: 'Lexend, monospace',
-    fontSize: 10,
+    fontSize: 9,
     color: '#cdc6b7',
-    letterSpacing: 1,
+    letterSpacing: 0.5,
   },
   metricValue: {
     fontFamily: 'Epilogue, sans-serif',
-    fontSize: 36,
+    fontSize: 20,
     fontWeight: '900',
     color: '#f2bf4b',
     marginVertical: 4,
   },
   metricSub: {
     fontFamily: 'Lexend, monospace',
-    fontSize: 9,
+    fontSize: 8,
     color: '#969083',
-    letterSpacing: 1,
+  },
+  weakAlertBox: {
+    padding: 14,
+    backgroundColor: '#480009',
+    borderWidth: 1,
+    borderColor: '#F44336',
+    marginBottom: 20,
+  },
+  weakAlertHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  weakAlertTitle: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#ffb4ab',
+    fontWeight: '800',
+  },
+  weakAlertTopic: {
+    fontFamily: 'Epilogue, sans-serif',
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#ffffff',
+    marginBottom: 4,
+  },
+  weakAlertDesc: {
+    fontFamily: 'Lexend, sans-serif',
+    fontSize: 12,
+    color: '#ffdad8',
+    lineHeight: 18,
+    marginBottom: 10,
+  },
+  weakAlertBtn: {
+    paddingVertical: 8,
+    backgroundColor: '#f2bf4b',
+    alignItems: 'center',
+  },
+  weakAlertBtnText: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#130f16',
+    fontWeight: '900',
   },
   launchDock: {
     marginBottom: 24,
+    gap: 8,
   },
   sectionHeader: {
     fontFamily: 'Lexend, monospace',
@@ -282,7 +390,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   modulesSection: {
-    gap: 8,
+    gap: 12,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -303,21 +411,21 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontFamily: 'Epilogue, sans-serif',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '700',
     color: '#ffdad8',
-    marginVertical: 8,
+    marginVertical: 6,
   },
   progressBarBg: {
     height: 6,
     backgroundColor: '#270003',
     borderWidth: 1,
     borderColor: '#4b463b',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f2bf4b',
   },
   cardBtn: {
     alignSelf: 'flex-start',

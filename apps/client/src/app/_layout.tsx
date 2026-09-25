@@ -85,6 +85,11 @@ function RouteGate() {
       <Stack.Screen name="sign-up" options={{ headerShown: false }} />
       <Stack.Screen name="onboarding" options={{ headerShown: false }} />
       <Stack.Screen name="create-profile" options={{ headerShown: false }} />
+      <Stack.Screen name="rapid-fire" options={{ headerShown: false }} />
+      <Stack.Screen name="paper-exam" options={{ headerShown: false }} />
+      <Stack.Screen name="upload" options={{ headerShown: false }} />
+      <Stack.Screen name="history" options={{ headerShown: false }} />
+      <Stack.Screen name="settings" options={{ headerShown: false }} />
       <Stack.Screen name="test" options={{ headerShown: false }} />
       <Stack.Screen name="ai-review" options={{ headerShown: false }} />
       <Stack.Screen name="crackr" options={{ headerShown: false }} />

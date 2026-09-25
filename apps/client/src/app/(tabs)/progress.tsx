@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,19 +6,42 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { BrutalistCard, BrutalistBadge, BrutalistButton } from '@/components/brutalist-ui';
+import { api } from '@/services/api';
 
 export default function ProgressDashboardScreen() {
   const router = useRouter();
+
+  const [loading, setLoading] = useState(true);
+  const [analytics, setAnalytics] = useState<any | null>(null);
+  const [dashboard, setDashboard] = useState<any | null>(null);
+
+  useEffect(() => {
+    loadProgress();
+  }, []);
+
+  const loadProgress = async () => {
+    try {
+      setLoading(true);
+      const [anData, dashData] = await Promise.all([api.getAnalytics(), api.getDashboard()]);
+      setAnalytics(anData);
+      setDashboard(dashData);
+    } catch (err) {
+      console.warn('Progress load error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Header */}
       <View style={styles.topBar}>
         <Text style={styles.title}>PROGRESS DIAGNOSTICS // MATRIX</Text>
-        <BrutalistBadge label="JEE 2025" variant="gold" />
+        <BrutalistBadge label={`ACCURACY ${dashboard?.overallAccuracy || 0}%`} variant="gold" />
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -26,66 +49,72 @@ export default function ProgressDashboardScreen() {
         <View style={styles.metricGrid}>
           <View style={styles.metricBox}>
             <Text style={styles.metricLabel}>OVERALL ACCURACY</Text>
-            <Text style={styles.metricNum}>88%</Text>
-            <Text style={styles.metricSub}>+4.2% THIS WEEK</Text>
+            <Text style={styles.metricNum}>{dashboard?.overallAccuracy || 0}%</Text>
+            <Text style={styles.metricSub}>{dashboard?.totalQuestionsSolved || 0} TOTAL SOLVED</Text>
           </View>
           <View style={styles.metricBox}>
-            <Text style={styles.metricLabel}>SOLVE SPEED</Text>
-            <Text style={[styles.metricNum, { color: '#ffffff' }]}>1.8m</Text>
-            <Text style={styles.metricSub}>PER JEE QUESTION</Text>
+            <Text style={styles.metricLabel}>MASTERY LEVEL</Text>
+            <Text style={[styles.metricNum, { color: '#ffffff' }]}>LVL {dashboard?.level || 1}</Text>
+            <Text style={styles.metricSub}>{dashboard?.xp || 0} XP EARNED</Text>
           </View>
         </View>
 
         {/* Diagnostic Analysis Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>{'// COGNITIVE DIAGNOSTIC BREAKDOWN'}</Text>
+          <Text style={styles.sectionTitle}>{'// COGNITIVE CHAPTER ACCURACY BREAKDOWN'}</Text>
         </View>
 
-        <BrutalistCard highlight>
-          <View style={styles.cardRow}>
-            <Text style={styles.tagText}>CRITICAL FOCUS AREA</Text>
-            <Text style={styles.pctText}>68%</Text>
+        {loading ? (
+          <ActivityIndicator color="#f2bf4b" style={{ marginVertical: 20 }} />
+        ) : !analytics?.topicBreakdown || analytics.topicBreakdown.length === 0 ? (
+          <View style={styles.emptyCard}>
+            <Text style={styles.emptyText}>No diagnostic attempts recorded yet.</Text>
+            <Text style={styles.emptySub}>Complete a Rapid Fire session or Practice paper to see your topic diagnostics!</Text>
+            <TouchableOpacity style={styles.startBtn} onPress={() => router.push('/rapid-fire')}>
+              <Text style={styles.startBtnText}>START RAPID FIRE NOW →</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.topicName}>PHYSICS // Rotational Dynamics</Text>
-          <Text style={styles.diagDesc}>
-            Trap Alert: Miscalculation of moment of inertia about non-centroidal parallel axes.
-          </Text>
-          <TouchableOpacity
-            style={styles.drillBtn}
-            onPress={() => router.push('/crackr')}
-          >
-            <Text style={styles.drillBtnText}>LAUNCH TARGETED DRILL →</Text>
-          </TouchableOpacity>
-        </BrutalistCard>
-
-        <BrutalistCard>
-          <View style={styles.cardRow}>
-            <Text style={styles.tagText}>HIGH ACCURACY DOMAIN</Text>
-            <Text style={[styles.pctText, { color: '#f2bf4b' }]}>92%</Text>
-          </View>
-          <Text style={styles.topicName}>CHEMISTRY // Organic Mechanisms</Text>
-          <Text style={styles.diagDesc}>
-            Strong conceptual mastery of electrophilic addition & stereochemistry.
-          </Text>
-        </BrutalistCard>
-
-        <BrutalistCard>
-          <View style={styles.cardRow}>
-            <Text style={styles.tagText}>MODERATE SPEED AREA</Text>
-            <Text style={[styles.pctText, { color: '#ffdad8' }]}>74%</Text>
-          </View>
-          <Text style={styles.topicName}>MATH // Definite Integration</Text>
-          <Text style={styles.diagDesc}>
-            Average solving time 2.4 minutes. Opportunity to apply substitution shortcuts.
-          </Text>
-        </BrutalistCard>
+        ) : (
+          analytics.topicBreakdown.map((item: any, idx: number) => {
+            const isWeak = item.accuracy < 65;
+            return (
+              <BrutalistCard key={`${item.subject}-${item.chapter}-${idx}`} highlight={isWeak}>
+                <View style={styles.cardRow}>
+                  <Text style={styles.tagText}>
+                    {item.subject.toUpperCase()} // {isWeak ? 'CRITICAL FOCUS AREA ⚠️' : 'HIGH ACCURACY AREA'}
+                  </Text>
+                  <Text style={[styles.pctText, isWeak ? { color: '#F44336' } : { color: '#4CAF50' }]}>
+                    {item.accuracy}%
+                  </Text>
+                </View>
+                <Text style={styles.topicName}>{item.chapter}</Text>
+                <Text style={styles.diagDesc}>
+                  Total Attempts: {item.totalAttempts} • Average solving time: {item.avgTimeSec}s per problem.
+                </Text>
+                {isWeak && (
+                  <TouchableOpacity
+                    style={styles.drillBtn}
+                    onPress={() =>
+                      router.push({
+                        pathname: '/rapid-fire',
+                        params: { mode: 'WEAK_TOPICS', topic: item.chapter },
+                      })
+                    }
+                  >
+                    <Text style={styles.drillBtnText}>LAUNCH TARGETED DRILL →</Text>
+                  </TouchableOpacity>
+                )}
+              </BrutalistCard>
+            );
+          })
+        )}
 
         {/* Action Callout */}
         <View style={styles.actionSection}>
           <BrutalistButton
-            title="LAUNCH FULL ACCURACY SIMULATION"
+            title="GENERATE FULL ACCURACY CUSTOM PAPER"
             variant="secondary"
-            onPress={() => router.push('/test')}
+            onPress={() => router.push('/paper-exam')}
           />
         </View>
       </ScrollView>
@@ -176,7 +205,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Epilogue, sans-serif',
     fontSize: 18,
     fontWeight: '800',
-    color: '#ffb4ab',
   },
   topicName: {
     fontFamily: 'Epilogue, sans-serif',
@@ -208,5 +236,37 @@ const styles = StyleSheet.create({
   },
   actionSection: {
     marginTop: 16,
+  },
+  emptyCard: {
+    padding: 24,
+    backgroundColor: '#270003',
+    borderWidth: 1,
+    borderColor: '#4b463b',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontFamily: 'Epilogue, sans-serif',
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#ffdad8',
+  },
+  emptySub: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 11,
+    color: '#969083',
+    textAlign: 'center',
+    marginTop: 6,
+  },
+  startBtn: {
+    marginTop: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: '#f2bf4b',
+  },
+  startBtnText: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 11,
+    color: '#130f16',
+    fontWeight: '900',
   },
 });

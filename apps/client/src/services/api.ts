@@ -159,4 +159,103 @@ export const api = {
     }
     return response.json();
   },
+
+  // Rapid Fire API
+  async startRapidFire(payload: { mode?: string; subject?: string; topic?: string; questionCount?: number }) {
+    return this.fetchWithAuth('/rapid-fire/start', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async answerRapidFireQuestion(sessionId: string, payload: { questionId: string; selectedAnswer: string; timeTakenSec?: number }) {
+    return this.fetchWithAuth(`/rapid-fire/${sessionId}/answer`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async finishRapidFireSession(sessionId: string) {
+    return this.fetchWithAuth(`/rapid-fire/${sessionId}/finish`, {
+      method: 'POST',
+    });
+  },
+
+  async getRapidFireSession(sessionId: string) {
+    return this.fetchWithAuth(`/rapid-fire/${sessionId}`);
+  },
+
+  // Questions API
+  async getSubjectsMetadata() {
+    return this.fetchWithAuth('/questions/subjects');
+  },
+
+  async getSavedQuestions() {
+    return this.fetchWithAuth('/questions/saved/all');
+  },
+
+  async saveQuestion(questionId: string, notes?: string) {
+    return this.fetchWithAuth(`/questions/${questionId}/save`, {
+      method: 'POST',
+      body: JSON.stringify({ notes }),
+    });
+  },
+
+  async unsaveQuestion(questionId: string) {
+    return this.fetchWithAuth(`/questions/${questionId}/save`, {
+      method: 'DELETE',
+    });
+  },
+
+  // Custom Papers API
+  async generateCustomPaper(payload: { title?: string; subject?: string; chapter?: string; topics?: string[]; difficulty?: string; durationMinutes?: number; totalQuestions?: number }) {
+    return this.fetchWithAuth('/papers/generate', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async getPapers() {
+    return this.fetchWithAuth('/papers');
+  },
+
+  async getPaperDetails(paperId: string) {
+    return this.fetchWithAuth(`/papers/${paperId}`);
+  },
+
+  async submitPaper(paperId: string, payload: { answers: Array<{ questionId: string; selectedAnswer?: string; timeSpentSec?: number }>; totalTimeSpentSec?: number }) {
+    return this.fetchWithAuth(`/papers/${paperId}/submit`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  // Progress & Dashboard API
+  async getDashboard() {
+    return this.fetchWithAuth('/progress/dashboard');
+  },
+
+  async getAnalytics() {
+    return this.fetchWithAuth('/progress/analytics');
+  },
+
+  async getAttempts(limit?: number) {
+    return this.fetchWithAuth(`/progress/attempts${limit ? `?limit=${limit}` : ''}`);
+  },
+
+  // Documents & Notes API
+  async uploadDocument(payload: { title: string; docType?: string; fileType?: string; text?: string; fileUrl?: string }) {
+    return this.fetchWithAuth('/documents', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async getDocuments() {
+    return this.fetchWithAuth('/documents');
+  },
+
+  async getDocumentDetails(documentId: string) {
+    return this.fetchWithAuth(`/documents/${documentId}`);
+  },
 };
