@@ -6,8 +6,10 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  TextInput,
   ActivityIndicator,
   Alert,
+  Image,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import {
@@ -40,6 +42,8 @@ export default function RapidFireScreen() {
 
   // Active question state
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [multiSelected, setMultiSelected] = useState<string[]>([]);
+  const [numericalInput, setNumericalInput] = useState('');
   const [answerFeedback, setAnswerFeedback] = useState<any | null>(null);
   const [answering, setAnswering] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -120,16 +124,16 @@ export default function RapidFireScreen() {
 
   const currentQ = questions[currentIndex];
 
-  const handleSelectOption = async (optionKey: string) => {
+  const submitAnswerPayload = async (answerKey: string) => {
     if (selectedAnswer || answering || !sessionId || !currentQ) return;
 
-    setSelectedAnswer(optionKey);
+    setSelectedAnswer(answerKey);
     setAnswering(true);
 
     try {
       const res = await api.answerRapidFireQuestion(sessionId, {
         questionId: currentQ.questionId,
-        selectedAnswer: optionKey,
+        selectedAnswer: answerKey,
         timeTakenSec: seconds,
       });
 
@@ -144,14 +148,12 @@ export default function RapidFireScreen() {
         setSessionXpEarned((prev) => prev + xpGained);
         setUserXp(res.totalXP || userXp + xpGained);
 
-        // Sound triggers
         if (newStreak >= 3) {
           sfx.playStreak();
         } else {
           sfx.playCorrect();
         }
 
-        // Level Up Trigger
         if (res.level && res.level > userLevel) {
           setUserLevel(res.level);
           setLevelUpPopup(res.level);
@@ -168,16 +170,46 @@ export default function RapidFireScreen() {
     }
   };
 
+  const handleSelectSingleOption = (optionKey: string) => {
+    submitAnswerPayload(optionKey);
+  };
+
+  const handleToggleMultiOption = (optionKey: string) => {
+    if (selectedAnswer || answering) return;
+    setMultiSelected((prev) =>
+      prev.includes(optionKey) ? prev.filter((k) => k !== optionKey) : [...prev, optionKey]
+    );
+  };
+
+  const handleSubmitMultiAnswer = () => {
+    if (multiSelected.length === 0) {
+      Alert.alert('Selection Required', 'Please select at least one choice before submitting.');
+      return;
+    }
+    const combined = multiSelected.sort().join(',');
+    submitAnswerPayload(combined);
+  };
+
+  const handleSubmitNumerical = () => {
+    const trimmed = numericalInput.trim();
+    if (!trimmed) {
+      Alert.alert('Input Required', 'Please enter your numerical answer before submitting.');
+      return;
+    }
+    submitAnswerPayload(trimmed);
+  };
+
   const handleNextQuestion = async () => {
     speechUtils.stop();
     setSelectedAnswer(null);
+    setMultiSelected([]);
+    setNumericalInput('');
     setAnswerFeedback(null);
     setIsSaved(false);
 
     if (currentIndex + 1 < questions.length) {
       setCurrentIndex((prev) => prev + 1);
     } else {
-      // Finish Session
       try {
         setLoading(true);
         if (sessionId) {
@@ -229,10 +261,8 @@ export default function RapidFireScreen() {
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* XP & Level Status Bar */}
           <XPLevelBar xp={userXp} level={userLevel} style={{ marginBottom: 12 }} />
 
-          {/* Weak Topics Target Indicator */}
           {weakTopics.length > 0 && (
             <BrutalistCard highlight style={styles.weakCard}>
               <View style={styles.weakHeader}>
@@ -387,7 +417,10 @@ export default function RapidFireScreen() {
   }
 
   // 4. Active Question View
+  const qType = currentQ?.question_type || 'single_correct_mcq';
   const optionsList = normalizeOptions(currentQ?.options);
+  const isNumerical = qType === 'numerical' || qType === 'integer_numerical';
+  const isMultiCorrect = qType === 'multiple_correct_mcq';
 
   return (
     <SafeAreaView style={styles.container}>
@@ -430,7 +463,7 @@ export default function RapidFireScreen() {
         {/* Question Counter & Meta */}
         <View style={styles.qMetaRow}>
           <Text style={styles.qCounterText}>
-            QUESTION {currentIndex + 1} / {questions.length}
+            QUESTION {currentIndex + 1} / {questions.length} ({qType.replace(/_/g, ' ').toUpperCase()})
           </Text>
           <View style={styles.actionIcons}>
             <TouchableOpacity style={styles.iconBtn} onPress={handleSpeakQuestion}>
@@ -447,61 +480,134 @@ export default function RapidFireScreen() {
           <Text style={styles.qSubjectTag}>
             {currentQ?.subject} {currentQ?.chapter ? `// ${currentQ.chapter}` : ''}
           </Text>
+
+          {/* Diagram Image if present */}
+          {currentQ?.image_url && (
+            <View style={styles.qImageFrame}>
+              <Image source={{ uri: currentQ.image_url }} style={styles.qImage} resizeMode="contain" />
+            </View>
+          )}
+
           <Text style={styles.qText}>{formatMathText(currentQ?.question)}</Text>
         </BrutalistCard>
 
-        {/* Options Grid */}
-        <View style={styles.optionsContainer}>
-          {optionsList.map((opt) => {
-            const isSelected = selectedAnswer === opt.key;
-            const isOptionCorrect =
-              answerFeedback?.correctAnswer &&
-              (answerFeedback.correctAnswer.toLowerCase().includes(opt.key.toLowerCase()) ||
-                opt.key.toLowerCase().includes(answerFeedback.correctAnswer.toLowerCase()));
+        {/* ----------------- TYPE-SPECIFIC UI RENDERING ----------------- */}
 
-            const isAnswered = !!selectedAnswer;
+        {/* 1. NUMERICAL UI */}
+        {isNumerical && (
+          <View style={styles.numContainer}>
+            <Text style={styles.numInstruction}>ENTER YOUR NUMERICAL ANSWER:</Text>
+            <TextInput
+              style={styles.numInput}
+              placeholder="e.g. 12.5 or -4"
+              placeholderTextColor="#969083"
+              keyboardType="numeric"
+              value={numericalInput}
+              onChangeText={setNumericalInput}
+              editable={!selectedAnswer && !answering}
+            />
+            {!selectedAnswer && (
+              <BrutalistButton
+                title="SUBMIT NUMERICAL ANSWER →"
+                variant="primary"
+                onPress={handleSubmitNumerical}
+                disabled={answering || !numericalInput.trim()}
+              />
+            )}
+          </View>
+        )}
 
-            let btnStyle = [styles.optionBtn];
-            let badgeStyle = [styles.optBadge];
-            let keyStyle = [styles.optKey];
-            let textStyle = [styles.optionText];
+        {/* 2. MULTIPLE CORRECT MCQ UI */}
+        {isMultiCorrect && (
+          <View style={styles.optionsContainer}>
+            <BrutalistBadge label="☑ SELECT ALL CORRECT ANSWERS" variant="gold" style={{ marginBottom: 6 }} />
+            {optionsList.map((opt) => {
+              const isChecked = multiSelected.includes(opt.key);
+              const isAnswered = !!selectedAnswer;
 
-            if (isAnswered) {
-              if (isSelected && answerFeedback?.isCorrect) {
-                btnStyle.push(styles.optionCorrect as any);
-                badgeStyle.push(styles.optBadgeCorrect as any);
-                keyStyle.push(styles.optKeyCorrect as any);
-                textStyle.push(styles.optionTextCorrect as any);
-              } else if (isSelected && !answerFeedback?.isCorrect) {
-                btnStyle.push(styles.optionIncorrect as any);
-                badgeStyle.push(styles.optBadgeIncorrect as any);
-                keyStyle.push(styles.optKeyIncorrect as any);
-                textStyle.push(styles.optionTextIncorrect as any);
-              } else if (!isSelected && isOptionCorrect) {
-                btnStyle.push(styles.optionCorrect as any);
-                badgeStyle.push(styles.optBadgeCorrect as any);
-                keyStyle.push(styles.optKeyCorrect as any);
-                textStyle.push(styles.optionTextCorrect as any);
+              return (
+                <TouchableOpacity
+                  key={opt.key}
+                  style={[styles.optionBtn, isChecked && styles.optionSelected]}
+                  disabled={isAnswered || answering}
+                  onPress={() => handleToggleMultiOption(opt.key)}
+                >
+                  <View style={[styles.optBadge, isChecked && styles.optBadgeSelected]}>
+                    <Text style={[styles.optKey, isChecked && styles.optKeySelected]}>
+                      {isChecked ? '✓' : opt.key}
+                    </Text>
+                  </View>
+                  <Text style={styles.optionText}>{opt.text}</Text>
+                </TouchableOpacity>
+              );
+            })}
+
+            {!selectedAnswer && (
+              <BrutalistButton
+                title="SUBMIT SELECTIONS →"
+                variant="primary"
+                onPress={handleSubmitMultiAnswer}
+                disabled={answering || multiSelected.length === 0}
+                style={{ marginTop: 8 }}
+              />
+            )}
+          </View>
+        )}
+
+        {/* 3. SINGLE CORRECT MCQ UI */}
+        {!isNumerical && !isMultiCorrect && (
+          <View style={styles.optionsContainer}>
+            {optionsList.map((opt) => {
+              const isSelected = selectedAnswer === opt.key;
+              const isOptionCorrect =
+                answerFeedback?.correctAnswer &&
+                (answerFeedback.correctAnswer.toLowerCase().includes(opt.key.toLowerCase()) ||
+                  opt.key.toLowerCase().includes(answerFeedback.correctAnswer.toLowerCase()));
+
+              const isAnswered = !!selectedAnswer;
+
+              let btnStyle = [styles.optionBtn];
+              let badgeStyle = [styles.optBadge];
+              let keyStyle = [styles.optKey];
+              let textStyle = [styles.optionText];
+
+              if (isAnswered) {
+                if (isSelected && answerFeedback?.isCorrect) {
+                  btnStyle.push(styles.optionCorrect as any);
+                  badgeStyle.push(styles.optBadgeCorrect as any);
+                  keyStyle.push(styles.optKeyCorrect as any);
+                  textStyle.push(styles.optionTextCorrect as any);
+                } else if (isSelected && !answerFeedback?.isCorrect) {
+                  btnStyle.push(styles.optionIncorrect as any);
+                  badgeStyle.push(styles.optBadgeIncorrect as any);
+                  keyStyle.push(styles.optKeyIncorrect as any);
+                  textStyle.push(styles.optionTextIncorrect as any);
+                } else if (!isSelected && isOptionCorrect) {
+                  btnStyle.push(styles.optionCorrect as any);
+                  badgeStyle.push(styles.optBadgeCorrect as any);
+                  keyStyle.push(styles.optKeyCorrect as any);
+                  textStyle.push(styles.optionTextCorrect as any);
+                }
+              } else if (isSelected) {
+                btnStyle.push(styles.optionSelected as any);
               }
-            } else if (isSelected) {
-              btnStyle.push(styles.optionSelected as any);
-            }
 
-            return (
-              <TouchableOpacity
-                key={opt.key}
-                style={btnStyle as any}
-                disabled={isAnswered || answering}
-                onPress={() => handleSelectOption(opt.key)}
-              >
-                <View style={badgeStyle as any}>
-                  <Text style={keyStyle as any}>{opt.key}</Text>
-                </View>
-                <Text style={textStyle as any}>{opt.text}</Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+              return (
+                <TouchableOpacity
+                  key={opt.key}
+                  style={btnStyle as any}
+                  disabled={isAnswered || answering}
+                  onPress={() => handleSelectSingleOption(opt.key)}
+                >
+                  <View style={badgeStyle as any}>
+                    <Text style={keyStyle as any}>{opt.key}</Text>
+                  </View>
+                  <Text style={textStyle as any}>{opt.text}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
 
         {/* Immediate Feedback & Solution Box */}
         {answerFeedback && (
@@ -524,6 +630,10 @@ export default function RapidFireScreen() {
               </Text>
             </View>
 
+            <Text style={styles.solutionText}>
+              Correct Answer: {answerFeedback.correctAnswer || currentQ?.answer}
+            </Text>
+
             {answerFeedback.solution ? (
               <Text style={styles.solutionText}>
                 Solution: {formatMathText(answerFeedback.solution)}
@@ -545,7 +655,7 @@ export default function RapidFireScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#310004', // OG Crackr Crimson
+    backgroundColor: '#310004',
   },
   center: {
     justifyContent: 'center',
@@ -816,12 +926,49 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     textTransform: 'uppercase',
   },
+  qImageFrame: {
+    height: 180,
+    backgroundColor: '#310004',
+    borderRadius: 6,
+    marginVertical: 8,
+    padding: 6,
+  },
+  qImage: {
+    width: '100%',
+    height: '100%',
+  },
   qText: {
     fontFamily: 'System',
     fontSize: 17,
     fontWeight: '700',
     color: '#ffdad8',
     lineHeight: 26,
+  },
+  numContainer: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: '#480009',
+    borderWidth: 1.5,
+    borderColor: '#f2bf4b',
+    borderRadius: 8,
+    gap: 12,
+  },
+  numInstruction: {
+    color: '#f2bf4b',
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+  },
+  numInput: {
+    height: 52,
+    borderWidth: 1.5,
+    borderColor: '#f2bf4b',
+    backgroundColor: '#310004',
+    paddingHorizontal: 16,
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: '900',
+    borderRadius: 6,
   },
   optionsContainer: {
     marginTop: 16,
@@ -861,6 +1008,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#310004',
   },
+  optBadgeSelected: {
+    backgroundColor: '#f2bf4b',
+    borderColor: '#f2bf4b',
+  },
   optBadgeCorrect: {
     backgroundColor: '#2e7d32',
     borderColor: '#2e7d32',
@@ -874,6 +1025,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#f2bf4b',
     fontWeight: '900',
+  },
+  optKeySelected: {
+    color: '#310004',
   },
   optKeyCorrect: {
     color: '#ffffff',
@@ -932,7 +1086,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
     fontSize: 13,
     color: '#ffdad8',
-    marginVertical: 8,
+    marginVertical: 4,
     lineHeight: 20,
   },
   nextBtn: {

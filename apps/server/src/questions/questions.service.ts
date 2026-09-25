@@ -52,9 +52,12 @@ export class QuestionsService {
     limit?: number;
     excludeIds?: string[];
   }) {
-    const where: any = {};
-    if (filters.subject) where.subject = filters.subject;
-    if (filters.chapter) where.chapter = filters.chapter;
+    const where: any = {
+      is_usable: true,
+      question_quality: { in: ['high', 'medium'] },
+    };
+    if (filters.subject && filters.subject !== 'Mixed' && filters.subject !== 'ALL') where.subject = filters.subject;
+    if (filters.chapter && filters.chapter !== 'Mixed') where.chapter = filters.chapter;
     if (filters.difficulty) where.difficulty = filters.difficulty;
     if (filters.year) where.year = filters.year;
     if (filters.excludeIds && filters.excludeIds.length > 0) {
@@ -70,6 +73,20 @@ export class QuestionsService {
     });
 
     return questions;
+  }
+
+  async getQuestionsForReview(limit = 30) {
+    return this.prisma.questions.findMany({
+      take: limit,
+      orderBy: { created_at: 'desc' },
+    });
+  }
+
+  async updateQuestionReview(id: string, data: { is_usable?: boolean; question_quality?: string; question_type?: string }) {
+    return this.prisma.questions.update({
+      where: { id },
+      data,
+    });
   }
 
   async saveQuestion(userId: string, questionId: string, notes?: string) {

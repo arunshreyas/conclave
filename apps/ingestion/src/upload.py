@@ -39,8 +39,10 @@ def get_db_connection():
 
     return psycopg2.connect(db_url)
 
+from .quality import process_question_pipeline
+
 def init_supabase_pgvector(vector_dim: int):
-    """Enable pgvector, create questions table, and create match_questions function in Supabase."""
+    """Enable pgvector, create questions table, and create match_questions and get_usable_questions functions in Supabase."""
     conn = get_db_connection()
     try:
         with conn.cursor() as cur:
@@ -68,13 +70,30 @@ def init_supabase_pgvector(vector_dim: int):
                 source_page INTEGER,
                 question_number INTEGER,
                 embedding VECTOR({vector_dim}),
+                question_type TEXT DEFAULT 'single_correct_mcq',
+                question_quality TEXT DEFAULT 'high',
+                is_usable BOOLEAN DEFAULT true,
+                normalized_question TEXT,
+                duplicate_of UUID,
+                image_url TEXT,
+                image_path TEXT,
                 created_at TIMESTAMPTZ DEFAULT NOW()
             );
             """
             cur.execute(create_table_sql)
             
-            # 3. Add confidence column if missing
-            cur.execute("ALTER TABLE questions ADD COLUMN IF NOT EXISTS confidence TEXT;")
+            # 3. Add quality & classification columns if missing
+            alter_cols_sql = """
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS confidence TEXT;
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS question_type TEXT DEFAULT 'single_correct_mcq';
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS question_quality TEXT DEFAULT 'high';
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS is_usable BOOLEAN DEFAULT true;
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS normalized_question TEXT;
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS duplicate_of UUID;
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_url TEXT;
+            ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_path TEXT;
+            """
+            cur.execute(alter_cols_sql)
             
             # 4. Add unique constraint safely
             add_constraint_sql = """
@@ -126,17 +145,48 @@ def init_supabase_pgvector(vector_dim: int):
                     1 - (q.embedding <=> query_embedding) AS similarity
                 FROM questions q
                 WHERE
-                    (filter_subject IS NULL OR q.subject = filter_subject)
-                    AND (filter_chapter IS NULL OR q.chapter = filter_chapter)
+                    q.is_usable = true
+                    AND q.question_quality IN ('high', 'medium')
+                    AND (filter_subject IS NULL OR filter_subject = 'Mixed' OR filter_subject = 'ALL' OR q.subject = filter_subject)
+                    AND (filter_chapter IS NULL OR filter_chapter = 'Mixed' OR q.chapter = filter_chapter)
                 ORDER BY q.embedding <=> query_embedding
                 LIMIT match_count;
             END;
             $$;
             """
             cur.execute(match_fn_sql)
+
+            # 6. Create get_usable_questions function
+            usable_fn_sql = """
+            CREATE OR REPLACE FUNCTION get_usable_questions(
+                filter_subject TEXT DEFAULT NULL,
+                filter_chapter TEXT DEFAULT NULL,
+                limit_count INT DEFAULT 10
+            )
+            RETURNS SETOF questions
+            LANGUAGE plpgsql
+            AS $$
+            BEGIN
+                RETURN QUERY
+                SELECT *
+                FROM questions q
+                WHERE q.is_usable = true
+                  AND q.question_quality IN ('high', 'medium')
+                  AND (filter_subject IS NULL OR filter_subject = 'Mixed' OR filter_subject = 'ALL' OR q.subject = filter_subject)
+                  AND (filter_chapter IS NULL OR filter_chapter = 'Mixed' OR q.chapter = filter_chapter OR filter_chapter = ANY(q.topics))
+                  AND (
+                      (q.question_type IN ('single_correct_mcq', 'multiple_correct_mcq', 'assertion_reason') AND q.options IS NOT NULL AND jsonb_array_length(q.options) >= 2 AND q.answer IS NOT NULL)
+                      OR
+                      (q.question_type IN ('numerical', 'integer_numerical') AND q.answer IS NOT NULL)
+                  )
+                LIMIT limit_count;
+            END;
+            $$;
+            """
+            cur.execute(usable_fn_sql)
             
             conn.commit()
-            logger.info("Supabase pgvector schema and match_questions function initialized successfully.")
+            logger.info("Supabase pgvector schema and get_usable_questions function initialized successfully.")
     except Exception as e:
         conn.rollback()
         logger.error(f"Failed to initialize Supabase pgvector schema: {e}")
@@ -145,7 +195,7 @@ def init_supabase_pgvector(vector_dim: int):
         conn.close()
 
 def upload_questions_to_supabase(questions: List[Dict[str, Any]]) -> Dict[str, int]:
-    """Upload embedded questions to Supabase PostgreSQL questions table."""
+    """Upload embedded questions to Supabase PostgreSQL questions table with quality evaluation."""
     conn = get_db_connection()
     conn.autocommit = False
     uploaded_count = 0
@@ -156,18 +206,21 @@ def upload_questions_to_supabase(questions: List[Dict[str, Any]]) -> Dict[str, i
     INSERT INTO questions (
         question, options, answer, solution, exam, year, session, shift,
         subject, chapter, topics, difficulty, confidence,
-        source_file, source_page, question_number, embedding
+        source_file, source_page, question_number, embedding,
+        question_type, question_quality, is_usable, normalized_question, duplicate_of, image_url, image_path
     ) VALUES (
         %s, %s::jsonb, %s, %s, %s, %s, %s, %s,
         %s, %s, %s, %s, %s,
-        %s, %s, %s, %s::vector
+        %s, %s, %s, %s::vector,
+        %s, %s, %s, %s, %s, %s, %s
     )
     ON CONFLICT (source_file, source_page, question_number) DO NOTHING;
     """
 
     total = len(questions)
-    for idx, q in enumerate(questions, 1):
+    for idx, raw_q in enumerate(questions, 1):
         try:
+            q = process_question_pipeline(raw_q)
             with conn.cursor() as cur:
                 options_json_str = json.dumps(q.get("options") or [])
                 topics_list = q.get("topics") or []
@@ -190,7 +243,14 @@ def upload_questions_to_supabase(questions: List[Dict[str, Any]]) -> Dict[str, i
                     q.get("source_file"),
                     q.get("source_page"),
                     q.get("question_number"),
-                    embedding_str
+                    embedding_str,
+                    q.get("question_type"),
+                    q.get("question_quality"),
+                    q.get("is_usable"),
+                    q.get("normalized_question"),
+                    q.get("duplicate_of"),
+                    q.get("image_url"),
+                    q.get("image_path")
                 ))
                 
                 if cur.rowcount > 0:
@@ -198,14 +258,13 @@ def upload_questions_to_supabase(questions: List[Dict[str, Any]]) -> Dict[str, i
                 else:
                     skipped_count += 1
             
-            # Commit every 20 questions or on final question
             if idx % 20 == 0 or idx == total:
                 conn.commit()
-                logger.info(f"Progress: {idx}/{total} questions uploaded/processed (Uploaded: {uploaded_count}, Skipped: {skipped_count}).")
+                logger.info(f"Progress: {idx}/{total} questions uploaded (Uploaded: {uploaded_count}, Skipped: {skipped_count}).")
         except Exception as ex:
             conn.rollback()
             failed_count += 1
-            logger.error(f"Error inserting question #{q.get('question_number')} from {q.get('source_file')}: {ex}")
+            logger.error(f"Error inserting question #{raw_q.get('question_number')} from {raw_q.get('source_file')}: {ex}")
 
     conn.close()
 

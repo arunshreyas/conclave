@@ -7,15 +7,35 @@ export function formatMathText(text: string | null | undefined): string {
 
   let cleaned = String(text).trim();
 
-  // Normalize common formula patterns if raw OCR text has artifacts
-  cleaned = cleaned.replace(/\bt1\/2\b/gi, 't½');
-  cleaned = cleaned.replace(/\bt1000%\b/gi, 't₁₀₀₀%');
-  cleaned = cleaned.replace(/∈/g, 'ε');
-  cleaned = cleaned.replace(/𝝁/g, 'μ');
-  cleaned = cleaned.replace(/𝝆/g, 'ρ');
-  cleaned = cleaned.replace(/𝜋/g, 'π');
+  // 1. Common chemical & subscript formulas
   cleaned = cleaned.replace(/\bH2O\b/g, 'H₂O');
   cleaned = cleaned.replace(/\bCO2\b/g, 'CO₂');
+  cleaned = cleaned.replace(/\bO2\b/g, 'O₂');
+  cleaned = cleaned.replace(/\bN2\b/g, 'N₂');
+  cleaned = cleaned.replace(/\bt1\/2\b/gi, 't½');
+  cleaned = cleaned.replace(/\bt1000%\b/gi, 't₁₀₀₀%');
+
+  // 2. Greek symbol normalization
+  cleaned = cleaned.replace(/\\alpha|𝜶|𝝰/g, 'α');
+  cleaned = cleaned.replace(/\\beta|𝜷|𝝱/g, 'β');
+  cleaned = cleaned.replace(/\\gamma|𝛄|𝝲/g, 'γ');
+  cleaned = cleaned.replace(/\\theta|𝜽|𝝷/g, 'θ');
+  cleaned = cleaned.replace(/\\lambda|𝝀|𝝀/g, 'λ');
+  cleaned = cleaned.replace(/\\pi|𝜋|𝝅/g, 'π');
+  cleaned = cleaned.replace(/\\mu|𝝁|𝛍/g, 'μ');
+  cleaned = cleaned.replace(/\\sigma|𝝈|𝛔/g, 'σ');
+  cleaned = cleaned.replace(/\\omega|𝝎|𝛚/g, 'ω');
+  cleaned = cleaned.replace(/\\Delta|𝚫|9/g, 'Δ');
+  cleaned = cleaned.replace(/∈/g, 'ε');
+
+  // 3. Mathematical powers ^2, ^3, ^n
+  cleaned = cleaned.replace(/\^2\b/g, '²');
+  cleaned = cleaned.replace(/\^3\b/g, '³');
+  cleaned = cleaned.replace(/\^-1\b/g, '⁻¹');
+
+  // 4. Square roots and integrals
+  cleaned = cleaned.replace(/\\sqrt\{([^}]+)\}/g, '√($1)');
+  cleaned = cleaned.replace(/\\int/g, '∫');
 
   return cleaned;
 }

@@ -189,25 +189,34 @@ model DocumentChunk {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model questions {
-  id              String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  question        String
-  options         Json?
-  answer          String?
-  solution        String?
-  exam            String
-  year            Int
-  session         String?
-  shift           String?
-  subject         String
-  chapter         String?
-  topics          String[]
-  difficulty      String?
-  source_file     String?
-  source_page     Int?
-  question_number Int?
-  embedding       Unsupported("vector")?
-  created_at      DateTime?              @default(now()) @db.Timestamptz(6)
-  confidence      String?
+  id                  String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  question            String
+  options             Json?
+  answer              String?
+  solution            String?
+  exam                String
+  year                Int
+  session             String?
+  shift               String?
+  subject             String
+  chapter             String?
+  topics              String[]
+  difficulty          String?
+  source_file         String?
+  source_page         Int?
+  question_number     Int?
+  embedding           Unsupported("vector")?
+  created_at          DateTime?              @default(now()) @db.Timestamptz(6)
+  confidence          String?
+  question_type       String                 @default("single_correct_mcq")
+  question_quality    String                 @default("high")
+  is_usable           Boolean                @default(true)
+  normalized_question String?
+  duplicate_of        String?                @db.Uuid
+  image_url           String?
+  image_path          String?
 
   @@unique([source_file, source_page, question_number], map: "unique_source_q")
+  @@index([is_usable, question_quality])
+  @@index([subject, is_usable])
 }

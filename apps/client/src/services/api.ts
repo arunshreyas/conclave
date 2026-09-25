@@ -262,4 +262,16 @@ export const api = {
   async getDocumentDetails(documentId: string) {
     return this.fetchWithAuth(`/documents/${documentId}`);
   },
+
+  // Admin Question Review API
+  async getQuestionsForReview(limit = 30) {
+    return this.fetchWithAuth(`/questions/admin/review?limit=${limit}`);
+  },
+
+  async updateQuestionReview(id: string, payload: { is_usable?: boolean; question_quality?: string; question_type?: string }) {
+    return this.fetchWithAuth(`/questions/admin/review/${id}`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
 };

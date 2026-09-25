@@ -24,10 +24,18 @@ export class RapidFireService {
     let filterSubject = dto.subject;
     let filterTopic = dto.topic;
 
+    const where: any = {
+      is_usable: true,
+      question_quality: { in: ['high', 'medium'] },
+    };
+
+    if (filterSubject && filterSubject !== 'Mixed' && filterSubject !== 'ALL') {
+      where.subject = filterSubject;
+    }
+
     if (mode === 'WEAK_TOPICS' || mode === 'ADAPTIVE') {
       const weakTopics = await this.questionsService.getUserWeakTopics(userId);
       if (weakTopics.length > 0) {
-        // Prioritize student's weakest topics (<65% accuracy or low attempt count)
         const targetTopics = weakTopics.map((w) => w.topic).filter(Boolean);
         const targetSubjects = Array.from(new Set(weakTopics.map((w) => w.subject).filter(Boolean)));
 
@@ -37,21 +45,24 @@ export class RapidFireService {
           { subject: { in: targetSubjects } },
         ];
       }
+    } else if (filterTopic && filterTopic !== 'Mixed') {
+      where.OR = [{ chapter: filterTopic }, { topics: { has: filterTopic } }];
     }
 
     // Get candidate questions from DB
     const candidates = await this.prisma.questions.findMany({
       where,
-      take: limit * 4, // over-sample for adaptive shuffling
+      take: limit * 4,
     });
 
     if (candidates.length === 0) {
-      // Fallback to any questions
+      // Fallback to usable questions
       const fallback = await this.prisma.questions.findMany({
+        where: { is_usable: true },
         take: limit,
       });
       if (fallback.length === 0) {
-        throw new NotFoundException('No questions available in database');
+        throw new NotFoundException('No usable questions available in database');
       }
       candidates.push(...fallback);
     }
@@ -98,6 +109,10 @@ export class RapidFireService {
           difficulty: q.difficulty,
           exam: q.exam,
           year: q.year,
+          question_type: q.question_type || 'single_correct_mcq',
+          question_quality: q.question_quality || 'high',
+          is_usable: q.is_usable,
+          image_url: q.image_url || q.image_path || null,
         };
       })
       .filter((q): q is NonNullable<typeof q> => q !== null);
@@ -143,12 +158,28 @@ export class RapidFireService {
 
     const cleanUserAns = (dto.selectedAnswer || '').trim().toLowerCase();
     const cleanCorrectAns = (questionObj.answer || '').trim().toLowerCase();
+    const qType = questionObj.question_type || 'single_correct_mcq';
 
-    // Flexible option comparison e.g. "a", "(a)", "Option A"
-    const isCorrect =
-      cleanUserAns === cleanCorrectAns ||
-      cleanUserAns === cleanCorrectAns.replace(/[()]/g, '') ||
-      cleanUserAns.endsWith(cleanCorrectAns.replace(/[()]/g, ''));
+    let isCorrect = false;
+
+    if (qType === 'numerical' || qType === 'integer_numerical') {
+      const userNum = parseFloat(cleanUserAns.replace(/,/g, ''));
+      const correctNum = parseFloat(cleanCorrectAns.replace(/,/g, ''));
+      if (!isNaN(userNum) && !isNaN(correctNum)) {
+        isCorrect = Math.abs(userNum - correctNum) <= 0.05;
+      } else {
+        isCorrect = cleanUserAns === cleanCorrectAns;
+      }
+    } else if (qType === 'multiple_correct_mcq') {
+      const userKeys = cleanUserAns.split(/[,&\s]+/).map((k) => k.trim()).filter(Boolean).sort().join(',');
+      const correctKeys = cleanCorrectAns.split(/[,&\s]+/).map((k) => k.trim()).filter(Boolean).sort().join(',');
+      isCorrect = userKeys === correctKeys || cleanUserAns === cleanCorrectAns;
+    } else {
+      isCorrect =
+        cleanUserAns === cleanCorrectAns ||
+        cleanUserAns === cleanCorrectAns.replace(/[()]/g, '') ||
+        cleanUserAns.endsWith(cleanCorrectAns.replace(/[()]/g, ''));
+    }
 
     const timeTaken = dto.timeTakenSec || 15;
 

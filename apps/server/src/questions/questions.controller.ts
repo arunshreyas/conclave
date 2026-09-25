@@ -18,6 +18,20 @@ export class QuestionsController {
     return this.questionsService.getSavedQuestions(userId);
   }
 
+  @Get('admin/review')
+  async getQuestionsForReview(@Query('limit') limit?: string) {
+    const lim = limit ? parseInt(limit, 10) : 30;
+    return this.questionsService.getQuestionsForReview(lim);
+  }
+
+  @Post('admin/review/:id')
+  async updateQuestionReview(
+    @Param('id') id: string,
+    @Body() data: { is_usable?: boolean; question_quality?: string; question_type?: string },
+  ) {
+    return this.questionsService.updateQuestionReview(id, data);
+  }
+
   @Get(':id')
   async getQuestionById(@Param('id') id: string) {
     return this.questionsService.getQuestionById(id);

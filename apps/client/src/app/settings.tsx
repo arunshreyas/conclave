@@ -90,15 +90,18 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.heading}>SYSTEM & AUDIO PREFERENCES</Text>
+          <Text style={styles.heading}>SYSTEM & AUDIT TOOLS</Text>
           <View style={styles.prefRow}>
-            <Text style={styles.prefLabel}>TEXT-TO-SPEECH (TTS) AUDIO</Text>
+            <Text style={styles.prefLabel}>SYNTHESIZED AUDIO SFX</Text>
             <BrutalistBadge label="ACTIVE ✓" variant="live" />
           </View>
           <View style={styles.prefRow}>
-            <Text style={styles.prefLabel}>SPEECH-TO-TEXT (STT) MIC</Text>
+            <Text style={styles.prefLabel}>TEXT-TO-SPEECH (TTS) READ</Text>
             <BrutalistBadge label="ACTIVE ✓" variant="live" />
           </View>
+          <TouchableOpacity style={styles.auditBtn} onPress={() => router.push('/review')}>
+            <Text style={styles.auditBtnText}>🔍 LAUNCH INTERNAL QUESTION AUDIT & REVIEW →</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.logoutDock}>
@@ -203,6 +206,21 @@ const styles = StyleSheet.create({
     fontFamily: 'Lexend, monospace',
     fontSize: 10,
     color: '#ffdad8',
+  },
+  auditBtn: {
+    marginTop: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    backgroundColor: '#480009',
+    borderWidth: 1,
+    borderColor: '#f2bf4b',
+    alignItems: 'center',
+  },
+  auditBtnText: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 10,
+    color: '#f2bf4b',
+    fontWeight: '800',
   },
   logoutDock: {
     marginTop: 12,
