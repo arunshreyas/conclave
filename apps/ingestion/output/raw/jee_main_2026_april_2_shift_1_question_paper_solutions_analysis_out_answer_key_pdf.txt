@@ -1,0 +1,804 @@
+SOURCE_FILE: JEE Main 2026 April 2 Shift 1 Question Paper Solutions Analysis OUT Answer Key PDF.pdf
+TOTAL_PAGES: 38
+============================================================
+
+--- PAGE 1 ---
+​
+​
+ 
+ 
+ 
+JEE-Main-02-04-2026 (Memory Based) 
+[MORNING SHIFT]  
+Physics 
+  
+Question:  Dimensional formula for ½ ∈ E2 is given as MaLbTc. Find the value of 
+2a-b+c. 
+Options: 
+(a) 1 
+(b) 2 
+(c) 3 
+(d) 4 
+Answer: (a) 
+Solution:  
+ 
+Question:  The velocity of a particle is given as
+ 
+ The magnitude of acceleration at point (1,2,4) is_____ m/s2? 
+Options: 
+(a) √13 
+(b) √65 
+(c) 65 
+(d) 13 
+Answer: (c) 
+Solution:
+
+--- PAGE 2 ---
+​
+​
+ 
+ 
+ 
+Question:  Angular momentum of the electron in a hydrogen atom is ​ 
+      then 
+find the energy of the electron in ______ ev. 
+Options: 
+(a) - 1.51 ev 
+(b) - 2.66 ev  
+(c) - 0.52 ev 
+(d) - 1.00 ev 
+Answer: (a) 
+Solution: (a) 
+ 
+ 
+Question:  The equation of a plane progressive wave is given by​
+Where x & y are in cm and t is in seconds. Find the 
+wave 150 velocity for the given wave function. 
+Options: 
+(a) 100 m/s 
+(b) 200 m/s 
+(c) 300 m/s 
+(d) 400 m/s
+
+--- PAGE 3 ---
+​
+​
+ 
+ 
+Answer: (c) 
+Solution: 
+ 
+ 
+Question:  For Diatomic gas, find the ration of ∆Q : ∆U : W for isobaric process 
+Options: 
+(a) 2:5:7 
+(b) 2:3:5 
+(c) 2:7:3 
+(d) 7:5:2 
+Answer: (d) 
+Solution:  
+ 
+ 
+Question:  A wooden cubic block of relative density. 0.4 is floating in water. Side 
+of cubic block is 10 cm. When a coin is placed on the block the dips 0.3 
+cm in equilibrium. Weight of coin is 
+Options: 
+(a) 0.3N 
+(b) 230 N 
+(c) 0.7 N 
+(d) 3N 
+Answer: (a) 
+Solution:
+
+--- PAGE 4 ---
+​
+​
+ 
+ 
+ 
+ 
+Question:  Consider two arrangements of wires, find ratio of magnetic field at 
+centre of the semi-circular part. 
+ 
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c)
+
+--- PAGE 5 ---
+​
+​
+ 
+ 
+(d) 
+ 
+Answer: (c) 
+Solution: 
+ 
+ 
+Question:  Weight of string = w and weight of block = w and cross sectional area of 
+string is A if stress at distance L/3 from top and is given by  
+ determine y ? 
+ 
+Options: 
+(a) 1 
+(b) 2 
+(c) 3 
+(d) 4 
+Answer: (c) 
+Solution: 
+ 
+ 
+Question:  Determine height of image after refraction.
+
+--- PAGE 6 ---
+​
+​
+ 
+ 
+ 
+Options: 
+(a) 25 cm 
+(b) -25 cm 
+(c) 40 cm 
+(d) -40 cm 
+Answer: (b) 
+Solution:
+
+--- PAGE 7 ---
+​
+​
+
+--- PAGE 8 ---
+​
+​
+ 
+ 
+ 
+ 
+Question:  Ratio of Electric field intensity on surface of sphere radius 18cm to that on 
+the surface of sphere of radius 8 cm after closing of switch till equilibrium 
+Established 
+ 
+Options: 
+(a) 2:7 
+(b) 7:2 
+(c) 4:9 
+(d) 9:4 
+Answer: (c) 
+Solution:
+
+--- PAGE 9 ---
+​
+​
+
+--- PAGE 10 ---
+​
+​
+ 
+ 
+ 
+ 
+Question:  Capacitor with plate separation of d filled with air has some capacitance 
+now dielectric slab of K = 5 of thickness d/2 is inserted determine % 
+creasing in capacitance. 
+ 
+Options: 
+(a) 70% 
+(b) 66.66% 
+(c) 33.33% 
+(d) 10% 
+Answer: (b) 
+Solution:
+
+--- PAGE 11 ---
+​
+​
+
+--- PAGE 12 ---
+​
+​
+ 
+ 
+  
+ 
+Question:  If at point c net electric field intensity is 
+at angle 60° with x axis. Determine P2/P1. 
+ 
+Options: 
+(a) 2√5 
+(b) 3√5 
+(c) 2√7 
+(d) 2√3 
+Answer: (d) 
+Solution:
+
+--- PAGE 13 ---
+​
+​
+
+--- PAGE 14 ---
+​
+​
+ 
+ 
+ 
+ 
+Question:  For an ideal gas having Cp = 3R and Cv = 2R. Find work done by one 
+mole of the gas in adiabatic expansion when pressure reduces from 
+8 bar to 1 bar. (Initial temperature = 140℃) 
+Options: 
+(a) 1140 R 
+(b) 270 R 
+(c) 826 R 
+(d) 413 R 
+Answer: (d) 
+Solution:
+
+--- PAGE 15 ---
+​
+​
+
+--- PAGE 16 ---
+​
+​
+ 
+ 
+ 
+Question:  Photons of wavelength λ & 3λ incident on a metal surface if stopping 
+potential for the ejected photoelectrons are 4v0 & V0 respectively. Find 
+threshold wavelength. 
+Options: 
+(a) 6λ 
+(b) 8λ 
+(c) 9λ 
+(d) 2λ 
+Answer: (c) 
+Solution:
+
+--- PAGE 17 ---
+​
+​
+ 
+ 
+ 
+ 
+Question:  in YDSE experiment wavelength of light used is 620 nm and separation 
+between slits is 0.2 mm. Find angular fringe width. 
+Options:
+
+--- PAGE 18 ---
+​
+​
+ 
+ 
+(a) 3× 10-4 
+(b) 6.2×10-4 
+(c) 3.1×10-3 
+(d) 1.2×10-3 
+Answer: (c) 
+Solution:  
+ 
+  
+Question:  A particle is rotating in a circular path and at any instance it's position 𝜃 and 
+time t are related as  ​
+then the angular acceleration after 10 seconds is  
+Answer: (130) 
+Solution:
+
+--- PAGE 19 ---
+​
+​
+
+--- PAGE 20 ---
+​
+​
+ 
+ 
+ 
+ 
+Question:  A liquid drop of diameter 2mm, breaks into 512 droplets. The change in the 
+surface energy is a x 10-6, the value of a is ____(take the surface tension of the liquid = 
+​
+0.08N/m) 
+Answer: (7) 
+Solution:
+
+--- PAGE 21 ---
+​
+​
+
+--- PAGE 22 ---
+​
+​
+ 
+ 
+ 
+ 
+JEE-Main-02-04-2026 (Memory Based) 
+[MORNING SHIFT]  
+Chemistry 
+  
+Question: The correct increasing order of bond length among the following is 
+Options: 
+(a) O2
++, O2, O2
+-, O2
+2- 
+(b) O2
++, O2, O2
+2-, O2
+- 
+(c) O2
+2-, O2
+-, O2, O2
++ 
+(d) O2
+-, O2
+2-, O2
++, O2 
+Answer: (a) 
+Solution: (a) O2
++, O2, O2
+-, O2
+2- 
+ 
+Question:  For first order reaction, rate constant at 27°C and t°C is 1.5 × 10³ and 4.5 × 
+10³ respectively. If the activation energy of reaction is 60 kJ then find temperature t. 
+Options: 
+Answer: (41) 
+Solution: 
+ 
+Question: Write the correct order of rate of reaction of following with PhN2Cl 
+ 
+Options: 
+(a) R > P > Q 
+(b) P > R > Q 
+(c) Q > P > R 
+(d) P > Q > R 
+Answer: (a) 
+Solution: (a) R > P > Q 
+ 
+Question:  Match List-I with List-II 
+ List-I 
+List-II 
+I) Vitamin C 
+A) Thiamine 
+II) Vitamin B1 
+B) Riboflavin
+
+--- PAGE 23 ---
+​
+​
+ 
+ 
+III) Vitamin B6 
+C) Ascorbic Acid 
+IV) Vitamin B2 
+D) Pyridoxine 
+Options: 
+(a) I-A, II-B, III-C, IV-D 
+(b) I-C, II-A, III-D, IV-B 
+(c) I-A, II-C, III-B, IV-D 
+(d) I-C, II-D, III-A, IV-B 
+Answer: (b) 
+Solution: (b) I-C, II-A, III-D, IV-B 
+ 
+Question:  Calculate number of isomers of C5H10, which does not decolourise cold 
+alkaline KMnO4 solution 
+Options: 
+Answer: (7) 
+Solution: 
+ 
+Question:  Arrange following functional group in the increasing order of priority of 
+functional group: 
+-CONH2, -C = O, -CHO, -CN, - C ≡ C, - -NH2 
+     (1)​        (2)          (3)      (4)       (5)         (6) 
+Options: 
+(a) 1 > 4 > 2 > 3 > 6 > 5 
+(b) 1 > 4 > 2 > 3 > 5 > 6 
+(c) 1 > 4 > 3 > 2 > 6 > 5 
+(d) 1 > 2 > 4 > 3 > 6 > 5 
+Answer: (c) 
+Solution: 
+ 
+Question: In the given compound, the electrophile attack will be favoured at 
+ 
+Options: 
+(a) S 
+(b) P 
+(c) Q 
+(d) R 
+Answer: (a) 
+Solution: 
+ 
+Question:  Which compound gives apple green colour in flame test? 
+Options: 
+(a) BaSO4 
+(b) Mn3(PO4)2
+
+--- PAGE 24 ---
+​
+​
+ 
+ 
+(c) Ca3(PO4)42 
+(d) Al2(SO4)3 
+Answer: (a) 
+Solution: (a) BaSO4 
+ 
+Question:  One mole of alkane reacts with 8 mole of O2. The molecular formula of 
+alkane is 
+Options: 
+(a) C4H10 
+(b) C5H12 
+(c) C2H14 
+(d) C3H8 
+Answer: (b) 
+Solution: (b) C5H12 
+ 
+Question: 18g of H2O reacts with x g of Fe to produce Fe2O3, ‘x’. Is, (Atomic mass of Fe 
+= 56 u) 
+Options: 
+(a) 84 g 
+(b) 63 g 
+(c) 42 g 
+(d) 51 g 
+Answer: (c) 
+Solution: (c) 42 g 
+ 
+ 
+Question:  The Ksp values of Ag2CrO4 and AgBr are 32x and 4y respectively. The ratio 
+of solubilities 
+ is 
+𝑆1
+𝑆2
+[Here, S1 is solubility of Ag2CrO4 and S2 is solubility of AgBr] 
+Options: 
+(a) 
+ 
+2𝑥
+1
+3
+𝑦
+1
+2
+(b) 
+ 
+𝑥
+1
+3
+𝑦
+1
+2
+(c) 
+ 
+𝑥
+1
+3
+2𝑦
+1
+2
+(d) 
+ 
+2𝑥
+(
+)
+1
+3
+2𝑦
+(
+)
+1
+2
+Answer: (b) 
+Solution: (b) 
+ 
+𝑥
+1
+3
+𝑦
+1
+2
+ 
+Question:  The orbit angular momentum of e in nth shell of H atom is 
+ The total 
+3ℎ
+π .
+energy of e is 
+Options: 
+(a) -0.38 eV
+
+--- PAGE 25 ---
+​
+​
+ 
+ 
+(b) -3.4 eV 
+(c) -0.544 eV 
+(d) -0.85 eV 
+Answer: (a) 
+Solution: (a) -0.38 eV 
+ 
+Question:  Arrange the following complexes in the increasing order of crystal field 
+splitting energy (Δ0) 
+(a) [Cr(CN)6]3-​
+​
+(b) [CrF6]3- 
+(c) [Cr(NH3)6]3+​
+​
+(d) [Cr(en)3]3+ 
+Options: 
+(a) b < c < d < a 
+(b) a < b < c < d 
+(c) a < d < c < b 
+(d) b < a < c < d 
+Answer: (a) 
+Solution: (a) b < c < d < a 
+ 
+Question:  Calculate the energy required for the following process Li2+ → Li3+ + e- 
+Given: Ground state energy of Hydrogen is -13.6 eV/atom 
+Options: 
+(a) 13.6 eV/atom 
+(b) 122.4 eV/atom 
+(c) 54.4 eV/atom 
+(d) 30.6 eV/atom 
+Answer: (b) 
+Solution:(b) 122.4 eV/atom 
+ 
+Question:  20 g fluoroacetic acid is dissolved in 500 gm water. If depression in freezing 
+point is 1°C, then calculate Ka for fluoroacetic acid. [Assume molality is same as 
+molarity] 
+Options: 
+(a) 1.18 × 10-3 
+(b) 1.5 × 10-5 
+(c) 1.18 × 10-4 
+(d) 1.2 × 10-6 
+Answer: (a) 
+Solution:(a) 1.18 × 10-3 
+ 
+Question:  Calculate work in following process during A to B, in following graph. 
+(Given (V = 3R)
+
+--- PAGE 26 ---
+​
+​
+ 
+ 
+Options: 
+(a) -6.2 L.atm 
+(b) -8.3 L.atm 
+(c) -4.8 L.atm 
+(d) -9.2 L.atm 
+Answer: (b) 
+Solution:(b) -8.3 L.atm 
+ 
+Question:  Match List-I with List-II 
+ List-I (Molecules) 
+List-II (Test) 
+I) Ethanol 
+P) Neutral FeCl3 
+II) Phenol 
+Q) Cerric ammonium nitrate 
+III) Ethanoic Acid 
+R) Schiff reagent 
+IV) Acetaldehyde 
+S) NaHCO3 
+Options: 
+(a) I-P, II-Q, III-R, IV-S 
+(b) I-Q, II-S, III-P, IV-R 
+(c) I-Q, II-P, III-S, IV-S 
+(d) I-P, II-Q, III-S, IV-R 
+Answer: (c) 
+Solution:(c) I-Q, II-P, III-S, IV-S 
+ 
+Question:  Which of the following relation about first order and zero order reaction is 
+correct 
+Options: 
+(a) (t1/2)first order = 2(t100%)first order 
+(b) (t1000%)first order = Infinite time of t1/2 of first order 
+(c) (t1/2)zero order = 2 × (t100%)zero order 
+(d) (t100%)zero order = Infinite time of t1/2 of zero order 
+Answer: (b) 
+Solution: (b) (t1000%)first order = Infinite time of t1/2 of first order 
+ 
+Question:  Consider the following reaction: 
+ 
+Products obtained are 
+Options:
+
+--- PAGE 27 ---
+​
+​
+ 
+ 
+(a) 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (a) 
+Solution:(a) 
+ 
+ 
+ 
+Question:  Given below are two statements. 
+Statement-I: First I.E. order : Na > Mg > Al 
+Statement-II: 3rd I.E. order : Ca > Al > Na. 
+Options: 
+(a) Both S-I and S-II are incorrect 
+(b) S-I is correct but S-II is incorrect 
+(c) S-I is incorrect but S-II is correct 
+(d) Both S-I and S-II are correct 
+Answer: (a) 
+Solution: (a) Both S-I and S-II are incorrect 
+ 
+ 
+Question:  8 g of [CrClx(H2O)y]Cl(3-x) × H2O(6-y) reacts with average AgNO3 to form 8.61 
+g of AgCl. The value of (x × y) is ____. 
+Options: 
+Answer: (5)
+
+--- PAGE 28 ---
+​
+​
+ 
+ 
+ 
+ 
+JEE-Main-02-04-2026 (Memory Based) 
+[MORNING SHIFT]  
+Maths 
+  
+Question: Let 
+Then find the value of 
+ 
+Solution:
+
+--- PAGE 29 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: 
+  
+Solution: 
+ 
+ 
+ 
+Question: Find the range of 
+ 
+Solution:
+
+--- PAGE 30 ---
+​
+​
+ 
+ 
+ 
+Question: 
+ (3, 4) is a point , e = 
+Find length of Latus Rectum 
+Solution:
+
+--- PAGE 31 ---
+​
+​
+ 
+ 
+Question: The number of seven digit numbers, that can be formed by using the digits 1, 
+2, 3, 5, 7 such that each digit is used at least once is   
+Options: 
+(a) 16800 
+(b) 15400 
+(c) 29400 
+(d) 17800 
+Answer: (a) 
+Solution: 
+ 
+ 
+Question:  Find number of solutions of equations in - pi to pi sin x(sin x + cos x) = a 
+where a is an integer 
+Solution: 
+ 
+ 
+ 
+Question: Two APS with a,d,n as 1,5,101 and 9,7,71. No. of common terms  
+Solution:
+
+--- PAGE 32 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: If  
+intersect in xy 
+plane. Then the value of |a + b| is   
+Solution:
+
+--- PAGE 33 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question:  
+ Such that S = {(r, k)} then number of elements in set S is  
+Solution:
+
+--- PAGE 34 ---
+​
+​
+ 
+ 
+  
+ 
+ 
+ 
+Qestion: Let 
+ Then total number of critical point(s) in x ∈(-2𝜋, 
+2𝜋) is  
+Solution:
+
+--- PAGE 35 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: Consider two A.P.s such that A.p.1 has 1st term 1, common difference 5 and 
+total terms 101 and A.P.2 has 1st term 9, common difference 7 and total terms 71 then 
+the number of common terms which appear in both these A.P.s is    
+Solution:
+
+--- PAGE 36 ---
+​
+​
+ 
+ 
+ 
+Question: The domain of 
+ is  
+Solution:
+
+--- PAGE 37 ---
+​
+​
+ 
+ 
+ 
+Question: Find midpoint of sides of triangle ABC to  
+  and (4, 5). If its 
+incenter is (h, k) then 3h + k is equal to  
+Solution:  
+ 
+Question: 
+   then a + b + m is equal to 
+Solution:
+
+--- PAGE 38 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: Let 
+ then 
+equal to 
+Solution:

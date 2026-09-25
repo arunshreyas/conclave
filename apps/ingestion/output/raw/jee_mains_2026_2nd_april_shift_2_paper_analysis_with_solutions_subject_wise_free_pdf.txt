@@ -1,0 +1,812 @@
+SOURCE_FILE: JEE Mains 2026 2nd April Shift 2 Paper Analysis with Solutions - Subject Wise FREE PDF.pdf
+TOTAL_PAGES: 37
+============================================================
+
+--- PAGE 1 ---
+​
+​
+ 
+ 
+ 
+ 
+JEE-Main-02-04-2026 (Memory Based) 
+[EVENING SHIFT]  
+Physics 
+  
+Question:  In equilateral prism the path of a ray is shown. Determine 𝝁 
+Options: 
+(a) 1.71 
+(b) 1.52 
+(c) 1.39 
+(d) 1.84 
+Answer: (c) 
+ 
+Question:  What is the equivalent gate for the circuit? 
+ 
+Options: 
+(a) AND gate 
+(b) OR gate 
+(c) NAND gate 
+(d) NOR gate 
+Answer: (d) 
+ 
+Question:  A soap bubble of radius r = 1 mm, liquid of density 
+ 𝝆1 = 2000 kg/m3. At the instant, the bubble is rising upward with constant velocity v = ½  
+cm/s. Find coefficient of viscosity (η). 
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (b) 
+ 
+Question:  Dimensions of G (Universal gravitational constant) in terms of h (Plank's 
+constant, length) will be
+
+--- PAGE 2 ---
+​
+​
+ 
+ 
+Options: 
+(a) h-1Lm-2t 
+(b) hL-1m2t 
+(c) hLm-2t-1 
+(d) h-1L-1m2t-1 
+Answer: (c) 
+ 
+Question:  Position of a particle is given by x = asin(50t + 𝜋/3). If speed and acceleration 
+is zero,, for the first time at time t1 & t2 respectively. Then t1 & t2 are 
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (b) 
+ 
+Question:  In Bohr's atomic model. Find ratio of magnetic field produced at center by 
+electron in 2nd orbit and 4th orbit. 
+Options: 
+(a) 8 
+(b) 4 
+(c) 32 
+(d) 16 
+Answer: (c) 
+ 
+Question: A small circular loop of radius r is completely enclosed within a large square 
+loop of length L. Both of the loops are concentric and co-planer. (Also L>> r). Find 
+coefficient of mutual induction. 
+ 
+Options: 
+(a)
+
+--- PAGE 3 ---
+​
+​
+ 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (a) 
+ 
+Question:  A ball is released from rest as shown in figure. Ball comes to rest- 
+after moving 10 cm below the surface. Find the average force applied by the floor 
+material. 
+ 
+Options: 
+(a) 800 N 
+(b) 1000 N 
+(c) 500 N 
+(d) 1200 N 
+Answer: (b) 
+ 
+Question:  Find displacement of center of mass after t = 2 sec. 
+ 
+Options:
+
+--- PAGE 4 ---
+​
+​
+ 
+ 
+(a) 20/9 
+(b) 10/9 
+(c) 25/9 
+(d) 5/9 
+Answer: (a) 
+ 
+Question: In a given AC circuit if only switch S1 is closed then phase difference is 30° 
+while  if only switch S2 is closed then phase difference is 60°. Current lags in both cases. 
+If Xc= 30 𝛀 then 3L1 -L2 is  
+ 
+Options: 
+(a) 0.3 H 
+(b) 0.5 H 
+(c) 0.2 H 
+(d) 10 H 
+Answer: (c) 
+ 
+Question:  A rod of length 3 m and ass 40 kg has same moment of inertia as that of solid 
+sphere. Find radius of solid sphere. 
+ 
+Options: 
+(a) 5/2 
+(b) √30 
+(c) 3/2 
+(d) √5 
+Answer: (b) 
+ 
+Question:  A ball of mass 1 kg and charge 9 nC is in equilibrium between two parallel 
+plates. Find potential difference between the plates.
+
+--- PAGE 5 ---
+​
+​
+ 
+ 
+ 
+Options: 
+(a) 24 × 103 V 
+(b) 6 x 106 V 
+(c) 
+ 
+(d) 12 × 105 V 
+Answer: (b) 
+ 
+Question:  A point mass just starts approaching earth from a large distance. Speed of 
+impact of point of mass-to planet's surface is _____ .  
+[Planet is 9 times heavier and with radius 4 times compared to earth] 
+Options: 
+(a) 25 km/s 
+(b) 10 km/s 
+(c) 17 km/s 
+(d) 5 km/s 
+Answer: (c) 
+ 
+Question:  In the situation shown a small mass 'm' is rotating along with the cylinder 
+with angular speed 𝛚 = 5 rad/s. The radius of the cylinder is R = ½ m. Find 
+the minimum value of friction coefficient between inner surface of cylinder and the 
+mass 'm' so that it does hot slip. 
+ 
+Options: 
+(a) 5/4 
+(b) 5/2 
+(c) 2/5
+
+--- PAGE 6 ---
+​
+​
+ 
+ 
+(d) 4/5 
+Answer: (d) 
+ 
+Question:  In a DC circuit a bulb (200 V, 100 W) is connected with 2 resistances and an 
+ideal voltmeter as shown. Reading of voltmeter is V volt then V is 
+ 
+Options: 
+(a) 50 V 
+(b) 25 V 
+(c) 30 V 
+(d) 40 V 
+Answer: (a) 
+ 
+Question:  Find the work done when radius of a soap bubble is increased from 2 cm to 6 
+cm. 
+Surface tension of soap 0.03 N/m.] 
+Options: 
+(a) 6 mJ 
+(b) 2.4 mJ 
+(c) 3.6 mJ 
+(d) 2.1 mJ 
+Answer: (b) 
+ 
+Question:  Two point charges q1 = +8 𝝁C and q2 = -2 𝝁C are placed at x = 2 and x = 4 
+respectively. Consider two spherical Gaussian surfaces S1 and S2 centered at the origin 
+of radius 3 m and 5 m respectively. Electric flux through S1 and S2 is ø1 and   ø2  then,   0
+    ______ 
+Options: 
+(a) 1 
+(b) 4 
+(c) 0 
+(d) 2 
+Answer: (b) 
+ 
+Question:  Temperature of a gas is increased from 10 k to 20 k isochorically. Find heat 
+absorbed by the 5 moles of the gas (Cp = 8 cal/mol k) 
+Options: 
+(a) 340 J
+
+--- PAGE 7 ---
+​
+​
+ 
+ 
+(b) 120 J 
+(c) 520 J 
+(d) 1260 J 
+Answer: (d) 
+ 
+Question:  The intensity of sunlight, collected from equiconvex lens of R = 60 cm, is 
+observed to be maximum at distance of 30 cm from lens, then refractive index of 
+material of lens is 
+Options: 
+(a) 1 
+(b) 3 
+(c) 2 
+(d) 5 
+Answer: (c) 
+ 
+Question:  A mixture of 13.2 gram of CO2 & O2 gas is maintained at pressure = 100 kpa, 
+volume v = 8310 cm3 and temperature T = 300 K. Find number of moles of CO2 & O2 
+respectively 
+Options: 
+(a) 2/9, 1/9 
+(b) 1.9/9, 1.1/9 
+(c) 1.6/9, 1.4/9 
+(d) 1.2/9, 1.8/9 
+Answer: (b)
+
+--- PAGE 8 ---
+​
+​
+ 
+ 
+ 
+ 
+JEE-Main-02-04-2026 (Memory Based) 
+[EVENING SHIFT]  
+Chemistry 
+  
+Question: Arrange following complexes in increasing order of CFSE (∆0) 
+(a) [Co(H2O)6]2+ 
+(b) [Co(H2O)6]3+ 
+(c) [Co(en)3]3+ 
+Options: 
+(a) c > a > b 
+(b) c > b > a 
+(c) a > b > c 
+(d) b > a > c 
+Answer: (b) 
+Solution: (b) c > b > a 
+ 
+Question: Consider the reaction given below: 
+ 
+A gives positive Fehling’s test. Choose the correct relation. 
+Options: 
+(a) Molar weight of A and molar weight of b are same 
+(b) Molar weight of A is greater than molar weight of B 
+(c) Molar weight of B is greater than molar weight of A 
+(d) None of these 
+Answer: (c) 
+Solution: (c) Molar weight of B is greater than molar weight of A 
+ 
+Question: 20 mL of 0.2 M HA (weak monoprotic acid) is titrated with 10 mL of 0.2 M 
+NaOH solution. pH of solution at 25°C is, (pKa of weak acid is 4.76) 
+Options: 
+(a) 9.24 
+(b) 5.24 
+(c) 4.76 
+(d) 9.76 
+Answer: (c) 
+Solution: (c) 4.76 
+ 
+Question: Molarity of H2SO4 solution is 4.9 M. If density of solution is 1.40 g/ml, then 
+molarity and mole fraction of solute in solution is 
+Options: 
+(a) m = 5.34, 𝒳solute = 0.088
+
+--- PAGE 9 ---
+​
+​
+ 
+ 
+(b) m = 5.34, 𝒳solute = 0.072 
+(c) m = 5.21, 𝒳solute = 0.088 
+(d) m = 5.21, 𝒳solute = 0.072 
+Answer: (a) 
+Solution: (a) m = 5.34, 𝒳solute = 0.088 
+ 
+Question: 
+ 
+ 
+‘C’ is a white curdy ppt. Find 10(x) (Nearest integer) 
+Options: 
+Answer: (14) 
+ 
+Question: SF4 is isostructural with 
+(I) XeO2F2 
+(II) CH4 
+(III) IF4
++ 
+(IV) BrF4
+- 
+Options: 
+(a) (I), (III), (IV) only 
+(b) (I), (III) Only 
+(c) (II), (IV) Only 
+(d) (I), (II), (III), (IV) 
+Answer: (b) 
+Solution: (b) (I), (III) Only 
+ 
+ 
+Question: The correct set that contains all kinds (basic, acidic, amphoteric and neutral) 
+in Oxides is 
+Options: 
+(a) Na2O, N2O, Al2O3 and CO 
+(b) Al2O3, As2O3, CO and NO 
+(c) K2O, Cl2O7, As2O3 and NO 
+(d) Na2O, K2O, Al2O3 and AS2O3 
+Answer: (c) 
+Solution: (c) K2O, Cl2O7, As2O3 and NO 
+ 
+ 
+Question: Among Fe2+, Fe3+, Cr2+ and Zn2+, the ion that shows positive Borax bead test 
+and with highest ionisation enthalpy is: 
+Options: 
+(a) Zn2+ 
+(b) Fe2+
+
+--- PAGE 10 ---
+​
+​
+ 
+ 
+(c) Fe3+ 
+(d) Cr2+ 
+Answer: (c) 
+Solution: (c) Fe3+ 
+ 
+Question: The complete combustion of x gram of an Organic compound gave 0.25 g of 
+CO2 and 0.12 g of H2O. If the % of carbon is 25% and of hydrogen is 4.89% then x = 
+____ × 10-3 g (Nearest integer) (molar mass of C: H and our 12, 1 and 16 g mol-1 
+respectively, 
+Options: 
+(a) 273 
+(b) 27.30 
+(c) 227 
+(d) 27 
+Answer: (a) 
+Solution: (a) 273 
+ 
+Question: For the reaction 2A → 4B + C. At 30 minutes the total pressure is 300 mm of 
+Hg and after infinite time the total pressure is 600 mm of Hg. Then the pressure of C a t 
+= 30 minutes will be 
+Options: 
+(a) 20 mm Hg 
+(b) 40 mm Hg 
+(c) 60 mm Hg 
+(d) 10 mm Hg 
+Answer: (a) 
+Solution: (a) 20 mm Hg 
+ 
+Question: 
+ 
+Options: 
+(a)
+
+--- PAGE 11 ---
+​
+​
+ 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (a) 
+Solution: (a)  
+ 
+ 
+ 
+Question: Two solutions of protein (M.Wf = 50,000 g) are prepared separately 
+Solution A: 1 g protein in 0.5 L solution 
+Solution B: 2 g protein in 1.0 L solution 
+When the two solutions are mixed at 300 K. Find total osmotic pressure: 
+(= 0.08 Lit-atm K-1 mol-1) 
+Options: 
+(a) 9.8 × 10-3 torr 
+(b) 6.5 × 10-2 torr 
+(c) 7.3 × 10-3 torr 
+(d) 5.4 × 10-4 torr
+
+--- PAGE 12 ---
+​
+​
+ 
+ 
+Answer: (c) 
+Solution: (c) 7.3 × 10-3 torr 
+ 
+ 
+Question: The work function of Na metal is 2.3 eV. If maximum kinetic energy of 
+emitted photoelectron is 2.8 × 10-19 J, then calculate wavelength of incident photon in 
+nm. 
+Options: 
+Answer: (307 nm) 
+Solution:  
+ 
+Question: The [HA-] concentration in a mixture containing 0.1 M H2A and 0.1 M HCl is 
+x × 10-9. Value of x is Given: Ka1 = 10-8 and Ka2 = 10-13 for H2A 
+Options: 
+Answer: (10) 
+Solution:  
+ 
+Question: Given below are two statements 
+Statement-I Order of second ionisation energy is B > Al > Ga 
+Statement-II: Order of first ionisation energy is B > Ga > Tl > Al > ln 
+Options: 
+(a) Both statement-I and Statement-II are correct 
+(b) Statement-I is correct but statement-II is incorrect 
+(c) Statement-I is incorrect but statement-II is correct 
+(d) Both Statement I and Sttemetn-II are incorrect 
+Answer: (d) 
+Solution:  
+ 
+Question: Correct order of enthalpy of atomisation is, 
+Options: 
+(a) N2 > O2 > F2 > Cl2 > Br2 > I2 
+(b) N2 > O2 > Cl2 > F2 > Br2 > I2 
+(c) N2 > O2 > Cl2 > Br2 > F2 > I2 
+(d) N2 > O2 > F2 > Br2 > Cl2 > I2 
+Answer: (c) 
+Solution:  
+ 
+ 
+Question: Which of the ion having highest ionisation energy will give borax bead test. 
+Options: 
+(a) Fe2+ 
+(b) Fe3+ 
+(c) Cr3+ 
+(d) Zn2+ 
+Answer: (b) 
+Solution:  
+ 
+ 
+Question: Consider the following reaction
+
+--- PAGE 13 ---
+​
+​
+ 
+ 
+ 
+𝑋→𝐴𝑙𝐶𝑙3/𝐻𝐶𝑙𝑎𝑛ℎ𝑦
+(
+)
+𝑎𝑟𝑜𝑚𝑎𝑡𝑖𝑠𝑎𝑡𝑖𝑜𝑛𝑇𝑜𝑙𝑢𝑒𝑛𝑒
+X → 3 - methylhexane 
+X may be 
+Options: 
+(a) 2-methylhexane 
+(b) Heptane 
+(c) 3-methylhexane 
+(d) Octane 
+Answer: (b) 
+Solution: (b) Heptane 
+ 
+Question: How many of following ions will show paramagnetism? 
+Mn++, Cu++, Zn++, Sc3+, Ti++, Yb++, Gd++, Lu3+, Ce3+, La3+ 
+Options: 
+Answer: (5) 
+Solution:  
+ 
+ 
+ 
+Question: Correct order of boiling point of Si, Ge Sn and Pb is 
+Options: 
+(a) Si > Ge > Sn > Pb 
+(b) Pb > Sn > Ge > Si 
+(c) Si > Ge > Sn > Pb 
+(d) Pb > Ge > Sn > Si 
+Answer: (a) 
+Solution: (a) Si > Ge > Sn > Pb 
+ 
+Question: Consider the reaction, aX → bY - (1) Rate constant k = 3 × 10-4 M-1 sec-1 The 
+correct statement is 
+Options: 
+(a) t1/2 is independent of initial cond. Of ‘x’ 
+(b) Dissociation of N2O5 is example of reaction -(1) 
+(c) When conc. ‘X’ becomes 4 time then rate of reaction increases by 16 times 
+(d) 
+ 
+Answer: (c) 
+Solution: (c) When conc. ‘X’ becomes 4 time then rate of reaction increases by 16 times 
+ 
+Options: Which option have acidic, basic, amphoteric and neutral oxide respectively? 
+(a) Na2, Al2O3, Na2O, CO 
+(b) CO2, Na2O, Al2O3, CO 
+(c) As2O3, Al2O3, Na2O, CO 
+(d) None of these
+
+--- PAGE 14 ---
+​
+​
+ 
+ 
+Answer: (b) 
+Solution:(b) CO2, Na2O, Al2O3, CO 
+ 
+Options: The correct order of reactivity of SN₁ is 
+(a) C₆H₅C(CH₃)C₆H₅Br > C₆H₅CH₂Br > C₆H₅CHC₆H₅Br 
+(b) C₆H₅C(CH₃)(C₆H₅)Br > C₆H₅CHC₆H₅Br > C₆H₅CH₂Br 
+(c) C₆H₅CHC₆H₅Br > C₆H₅CH₂Br > C₆H₅C(CH₃)C₆H₅Br 
+(d) C₆H₅CH₂Br > C₆H₅CHC₆H₅Br > C₆H₅C(CH₃)C₆H₅Br 
+Answer: (b) 
+Solution: (b) C₆H₅C(CH₃)(C₆H₅)Br > C₆H₅CHC₆H₅Br > C₆H₅CH₂Br 
+ 
+Options: The thyroxine hormone is formed by the iodination of an alpha amino acids. 
+The single letter code of that amino acid is 
+(a) Y 
+(b) T 
+(c) W 
+(d) H 
+Answer: (a) 
+Solution:(a) Y
+
+--- PAGE 15 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+JEE-Main-02-04-2026 (Memory Based) 
+[EVENING SHIFT]  
+Maths 
+  
+Question: The value of the sum 
+ 
+Solution:
+
+--- PAGE 16 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: f(x) is 5 degree polynomial has extremes at x = ± 1 and 
+then f(2) - f(-2) is 
+Solution:
+
+--- PAGE 17 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: The value of 
+is equal to​
+ 
+Solution:
+
+--- PAGE 18 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: If for 3 ≤ r ≤ 30, 30C30-r  + 3(30C31-r) + 3(30C32-r) + 30C33-r = mCr then m equals to 
+_____ .  
+Solution:
+
+--- PAGE 19 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If Pn denotes the number of triangles formed by the vertices of n-sides 
+polygon and Pn+1 - Pn = 66, then n is  
+Solution:
+
+--- PAGE 20 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If  
+ and 
+ ​  
+Intersect in xy-plane then the value o |a + b| is  
+Solution:
+
+--- PAGE 21 ---
+​
+​
+
+--- PAGE 22 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If x = x(y), satisfies 
+y > 1, x(e) = e. Then x(e2) 
+Solution: 
+ 
+ 
+Question: Let A = {2, 3, 4, 5, 6}, consider R be relation of A × A such that (x, y) R (a, b) 
+implies that x divides a and y ≤ b then total number of elements in R is  
+Solution:
+
+--- PAGE 23 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+ 
+Question: Let a1, a2, a3, … be an arithmetic progression and g1, g2, g3…. be an increasing 
+geometric progression such that g1 = a1 = a2 + g2  = 1 and g3 + a3 = 4 then a10 + g5 is equal 
+to  
+Solution:
+
+--- PAGE 24 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If AB is a chord of hyperbola xy = 12, whose mid point is 
+, then the 
+area of triangle ABO (whose O is the origin) is   
+Solution:
+
+--- PAGE 25 ---
+​
+​
+
+--- PAGE 26 ---
+​
+​
+ 
+ 
+Question: Let 
+and  
+Then 
+ 
+Solution:
+
+--- PAGE 27 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: A variable  circle with diameter AB where A(3, 0) touching the circle x2 + y2 = 
+36 internally. The locus of centre of variable circle is a conic whose eccentricity is e, then 
+72e2 is 
+Solution:
+
+--- PAGE 28 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If 
+ given that f(4) = 14 ln 3, then the value 
+of f(7) 
+Solution:  
+ 
+Question: Let X1, X2, X3, …., Xn be ‘n’ observations such that 
+                
+and  
+ If mean and variance of the distribution are 8 and 16 
+respectively then value of n is:-   
+Solution:
+
+--- PAGE 29 ---
+​
+​
+
+--- PAGE 30 ---
+​
+​
+
+--- PAGE 31 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If the system of equations x + 5y + 6z = 4, 2x + 2y + 4z = 1 and x + y + az = b 
+has infinite numbers of solutions then point (a, b) lies on. 
+Solution:
+
+--- PAGE 32 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: Let 
+then the number of points of discontinuity in [2, 4] 
+is/are (where [.] denotes greatest integer function) 
+Solution:  
+ 
+ 
+ 
+ 
+Question: If P = {𝜃 ∈ [0, 4𝜋] : tan2 𝜃 ≠ 1, 2(cos8 𝜃 - sin8 𝜃)sec 2 𝜃 = a2, a ∈ Z} then the 
+number of elements in set P is
+
+--- PAGE 33 ---
+​
+​
+ 
+ 
+Solution:
+
+--- PAGE 34 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: If complex number z1 and z2 such that |z1| = 17 and  
+                            
+then max(|z1 + z2|) is equal to 
+Solution:
+
+--- PAGE 35 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: A fair coin is tossed four times such that for heads 10 points are allotted and 
+tail gets 5 points then probability that total points are 30 points is equal to 
+Solution:
+
+--- PAGE 36 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If roots of the equation x2 - 3x + n = 0 are 𝛼 and 𝛽  and equation x2 + 3x + 4 = 
+0 are 
+ 3𝛽 then (2𝛼 + 𝛽 + 3n) is equal to  
+Solution:
+
+--- PAGE 37 ---
+​
+​

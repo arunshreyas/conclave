@@ -1,5 +1,3 @@
-// packages/db/prisma/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,16 +16,40 @@ model User {
 }
 
 model UserProfile {
-  id        String   @id @default(uuid())
-  userId    String   @unique
+  id        String    @id @default(uuid())
   name      String
-  userName  String   @unique
+  userName  String    @unique
   birthday  DateTime?
   school    String
   grade     String
   stream    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model questions {
+  id              String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  question        String
+  options         Json?
+  answer          String?
+  solution        String?
+  exam            String
+  year            Int
+  session         String?
+  shift           String?
+  subject         String
+  chapter         String?
+  topics          String[]
+  difficulty      String?
+  source_file     String?
+  source_page     Int?
+  question_number Int?
+  embedding       Unsupported("vector")?
+  created_at      DateTime?              @default(now()) @db.Timestamptz(6)
+  confidence      String?
+
+  @@unique([source_file, source_page, question_number], map: "unique_source_q")
+}

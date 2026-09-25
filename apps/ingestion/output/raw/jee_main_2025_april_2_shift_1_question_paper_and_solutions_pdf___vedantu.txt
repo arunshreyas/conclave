@@ -1,0 +1,754 @@
+SOURCE_FILE: JEE Main 2025 April 2 Shift 1 Question Paper and Solutions PDF _ Vedantu.pdf
+TOTAL_PAGES: 22
+============================================================
+
+--- PAGE 1 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+JEE-Main-02-04-2025 (Memory Based) 
+[MORNING SHIFT]  
+ 
+Physics  
+ 
+Question: The moment of inertia of a uniform rod of mass m and length l is α when 
+rotated about an axis passing through centre and perpendicular to the length. If the rod 
+is broken into equal halves and arranged as shown, than the moment of inertia about 
+the given axis is  
+ 
+Options: 
+(a) 2α 
+(b) α/4 
+(c) 4α 
+(d) α 
+Answer: (b) 
+ 
+Question: The wavefront of a wave is a wave x + y + z = const. Find the angle which 
+direction of wave of propagation makes with x axis 
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (a)
+
+--- PAGE 2 ---
+​
+​
+ 
+ 
+Question: Two point charges q and 9q are placed at distance of l form each other. Then 
+the electric field is zero at a 
+Options: 
+(a) Distance 
+ from charge 9q 
+(b) Distance 
+ from charge q 
+(c) Distance 
+ from charge 9q 
+(d) Distance 
+ from charge q 
+Answer (d) 
+ 
+Question: A square shape lamina of mass M kg is at rest. Find value of F (in N). 
+  
+Options: 
+(a) 10 N 
+(b) 15 N 
+(c) 20 N 
+(d) 30 N 
+Answer: (a) 
+ 
+Question: The figure shows a infinite plane having uniform charge density σ and a small 
+charged particle having charge q and mass m suspended by a light insulting thread. 
+Find σ if the charge is in equilibrium. 
+ 
+Options: 
+(a) 
+ 
+(b)
+
+--- PAGE 3 ---
+​
+​
+ 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (a) 
+ 
+Question: Find the ratio of 
+ for two gases having degree of freedoms f = 3 and 
+f = 5. 
+Options: 
+(a) 21/25 
+(b) 3/7 
+(c) 25/21 
+(d) 7/3 
+Answer: (c) 
+ 
+Question: What is the SI unit of viscosity, intensity of work & pressure gradient?  
+Options: 
+(a) Pa.s, Watt, Pa/m² 
+(b) Watt, Pa/m, Pa 
+(c) Pa.s, Watt/m², Pa.m 
+(d) Pa.s, Watt/m², N/m³ 
+Answer: (d) 
+ 
+Question: Find the ratio of magnetic field at the centre of circular coil to that at a 
+distance of 
+ from the centre on the axis of the coil.  
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (b) 
+ 
+Question:  A current carrying wire is in form of a circle of radius R. Find ratio of 
+magnetic field at centre to the magnetic field at axial point at a distance R from it’s 
+centre. 
+Options: 
+(a) 2
+
+--- PAGE 4 ---
+​
+​
+ 
+ 
+(b) 2√2 
+(c) √3 
+(d) 
+ 
+Answer: (b) 
+ 
+Question: A Two SHMs are superimposed on a particle moving along x axis as x₁ = A 
+sin ωt and x₂ = A sin(ωt + 𝝅/3) then acceleration of particle is (given ω = 5)  
+Options: 
+(a) -25 A sin(5t + 𝜋/3) 
+(b) -25 A sin(5t + 𝜋/6) 
+(c) -25√3 A sin(5t + 𝜋/6) 
+(d) 25√3 A sin(5t - 𝜋/6) 
+Answer: (c) 
+ 
+Question: There is a metal plate with work function Φ a photon of frequency v incident 
+on it. An electron is rejected normally from point A with maximum Kinetic energy and 
+a magnetic field perpendicular to initial velocity and parallel to metallic plate exists 
+throughout the path. The electron strikes plate at B. Find the distance between point A 
+& B  
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (c) 
+ 
+Question: What is the ratio of radius of nth orbit in H, He⁺ and Li⁺²? (Assume Bohr 
+model is applicable)  
+Options: 
+(a) 6 : 3 : 1 
+(b) 6 : 3 : 2 
+(c) 3 : 6 : 2 
+(d) 4 : 3 : 2  
+Answer: (b) 
+ 
+Question: Find the dimension of 
+from the given formula 
+ 
+where symbols have their usual meaning. 
+Options:
+
+--- PAGE 5 ---
+​
+​
+ 
+ 
+(a) ML³T⁻² 
+(b) ML⁻¹T⁻² 
+(c) ML³T⁻¹ 
+(d) MLT 
+Answer: (b) 
+ 
+Question: Match the List-I with the List-II. 
+   
+List-I 
+  
+List-II 
+(i) 
+Coefficient of viscosity 
+(a) 
+M⁰L⁰T⁰ 
+(ii) 
+Strain 
+(b) 
+M⁻¹LT² 
+(iii) 
+Compressibility 
+(c) 
+ML⁻²T⁻² 
+(iv) 
+Pressure gradient 
+(d) 
+ML⁻¹T⁻¹ 
+Options: 
+(a) (i)-(a), (ii)-(c), (iii)-(d), (iv)-(b) 
+(b) (i)-(d), (ii)-(a), (iii)-(b), (iv)-(c) 
+(c) (i)-(b), (ii)-(d), (iii)-(c), (iv)-(a) 
+(d) (i)-(c), (ii)-(b), (iii)-(d), (iv)-(a) 
+Answer: (b) 
+ 
+Question: Speed of a boat in still water is 27 km/hr and speed of river flow is 9 km/hr.If 
+boat rows at angle 150° with the river flow and it takes 30 seconds to cross the river. 
+Find width of the river. 
+Options: 
+(a) 56 m 
+(b) 100 m 
+(c) 225 m 
+(d) 112. 5 m 
+Answer: (d) 
+ 
+Question: The figure shows a dice of mass 5 kg and radius 10 cm having axis fixed and 
+free to rotate about its axis. A 2 kg block is suspended with the help of a string wound 
+the disc and released from rest. The angular velocity of the disc when the block moves 
+by 0.2 m is (Take g = 10 ms²) 
+  
+Options: 
+(a) 40/9 rad/s
+
+--- PAGE 6 ---
+​
+​
+ 
+ 
+(b) 40/3 rad/s 
+(c) 30/7 rad/s 
+(d) 28/5 rad/s 
+Answer: (b) 
+ 
+Question: Zener the figure shows an electric diode with rotes circuit with a voltage 
+find the current through the diode in mA 
+ 
+Options: 
+(a) 6 mA 
+(b) 150 mA 
+(c) 144 mA 
+(d) 154 mA 
+Answer: (c) 
+ 
+Question: In a single slit diffraction using light of wavelength λ, the 2nd minima is 
+formed at θ₁ and 3rd maxima is at θ₂. If θ₁ + θ₂ = 30°, then the slit width is 
+Options: 
+(a) 
+  
+(b) 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (c) 
+ 
+Question: A wire having length 2 m having Young modulus Y = 2 × 10¹¹ N/m². Axial 
+strain is 0.2 and Poisson ratio is 0.01 for a deformation. Find energy density for elastic 
+energy stored in rod. 
+Options: 
+(a) 2 × 10⁹ J/m³ 
+(b) 4 × 10⁹ J/m³ 
+(c) 10⁹ J/m³ 
+(d) 5 × 10⁸ J/m³ 
+Answer: (b)
+
+--- PAGE 7 ---
+​
+​
+ 
+ 
+Question: Correct relation between permeability of vacuum μ₀, relative permeability μᵣ, 
+permeability of medium μ and magnetic susceptibility ✗ is 
+Options: 
+(a) μ =✘μ₀ 
+(b) μ = (μᵣ₊₁)μ₀ 
+(c) μ = (1 +✘)μ₀ 
+(d) μ = ✘(μᵣ₊₁) 
+Answer: (c) 
+ 
+Question: Two uniformly charged sheets are shown in the figure. Find net force on the 
+charge Q placed symmetrically between the plates. 
+ 
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c) 
+ 
+(d) Zero 
+Answer: (c) 
+ 
+Question: A concrete wall represents two liquids of densities 1 gm/cc and 1.5 gm/cc as 
+shown. There is a square window of area 100 cm² of wood instead of concrete. Assuming 
+no friction, find extend force needed to hold the window. 
+ 
+Options:
+
+--- PAGE 8 ---
+​
+​
+ 
+ 
+(a) 400 N 
+(b) 300 N 
+(c) 150 N 
+(d) 250 N 
+Answer: (c) 
+ 
+Question: The figure shows a spherical surface of radius 40 cm separating two mediums 
+of refractive indices μ₁ = 1 and μ₂ = 1.5. A point object in the medium μ₁ at a distance 20 
+cm from the separation forms an image whose distance from the separation is ✘ cm, 
+where ✘ is 
+Answer: (40)
+
+--- PAGE 9 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+JEE-Main-02-04-2025 (Memory Based) 
+[MORNING SHIFT]  
+Chemistry 
+Question:  Which of the following is correct order of basic strength of amines in 
+aqueous medium 
+Options: 
+(a) CH3NH2 > (CH3)2NH > (CH3)3 N > NH3 
+(b) (CH3)2NH > CH3NH2 > (CH3)3N > NH3 
+(c) CH3NH2 > NH3 > (CH3)2NH > (CH3)3N 
+(d) (CH3)3N > (CH3)2NH > CH3NH2 > NH3 
+Answer: (b) 
+ 
+Question: Which of the following statement(s) is correct is/are for the adiabatic process? 
+A. Molar heat capacity is zero. 
+B. Molar heat capacity is infinite. 
+C. Work done on gas is equal to increase in internal energy 
+D. The increase in temperature results in decrease in internal energy 
+Options: 
+(a) A and C only 
+(b) B and C only 
+(c) A and D only 
+(d) C & D only 
+Answer: (a) 
+ 
+Question: In group 17, which property does not follow a regular trend? 
+Options: 
+(a) Electron affinity 
+(b) Ionisation energy 
+(c) Covalent radii 
+(d) Ionic radii 
+Answer (a) 
+ 
+Question: Which of the following molecules hydrolysis fast 
+Options: 
+(a) 
+ 
+(b)
+
+--- PAGE 10 ---
+​
+​
+ 
+ 
+(c) 
+ 
+(d) 
+ 
+Answer: (a) 
+ 
+Question: Which is correct option about radius of nth orbit in hydrogen 
+Options: 
+(a) Radius of 3rd orbit is 9 times of radius 1st orbit 
+(b) Radius of 4th orbit is 4 times of radius of 1st orbit 
+(c) Radius of 8th orbit is 4 times of radius of 2nd orbit 
+(d) Radius of 6th orbit is 2 times of radius of 3rd orbit 
+Answer: (a) 
+ 
+Question:  Among the given compounds 
+NH3, NF3, ClF3, XeF2, SO2 
+Find the hybridisation of the compound which is polar highest number of lone pairs on 
+central atom. 
+Options: 
+(a) sp3d 
+(b) sp3d2 
+(c) sp3d3 
+(d) sp3d1 
+Answer: (a) 
+ 
+Question: Which of the following is antiaromatic?   
+Options: 
+(a) 
+ 
+(b) 
+ 
+(c)
+
+--- PAGE 11 ---
+​
+​
+ 
+ 
+(d) 
+ 
+Answer: (b) 
+ 
+Question: Identify correct statement is:  
+Options: 
+(a) All Natural occurring amino acid are optically active 
+(b) All Natal occurring amino acid except Glycine have one chiral center. 
+(c) All Natural occurring amino acid except proline have primary amine Functional group 
+(d) All Natural occurring amino acid are neutral amino acid. 
+Answer: (c) 
+ 
+Question: What is the ratio of radius of nth orbit in H, He+ and Li+2? (Assume Bohr 
+model is applicable) 
+Options: 
+(a) 6 : 3 : 1 
+(b) 6 : 3 : 2 
+(c) 3 : 6 : 2 
+(d) 4 : 3 : 2 
+Answer: (b) 
+ 
+Question: In following reaction sequence product C is 
+But-2-ene + Br2 
+ 
+Identity C, 
+Options: 
+(a) 
+ 
+(b) CH3-CH2-CH2-CHO 
+(c) CH3-CH2-CH2-CH2-OH 
+(d) 
+ 
+Answer: (a) 
+ 
+Question: Statement-I: 
+ reacts with NaOH to give a compound which gives 
+positive Tollen’s test.
+
+--- PAGE 12 ---
+​
+​
+ 
+ 
+Statement-II: 
+ react with NaOH to give self-aldol condensation reaction. 
+In the light of above statements, choose the correct options. 
+Options: 
+(a) Statement-I and Statement-II both are correct 
+(b) Statement-I is correct and Statement-II is incorrect 
+(c) Statement-II is correct and Statement-I is incorrect  
+(d) Statement-I and Statement-II both are incorrect 
+Answer: (d) 
+ 
+ 
+Question:  Which of the following carbon atom, forms the least stable and most stable 
+free radical, respectively. 
+ 
+Options: 
+(a) 1, 3 
+(b) 1, 4 
+(c) 1, 2 
+(d) 3, 4 
+Answer: (a) 
+ 
+Question:  Consider the following statements 
+Statement-I: Metallic radius of AI is less than that of Ga. 
+Statement-II: Ionic radius of Al3+ is less than that of Ga3+ 
+Options: 
+(a) Statement-I and Statement-II both correct 
+(b) Statement-I and Statement-II both incorrect 
+(c) Statement-I is incorrect Statement-II is correct 
+(d) Statement-I and Statement-II, both one incorrect 
+Answer: (c) 
+ 
+Question:  Given below are two statements. 
+Statement-I: All naturally occurring amino acids are optically active except glycine. 
+Statement-II: All amino acids are optically active. In light of the above statement, 
+choose the most appropriate option 
+Options: 
+(a) Statement-I is true, Statement-II is false 
+(b) Both Statement-I and Statement-II are true 
+(c) Both Statement-I and statement-II are false 
+(d) Statement-I is false while statement-II is true 
+Answer: (a)
+
+--- PAGE 13 ---
+​
+​
+ 
+ 
+ 
+Question:  In the complex [M(CN6)]4-. If M is Mn, Fe, Co calculate total number of 
+electrons in eg orbitals? 
+Options: 
+ 
+Answer: (1) 
+ 
+Question:  Vapour pressure of pure liquid A is 200 mm Hg . 
+If 1 mol of A and 3 mol of B are mixed. Assuming solution to be ideal, find the vapour 
+pressure of pure liquid 'B', if total pressure of solution is 500 mm Hg 
+ 
+Answer: (600) 
+ 
+Question:  100 g CaCO3 when reacted with 0.19 mole of HCl then the moles of CaCl2 
+formed is P × 10-3 mol. 
+Find P? 
+ 
+Answer: (95) 
+ 
+Question:  In the following graph between t1/2 and initial concentration [A0]. If slope of 
+the graph is 79.62 M-1 min. and initial concentration si 2.5 M. Find the concentration of 
+A after 10 min 
+ 
+ 
+Answer: (2)
+
+--- PAGE 14 ---
+​
+​
+ 
+ 
+JEE-Main-02-04-2025 (Memory Based) 
+[MORNING SHIFT]  
+Maths 
+Question: Find the maximum value of n such that 50! is divisible by 3n .  
+Options: 
+(a) 22 
+(b) 16 
+(c) 5 
+(d) 1 
+Answer: (22) 
+ 
+ 
+Question: Let Pn = 𝛼n + 𝛽n, P10 = 123, P9 = 76, P8 = 47 and P1 = 1, the quadratic equation 
+whose roots are 
+ . 
+Options: 
+(a) x2 + x - 1 = 0  
+(b) x2 - 2x + 1 = 0  
+(c) x2 + x - 2 = 0  
+(d) x2 - x - 2 = 0  
+Answer: (a) 
+ 
+ 
+Question: The total number of 10 digits sequences formed by only {0, 1, 2} where 1 
+should be used at least 5 times and 2 should be used exactly three times, is 
+Options: 
+(a) 3250 
+(b) 3680 
+(c) 3480 
+(d) 3840 
+Answer (c)
+
+--- PAGE 15 ---
+​
+​
+ 
+ 
+ 
+Question: Let a1, a2, a3, .... is an A.P. and                                                 Then the value of n 
+is  
+Options: 
+(a) 10 
+(b) 13 
+(c) 11 
+(d) 8 
+Answer: (c) 
+ 
+Question: Number of solutions in [-2𝜋,2𝜋] for equation 
+  
+Options: 
+(a) 4 
+(b) 2 
+(c) 6 
+(d) 8 
+Answer: (d) 
+ 
+= 8 
+ 
+Question:Given the equation of a hyperbola                                        and its directrix is  
+ 
+      with a focus at (√10.0), then find the value of 9(e + l2), where l  is length of 
+ 
+latus rectum is   
+Options:
+
+--- PAGE 16 ---
+​
+​
+ 
+ 
+(a) 2697 
+(b) 2597 
+(c) 2487 
+(d) 2587 
+Answer: (d) 
+ 
+ 
+Question: If a twice differentiable function f satisfies f'(x)=f(x) such that f(0)= ½ f’(0). 
+Then find  ​
+​
+​
+​
+ 
+Options: 
+(a) 
+ 
+ 
+(b)  
+ 
+ 
+(c)  
+ 
+ 
+ 
+ 
+(d)  
+ 
+ 
+Answer: (b)
+
+--- PAGE 17 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: Let the system of equations,3x - y + 𝛽z = 3, 2x + 𝛼y + z =-3 and x+ y+4z = 4 
+has infinite solutions, then 22𝛽 -9𝛼 equals to    
+Options: 
+(a) 165 
+(b) 164 
+(c) 163 
+(d) 162 
+Answer: (b)
+
+--- PAGE 18 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question:  PQ is focal chord of y2 = 4x making an angle of 60° with positive x-axis. P lies 
+in first quadrant & S is its focus. Circle with PS as diameter touches y-axis at (0, 𝛼), find 
+𝛼2 
+Options: 
+(a) 1 
+(b) 2 
+(c) 3 
+(d) 4 
+Answer: (c) 
+ 
+ 
+ 
+Question: If y ≥ |4 - x2l, y ≤ x2, y ≤ 4, x > 0, then find the area bounded by inequalities.  
+Answer: (
+) 
+40 2
+3
+−16
+
+--- PAGE 19 ---
+​
+​
+ 
+ 
+ 
+ 
+ 
+Question: Let f(x) = 2x3 + 9x2a + 12a2x + 1. Local minima and local maxima occur at p 
+& q respectively, such that p2 = q. Then the value of f(3) is   
+Options: 
+(a) 30 
+(b) 35 
+(c) 32 
+(d) 37 
+Answer: (d)
+
+--- PAGE 20 ---
+​
+​
+ 
+ 
+ 
+ 
+Question: If                                                where [.] is Greatest integer function, then ⍺3 
+equals to  
+Options: 
+(a) 4 
+(b) 6 
+(c) 8 
+(d) 10 
+Answer: (c)
+
+--- PAGE 21 ---
+​
+​
+ 
+ 
+Question: If  
+ then 𝛼 + 2𝛽 + 𝛾 is equal to  
+Options: 
+(a) 0 
+(b) 1 
+(c) 3 
+(d) 5 
+Answer: (b) 
+ 
+ 
+Question: The term independent of x in the binomial expression of 
+is ​
+  
+Options: 
+(a) 120 
+(b) 210 
+(c) 84 
+(d) 110 
+Answer: (b) 
+ 
+Question: Let E be an ellipse such that 
+Let point P lies on E such that 
+S and S' are foci of ellipse. Then find the sum of min (PS.PS') + max (PS.PS') 
+Options: 
+(a) 18 
+(b) 36
+
+--- PAGE 22 ---
+​
+​
+ 
+ 
+(c) 9 
+(d) 27 
+Answer: (d)
