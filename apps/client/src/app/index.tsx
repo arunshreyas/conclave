@@ -1,32 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import { Redirect } from 'expo-router';
-import { useAuthStatus } from '@/hooks/useAuthStatus';
 import { BrutalistBadge } from '@/components/brutalist-ui';
 
 export default function IndexGateScreen() {
-  const { isSignedIn, isLoaded, loading, hasProfile } = useAuthStatus();
-
-  if (!isLoaded || loading) {
-    return (
-      <View style={styles.container}>
-        <BrutalistBadge label="CLERK AUTH // GATEWAY" variant="gold" />
-        <Text style={styles.title}>CONCLAVE</Text>
-        <ActivityIndicator size="large" color="#f2bf4b" style={{ marginVertical: 16 }} />
-        <Text style={styles.loadingText}>VERIFYING AUTHENTICATION MATRIX...</Text>
-      </View>
-    );
-  }
-
-  if (!isSignedIn) {
-    return <Redirect href="/welcome" />;
-  }
-
-  if (hasProfile === false) {
-    return <Redirect href="/create-profile" />;
-  }
-
-  return <Redirect href="/(tabs)" />;
+  return (
+    <View style={styles.container}>
+      <BrutalistBadge label="JWT AUTH // GATEWAY" variant="gold" />
+      <Text style={styles.title}>CONCLAVE</Text>
+      <ActivityIndicator size="large" color="#f2bf4b" style={{ marginVertical: 16 }} />
+      <Text style={styles.loadingText}>VERIFYING AUTHENTICATION MATRIX...</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -1,17 +1,8 @@
-import React from 'react';
-import { DarkTheme, ThemeProvider, Stack } from 'expo-router';
-import { ClerkProvider } from '@clerk/clerk-expo';
-import { tokenCache } from '@/utils/tokenCache';
+import React, { useEffect } from 'react';
+import { DarkTheme, ThemeProvider, Stack, useSegments, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet } from 'react-native';
-
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || process.env.CLERK_PUBLISHABLE_KEY;
-
-const isValidClerkKey = Boolean(
-  publishableKey &&
-  (publishableKey.startsWith('pk_test_') || publishableKey.startsWith('pk_live_')) &&
-  !publishableKey.includes('dummy')
-);
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
 
 const customDarkTheme = {
   ...DarkTheme,
@@ -26,62 +17,95 @@ const customDarkTheme = {
 };
 
 export default function RootLayout() {
-  const content = (
-    <ThemeProvider value={customDarkTheme}>
-      <StatusBar style="light" />
-      {!isValidClerkKey && (
-        <View style={styles.warningBanner}>
-          <Text style={styles.warningText}>
-            ⚠️ CLERK AUTH NOTICE: Set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in .env
-          </Text>
-        </View>
-      )}
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: '#310004' },
-          animation: 'fade',
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="welcome" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-        <Stack.Screen name="create-profile" options={{ headerShown: false }} />
-        <Stack.Screen name="test" options={{ headerShown: false }} />
-        <Stack.Screen name="ai-review" options={{ headerShown: false }} />
-        <Stack.Screen name="crackr" options={{ headerShown: false }} />
-        <Stack.Screen name="sahara" options={{ headerShown: false }} />
-      </Stack>
-    </ThemeProvider>
+  return (
+    <AuthProvider>
+      <ThemeProvider value={customDarkTheme}>
+        <StatusBar style="light" />
+        <RouteGate />
+      </ThemeProvider>
+    </AuthProvider>
   );
+}
 
-  if (isValidClerkKey && publishableKey) {
+function RouteGate() {
+  const router = useRouter();
+  const segments = useSegments();
+  const { isSignedIn, isLoaded, loading, hasProfile, backendUnavailable, refetch } = useAuth();
+  
+  const firstSegment = segments[0];
+  const isAuthRoute = firstSegment === 'welcome' || firstSegment === 'sign-in' || firstSegment === 'sign-up';
+  const isOnboardingRoute = firstSegment === 'onboarding';
+
+  useEffect(() => {
+    if (!isLoaded || loading) return;
+
+    if (!isSignedIn && !isAuthRoute) {
+      router.replace('/welcome');
+    } else if (isSignedIn && isAuthRoute) {
+      if (hasProfile === false) {
+        router.replace('/onboarding');
+      } else {
+        router.replace('/(tabs)');
+      }
+    } else if (isSignedIn && hasProfile === false && !isOnboardingRoute) {
+      router.replace('/onboarding');
+    } else if (isSignedIn && hasProfile === true && isOnboardingRoute) {
+      router.replace('/(tabs)');
+    }
+  }, [isLoaded, loading, isSignedIn, hasProfile, isAuthRoute, isOnboardingRoute, router]);
+
+  if (isSignedIn && backendUnavailable && !loading) {
     return (
-      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-        {content}
-      </ClerkProvider>
+      <View style={styles.centered}>
+        <Text style={styles.warningText}>Could not reach Crack backend. Check your connection and try again.</Text>
+        <Text onPress={() => void refetch()} style={[styles.warningText, styles.retry]}>RETRY</Text>
+      </View>
     );
   }
 
-  return content;
+  if (!isLoaded || (isSignedIn && (loading || hasProfile === null))) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#f2bf4b" />
+      </View>
+    );
+  }
+
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: '#310004' },
+        animation: 'fade',
+      }}
+    >
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="welcome" options={{ headerShown: false }} />
+      <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+      <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+      <Stack.Screen name="create-profile" options={{ headerShown: false }} />
+      <Stack.Screen name="test" options={{ headerShown: false }} />
+      <Stack.Screen name="ai-review" options={{ headerShown: false }} />
+      <Stack.Screen name="crackr" options={{ headerShown: false }} />
+      <Stack.Screen name="sahara" options={{ headerShown: false }} />
+    </Stack>
+  );
 }
 
 const styles = StyleSheet.create({
-  warningBanner: {
-    backgroundColor: '#5c010e',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderBottomWidth: 1,
-    borderColor: '#f2bf4b',
+  centered: {
+    flex: 1,
+    backgroundColor: '#310004',
     alignItems: 'center',
-    zIndex: 999,
+    justifyContent: 'center',
+    padding: 24,
   },
   warningText: {
     fontFamily: 'Lexend, monospace',
-    fontSize: 10,
+    fontSize: 12,
     color: '#f2bf4b',
-    fontWeight: '700',
     textAlign: 'center',
   },
+  retry: { marginTop: 20, padding: 12 },
 });

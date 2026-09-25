@@ -39,7 +39,7 @@ export default function AIReviewScreen() {
 
         {/* Step-by-Step Reasoning breakdown */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>// STEP 1.0: FORCE & TORQUE EQUATIONS</Text>
+          <Text style={styles.sectionHeader}>{'// STEP 1.0: FORCE & TORQUE EQUATIONS'}</Text>
           <BrutalistCard>
             <Text style={styles.mathBlock}>1) Mg sin θ - f = M a</Text>
             <Text style={styles.mathBlock}>2) Torque τ = f · R = I α</Text>
@@ -48,7 +48,7 @@ export default function AIReviewScreen() {
             </Text>
           </BrutalistCard>
 
-          <Text style={styles.sectionHeader}>// STEP 2.0: NO-SLIP CONSTRAINT</Text>
+          <Text style={styles.sectionHeader}>{'// STEP 2.0: NO-SLIP CONSTRAINT'}</Text>
           <BrutalistCard>
             <Text style={styles.mathBlock}>3) Rolling without slipping implies a = α · R</Text>
             <Text style={styles.mathBlock}>4) Friction force f = (2/5) M a</Text>
@@ -57,7 +57,7 @@ export default function AIReviewScreen() {
             </Text>
           </BrutalistCard>
 
-          <Text style={styles.sectionHeader}>// STEP 3.0: FINAL ACCELERATION RESULT</Text>
+          <Text style={styles.sectionHeader}>{'// STEP 3.0: FINAL ACCELERATION RESULT'}</Text>
           <BrutalistCard highlight>
             <Text style={styles.resultMath}>a = (5/7) g sin θ</Text>
             <Text style={styles.trapWarning}>

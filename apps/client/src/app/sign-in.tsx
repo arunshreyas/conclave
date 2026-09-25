@@ -4,59 +4,38 @@ import {
   Text,
   View,
   SafeAreaView,
-  ScrollView,
   TextInput,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useSignIn } from '@clerk/clerk-expo';
-import { BrutalistButton, BrutalistBadge } from '@/components/brutalist-ui';
+import { api } from '@/services/api';
+import { useAuth } from '@/context/AuthContext';
+import { BrutalistButton, BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
 
 export default function SignInScreen() {
   const router = useRouter();
-
-  let signIn: any = null;
-  let isLoaded = false;
-  let setActive: any = null;
-
-  try {
-    const auth = useSignIn();
-    signIn = auth.signIn;
-    isLoaded = auth.isLoaded;
-    setActive = auth.setActive;
-  } catch (e) {
-    // ClerkProvider not mounted
-  }
+  const { refetch } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async () => {
-    if (!email || !password) {
-      Alert.alert('Missing Info', 'Please enter your email and password.');
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !password) {
+      Alert.alert('Missing Info', 'Please enter your email address and password.');
       return;
     }
 
     setLoading(true);
     try {
-      if (isLoaded && signIn && setActive) {
-        const completeSignIn = await signIn.create({
-          identifier: email,
-          password,
-        });
-
-        if (completeSignIn.status === 'complete') {
-          await setActive({ session: completeSignIn.createdSessionId });
-          router.replace('/(tabs)');
-          return;
-        }
-      }
-      // Dev mode fallback
-      router.replace('/(tabs)');
+      await api.login(trimmedEmail, password);
+      await refetch();
+      // On success, refetch() sets auth state and RouteGate handles redirection to /onboarding or /(tabs)
     } catch (err: any) {
-      Alert.alert('Sign In Failed', err.errors?.[0]?.message || err.message || 'Invalid credentials');
+      Alert.alert('Sign In Failed', err.message || 'Invalid email or password.');
     } finally {
       setLoading(false);
     }
@@ -65,24 +44,22 @@ export default function SignInScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Text style={styles.backBtnText}>← BACK</Text>
-        </TouchableOpacity>
-        <Text style={styles.topBarTitle}>CLERK AUTHENTICATION</Text>
+        <BrutalistBadge label="CONCLAVE // AUTHENTICATION" variant="gold" />
+        <Text style={styles.topBarTitle}>PORTAL LOGIN</Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.headerSection}>
-          <BrutalistBadge label="CLERK AUTH // ACCESS PORTAL" variant="gold" />
-          <Text style={styles.title}>SIGN IN TO CONCLAVE</Text>
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
+        <View style={styles.headerBox}>
+          <BrutalistBadge label="JWT SECURED" variant="live" style={{ marginBottom: 8 }} />
+          <Text style={styles.title}>SIGN IN TO CRACK</Text>
           <Text style={styles.subtitle}>
-            Enter your credentials to verify session & sync profile matrix.
+            Enter your student email and password to access your practice modules.
           </Text>
         </View>
 
-        <View style={styles.formContainer}>
+        <BrutalistCard highlight style={styles.card}>
           <View style={styles.fieldGroup}>
-            <Text style={styles.label}>1.0 // EMAIL ADDRESS</Text>
+            <Text style={styles.label}>1.0 // EMAIL ADDRESS *</Text>
             <TextInput
               style={styles.input}
               placeholder="student@example.com"
@@ -95,7 +72,7 @@ export default function SignInScreen() {
           </View>
 
           <View style={styles.fieldGroup}>
-            <Text style={styles.label}>2.0 // PASSWORD</Text>
+            <Text style={styles.label}>2.0 // PASSWORD *</Text>
             <TextInput
               style={styles.input}
               placeholder="••••••••••••"
@@ -105,20 +82,21 @@ export default function SignInScreen() {
               onChangeText={setPassword}
             />
           </View>
-        </View>
 
-        <View style={styles.actionBox}>
-          <BrutalistButton
-            title={loading ? 'VERIFYING SESSION...' : 'SIGN IN & VERIFY'}
-            variant="secondary"
-            onPress={handleSignIn}
-            disabled={loading}
-          />
-          <TouchableOpacity
-            style={styles.signUpLink}
-            onPress={() => router.push('/sign-up')}
-          >
-            <Text style={styles.signUpLinkText}>DON'T HAVE AN ACCOUNT? REGISTER HERE →</Text>
+          <View style={styles.actionBox}>
+            <BrutalistButton
+              title={loading ? 'AUTHENTICATING...' : 'SIGN IN TO PORTAL →'}
+              variant="secondary"
+              onPress={handleSignIn}
+              disabled={loading}
+            />
+          </View>
+        </BrutalistCard>
+
+        <View style={styles.footerLinkBox}>
+          <Text style={styles.footerText}>DONT HAVE A CONCLAVE ACCOUNT?</Text>
+          <TouchableOpacity onPress={() => router.push('/sign-up')}>
+            <Text style={styles.linkText}>REGISTER NEW STUDENT PROFILE →</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -139,18 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  backBtn: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderWidth: 1,
-    borderColor: '#4b463b',
-  },
-  backBtnText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 11,
-    color: '#ffdad8',
-    fontWeight: '700',
+    backgroundColor: '#130f16',
   },
   topBarTitle: {
     fontFamily: 'Lexend, monospace',
@@ -160,26 +127,27 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   scrollContent: {
-    padding: 16,
+    padding: 20,
   },
-  headerSection: {
+  headerBox: {
     marginBottom: 20,
   },
   title: {
     fontFamily: 'Epilogue, sans-serif',
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: '900',
     color: '#ffdad8',
-    marginVertical: 8,
-    textTransform: 'uppercase',
+    letterSpacing: -0.5,
   },
   subtitle: {
     fontFamily: 'Lexend, sans-serif',
     fontSize: 13,
     color: '#cdc6b7',
+    marginTop: 6,
     lineHeight: 20,
   },
-  formContainer: {
+  card: {
+    padding: 20,
     gap: 16,
   },
   fieldGroup: {
@@ -197,23 +165,29 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#4b463b',
     backgroundColor: '#270003',
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
     color: '#ffdad8',
     fontFamily: 'Lexend, sans-serif',
     fontSize: 14,
   },
   actionBox: {
+    marginTop: 8,
+  },
+  footerLinkBox: {
     marginTop: 24,
-  },
-  signUpLink: {
-    marginTop: 16,
     alignItems: 'center',
+    gap: 6,
   },
-  signUpLinkText: {
+  footerText: {
     fontFamily: 'Lexend, monospace',
     fontSize: 11,
+    color: '#cdc6b7',
+  },
+  linkText: {
+    fontFamily: 'Lexend, monospace',
+    fontSize: 12,
     color: '#f2bf4b',
-    fontWeight: '700',
+    fontWeight: '800',
     letterSpacing: 1,
   },
 });

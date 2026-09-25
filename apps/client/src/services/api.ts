@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { authService } from './auth.service';
 
 const getBaseUrl = () => {
   if (process.env.EXPO_PUBLIC_API_URL) {
@@ -12,49 +13,150 @@ const getBaseUrl = () => {
 
 export const API_BASE_URL = getBaseUrl();
 
-export interface UserProfileData {
+export interface CreateUserProfilePayload {
   name: string;
   userName: string;
-  email: string;
-  birthday: string;
+  birthday?: string;
   school: string;
   grade: string;
   stream: string;
 }
 
+export interface UpdateUserProfilePayload {
+  name?: string;
+  userName?: string;
+  birthday?: string;
+  school?: string;
+  grade?: string;
+  stream?: string;
+}
+
 export const api = {
-  async getAuthStatus(token: string | null) {
-    if (!token) return null;
-    const res = await fetch(`${API_BASE_URL}/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+  async fetchWithAuth(
+    endpoint: string,
+    options: RequestInit = {},
+  ) {
+    const token = await authService.getAccessToken();
+    if (!token) {
+      const error = new Error('Your session has expired. Please sign in again.') as Error & { status: number };
+      error.status = 401;
+      throw error;
+    }
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...(options.headers as Record<string, string>),
+    };
+
+    headers['Authorization'] = `Bearer ${token}`;
+
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      ...options,
+      headers,
     });
-    if (!res.ok) throw new Error('Failed to fetch auth status');
-    return res.json();
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const rawMsg = errorData.message;
+      const message = Array.isArray(rawMsg)
+        ? rawMsg.join(', ')
+        : rawMsg || `HTTP error! status: ${response.status}`;
+      const error = new Error(message) as any;
+      error.status = response.status;
+      error.data = errorData;
+      throw error;
+    }
+
+    return response.json();
   },
 
-  async createProfile(token: string | null, data: UserProfileData) {
-    if (!token) throw new Error('Unauthenticated');
-    const res = await fetch(`${API_BASE_URL}/user-profile`, {
+  async register(email: string, password: string) {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
     });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || 'Failed to create profile');
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      const rawMsg = data.message;
+      const message = Array.isArray(rawMsg)
+        ? rawMsg.join(', ')
+        : rawMsg || 'Registration failed';
+      const error = new Error(message) as any;
+      error.status = response.status;
+      error.data = data;
+      throw error;
     }
-    return res.json();
+
+    if (data.accessToken) {
+      await authService.setTokens(data.accessToken);
+    }
+    return data;
+  },
+
+  async login(email: string, password: string) {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      const rawMsg = data.message;
+      const message = Array.isArray(rawMsg)
+        ? rawMsg.join(', ')
+        : rawMsg || 'Login failed';
+      const error = new Error(message) as any;
+      error.status = response.status;
+      error.data = data;
+      throw error;
+    }
+
+    if (data.accessToken) {
+      await authService.setTokens(data.accessToken);
+    }
+    return data;
+  },
+
+  async getMe() {
+    return this.fetchWithAuth('/auth/me');
+  },
+
+  async getMyProfile() {
+    return this.fetchWithAuth('/user-profile/me');
+  },
+
+  async createProfile(
+    payload: CreateUserProfilePayload,
+  ) {
+    return this.fetchWithAuth('/user-profile', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async updateMyProfile(
+    payload: UpdateUserProfilePayload,
+  ) {
+    return this.fetchWithAuth('/user-profile/me', {
+      method: 'PATCH',
+      body: JSON.stringify(payload),
+    });
   },
 
   async checkUsername(username: string) {
-    const res = await fetch(`${API_BASE_URL}/user-profile/check-username/${username}`);
-    if (!res.ok) return { available: false };
-    return res.json();
+    const response = await fetch(`${API_BASE_URL}/user-profile/check-username/${encodeURIComponent(username)}`);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const message = errorData.message || `HTTP error! status: ${response.status}`;
+      const error = new Error(message) as any;
+      error.status = response.status;
+      error.data = errorData;
+      throw error;
+    }
+    return response.json();
   },
 };

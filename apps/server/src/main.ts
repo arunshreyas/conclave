@@ -1,10 +1,13 @@
-import { NestFactory } from '@nestjs/core';
-import { resolve } from 'node:path';
 import dotenv from 'dotenv';
-import { clerkMiddleware } from '@clerk/express';
-import { AppModule } from './app.module';
+import { resolve } from 'node:path';
 
 dotenv.config({ path: resolve(__dirname, '../../../.env') });
+dotenv.config({ path: resolve(process.cwd(), '../../.env') });
+dotenv.config({ path: resolve(process.cwd(), '.env') });
+
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +17,13 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.use(clerkMiddleware());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: false,
+    }),
+  );
 
   app.enableShutdownHooks();
   await app.listen(process.env.PORT ?? 3000);

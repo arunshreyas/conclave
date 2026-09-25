@@ -45,7 +45,7 @@ export default function CrackrSpeedDrillScreen() {
 
             {/* Subject Selector */}
             <View style={styles.selectorBox}>
-              <Text style={styles.sectionHeader}>// SELECT SPEED DRILL SUBJECT</Text>
+              <Text style={styles.sectionHeader}>{'// SELECT SPEED DRILL SUBJECT'}</Text>
               <View style={styles.chipRow}>
                 {['PHYSICS', 'CHEMISTRY', 'MATHEMATICS'].map((subj) => (
                   <TouchableOpacity
@@ -102,7 +102,7 @@ export default function CrackrSpeedDrillScreen() {
             </View>
 
             <BrutalistCard highlight>
-              <Text style={styles.qHeader}>{selectedSubject} // RAPID QUESTION 01</Text>
+              <Text style={styles.qHeader}>{selectedSubject} {'// RAPID QUESTION 01'}</Text>
               <Text style={styles.qText}>
                 The dimensions of magnetic permeability μ₀ are given by:
               </Text>

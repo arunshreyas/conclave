@@ -1,36 +1,38 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
   Param,
-  Delete,
+  Patch,
+  Post,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { UserProfileService } from './user-profile.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CurrentUserId } from '../auth/current-user.decorator';
 import { CreateUserProfileDto } from './dto/create-user-profile.dto';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
-import { ClerkAuthGuard } from '../auth/clerk-auth.guard';
-import { CurrentClerkId } from '../auth/current-user.decorator';
+import { UserProfileService } from './user-profile.service';
 
 @Controller('user-profile')
+@UsePipes(new ValidationPipe({ whitelist: true, transform: true, forbidNonWhitelisted: true }))
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
-  @Post()
-  @UseGuards(ClerkAuthGuard)
-  create(
-    @CurrentClerkId() clerkId: string,
-    @Body() createUserProfileDto: CreateUserProfileDto,
-  ) {
-    return this.userProfileService.create(clerkId, createUserProfileDto);
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  getMe(@CurrentUserId() userId: string) {
+    return this.userProfileService.findByUserId(userId);
   }
 
-  @Get('me')
-  @UseGuards(ClerkAuthGuard)
-  getMe(@CurrentClerkId() clerkId: string) {
-    return this.userProfileService.findByClerkId(clerkId);
+  @Post()
+  @UseGuards(JwtAuthGuard)
+  create(
+    @CurrentUserId() userId: string,
+    @Body() createUserProfileDto: CreateUserProfileDto,
+  ) {
+    return this.userProfileService.create(userId, createUserProfileDto);
   }
 
   @Get('check-username/:username')
@@ -39,17 +41,11 @@ export class UserProfileController {
   }
 
   @Patch('me')
-  @UseGuards(ClerkAuthGuard)
+  @UseGuards(JwtAuthGuard)
   updateMe(
-    @CurrentClerkId() clerkId: string,
+    @CurrentUserId() userId: string,
     @Body() updateUserProfileDto: UpdateUserProfileDto,
   ) {
-    return this.userProfileService.updateByClerkId(clerkId, updateUserProfileDto);
-  }
-
-  @Delete('me')
-  @UseGuards(ClerkAuthGuard)
-  removeMe(@CurrentClerkId() clerkId: string) {
-    return this.userProfileService.removeByClerkId(clerkId);
+    return this.userProfileService.updateByUserId(userId, updateUserProfileDto);
   }
 }

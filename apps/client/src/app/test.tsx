@@ -80,7 +80,7 @@ export default function InteractiveTestScreen() {
 
         {/* Multiple Choice Options */}
         <View style={styles.optionsContainer}>
-          <Text style={styles.sectionHeader}>// SELECT MULTIPLE CHOICE ANSWER</Text>
+          <Text style={styles.sectionHeader}>{'// SELECT MULTIPLE CHOICE ANSWER'}</Text>
           {options.map((opt) => (
             <TouchableOpacity
               key={opt.key}
@@ -102,7 +102,7 @@ export default function InteractiveTestScreen() {
 
         {/* Voice Dictation Matrix */}
         <View style={styles.voiceSection}>
-          <Text style={styles.sectionHeader}>// SPEECH-TO-TEXT DICTATION MATRIX</Text>
+          <Text style={styles.sectionHeader}>{'// SPEECH-TO-TEXT DICTATION MATRIX'}</Text>
           <View style={styles.micCard}>
             <TouchableOpacity
               onPress={handleVoiceToggle}

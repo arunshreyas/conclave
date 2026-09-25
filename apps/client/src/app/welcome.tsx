@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { BrutalistButton, BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
-import { useGoogleOAuth } from '@/hooks/useGoogleOAuth';
 
 const slides = [
   {
@@ -38,7 +37,6 @@ const slides = [
 export default function WelcomeScreen() {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { handleGoogleAuth } = useGoogleOAuth();
 
   const slide = slides[currentSlide];
 
@@ -100,32 +98,22 @@ export default function WelcomeScreen() {
 
           {/* Authentication Access Dock Card */}
           <BrutalistCard highlight style={styles.authCard}>
-            <BrutalistBadge label="CLERK AUTH // GOOGLE OAUTH MATRIX" variant="gold" />
+            <BrutalistBadge label="JWT AUTH // EMAIL + PASSWORD" variant="gold" />
             <Text style={styles.authCardTitle}>AUTHENTICATION PORTAL</Text>
             <Text style={styles.authCardSub}>
-              Sign in with your Google account via Clerk to initialize or sync your student profile matrix.
+              Sign in or register with your email and password to access your Crack JEE student portal.
             </Text>
 
             <View style={styles.authBtnGroup}>
-              {/* Google OAuth Button */}
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.googleBtn}
-                onPress={handleGoogleAuth}
-              >
-                <Text style={styles.googleIcon}>G</Text>
-                <Text style={styles.googleBtnText}>CONTINUE WITH GOOGLE</Text>
-              </TouchableOpacity>
-
               <BrutalistButton
-                title="REGISTER NEW STUDENT PROFILE"
+                title="SIGN IN TO CRACK"
                 variant="primary"
-                onPress={() => router.push('/sign-up')}
+                onPress={() => router.push('/sign-in')}
               />
               <BrutalistButton
-                title="PREVIEW HOME DASHBOARD"
+                title="REGISTER NEW STUDENT PROFILE"
                 variant="outline"
-                onPress={() => router.push('/(tabs)')}
+                onPress={() => router.push('/sign-up')}
               />
             </View>
           </BrutalistCard>
@@ -134,7 +122,7 @@ export default function WelcomeScreen() {
 
       {/* Bottom Action Dock */}
       <View style={styles.footerDock}>
-        <Text style={styles.footerNotice}>ACCESSIBILITY-FIRST ARCHITECTURE • CLERK SECURED</Text>
+        <Text style={styles.footerNotice}>ACCESSIBILITY-FIRST ARCHITECTURE • JWT SECURED</Text>
       </View>
     </SafeAreaView>
   );
@@ -325,34 +313,6 @@ const styles = StyleSheet.create({
   },
   authBtnGroup: {
     gap: 10,
-  },
-  googleBtn: {
-    height: 52,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#f2bf4b',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10,
-    shadowColor: '#4b463b',
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 0.9,
-    shadowRadius: 0,
-    elevation: 3,
-  },
-  googleIcon: {
-    fontFamily: 'Epilogue, sans-serif',
-    fontSize: 18,
-    fontWeight: '900',
-    color: '#4285F4',
-  },
-  googleBtnText: {
-    fontFamily: 'Lexend, monospace',
-    fontSize: 13,
-    fontWeight: '800',
-    color: '#130f16',
-    letterSpacing: 1.2,
   },
   footerDock: {
     padding: 16,

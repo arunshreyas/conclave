@@ -1,42 +1,96 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { createClerkClient } from '@clerk/backend';
+import { JwtAuthService } from './jwt.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  private readonly logger = new Logger(AuthService.name);
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtAuthService: JwtAuthService,
+  ) {}
 
-  constructor(private readonly prisma: PrismaService) {}
+  async register(email: string, password: string) {
+    const normalizedEmail = email.trim().toLowerCase();
 
-  async getAuthStatus(clerkId: string) {
-    const profile = await this.prisma.userProfile.findUnique({
-      where: { clerkId },
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: normalizedEmail },
     });
 
-    let clerkUser: any = null;
-    if (process.env.CLERK_SECRET_KEY) {
-      try {
-        const clerkClient = createClerkClient({
-          secretKey: process.env.CLERK_SECRET_KEY,
-        });
-        const user = await clerkClient.users.getUser(clerkId);
-        clerkUser = {
-          id: user.id,
-          email: user.emailAddresses[0]?.emailAddress || '',
-          firstName: user.firstName || '',
-          lastName: user.lastName || '',
-        };
-      } catch (err) {
-        this.logger.warn(`Could not fetch Clerk user details: ${err}`);
-      }
+    if (existingUser) {
+      throw new ConflictException('Email is already registered.');
     }
 
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = await this.prisma.user.create({
+      data: {
+        email: normalizedEmail,
+        passwordHash,
+      },
+    });
+
+    const { accessToken } = await this.jwtAuthService.generateTokens(user.id, user.email);
+
     return {
-      authenticated: true,
-      clerkId,
-      hasProfile: !!profile,
-      profile,
-      clerkUser,
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        createdAt: user.createdAt,
+      },
     };
+  }
+
+  // Alias for backward compatibility if needed
+  async signup(email: string, password: string) {
+    return this.register(email, password);
+  }
+
+  async login(email: string, password: string) {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const user = await this.prisma.user.findUnique({
+      where: { email: normalizedEmail },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password.');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid email or password.');
+    }
+
+    const { accessToken } = await this.jwtAuthService.generateTokens(user.id, user.email);
+
+    return {
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        createdAt: user.createdAt,
+      },
+    };
+  }
+
+  async getMe(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User account not found.');
+    }
+
+    return user;
   }
 }

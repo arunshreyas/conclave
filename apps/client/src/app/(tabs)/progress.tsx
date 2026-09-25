@@ -38,7 +38,7 @@ export default function ProgressDashboardScreen() {
 
         {/* Diagnostic Analysis Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>// COGNITIVE DIAGNOSTIC BREAKDOWN</Text>
+          <Text style={styles.sectionTitle}>{'// COGNITIVE DIAGNOSTIC BREAKDOWN'}</Text>
         </View>
 
         <BrutalistCard highlight>

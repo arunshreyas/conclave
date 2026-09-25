@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Switch,
 } from 'react-native';
-import { BrutalistCard, BrutalistBadge, BrutalistButton } from '@/components/brutalist-ui';
+import { BrutalistCard, BrutalistBadge } from '@/components/brutalist-ui';
 
 export default function AccessibilitySettingsScreen() {
   const [typeface, setTypeface] = useState<'LEXEND' | 'INTER' | 'OPENDYSLEXIC'>('LEXEND');
@@ -28,7 +28,7 @@ export default function AccessibilitySettingsScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Intro Section */}
         <View style={styles.introBox}>
-          <Text style={styles.sectionHeader}>// READING & COGNITIVE CONTROLS</Text>
+          <Text style={styles.sectionHeader}>{'// READING & COGNITIVE CONTROLS'}</Text>
           <Text style={styles.introDesc}>
             Configure typography, speech dictation rates, and brutalist high-contrast borders for dyslexia & focus.
           </Text>
@@ -158,7 +158,7 @@ export default function AccessibilitySettingsScreen() {
               { fontSize },
             ]}
           >
-            "A rigid body of mass M and radius R rotates about a fixed axis with angular velocity ω."
+            {'"A rigid body of mass M and radius R rotates about a fixed axis with angular velocity ω."'}
           </Text>
         </View>
       </ScrollView>

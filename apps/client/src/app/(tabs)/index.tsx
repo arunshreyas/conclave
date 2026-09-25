@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,55 +8,25 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useAuth } from '@clerk/clerk-expo';
 import { BrutalistButton, BrutalistBadge, BrutalistCard } from '@/components/brutalist-ui';
-import { api } from '@/services/api';
+import { useAuthStatus } from '@/hooks/useAuthStatus';
+import { authService } from '@/services/auth.service';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { isSignedIn, profile: userProfile, refetch } = useAuthStatus();
 
-  let getToken: any = async () => null;
-  let signOut: any = async () => {};
-  let isSignedIn = false;
-
-  try {
-    const auth = useAuth();
-    getToken = auth.getToken;
-    signOut = auth.signOut;
-    isSignedIn = auth.isSignedIn ?? false;
-  } catch (e) {
-    // ClerkProvider not mounted
-  }
-
-  const [userProfile, setUserProfile] = useState<any>(null);
-
-  useEffect(() => {
-    async function loadAuth() {
-      try {
-        const token = await getToken();
-        if (token) {
-          const status = await api.getAuthStatus(token);
-          if (status?.profile) {
-            setUserProfile(status.profile);
-          }
-        }
-      } catch (e) {
-        // Fallback or unauthenticated state
-      }
-    }
-    loadAuth();
-  }, []);
-
-  const handleMenuPress = () => {
-    if (isSignedIn && signOut) {
-      signOut();
+  const handleMenuPress = async () => {
+    if (isSignedIn) {
+      await authService.signOut();
+      await refetch();
       router.replace('/welcome');
     } else {
       router.push('/welcome');
     }
   };
 
-  const userNameDisplay = userProfile?.name?.toUpperCase() || 'ARJUN';
+  const userNameDisplay = userProfile?.name?.toUpperCase() || 'STUDENT';
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,7 +76,7 @@ export default function HomeScreen() {
 
         {/* Quick Launcher Dock */}
         <View style={styles.launchDock}>
-          <Text style={styles.sectionHeader}>// QUICK PRACTICE LAUNCHER</Text>
+          <Text style={styles.sectionHeader}>{'// QUICK PRACTICE LAUNCHER'}</Text>
           <BrutalistButton
             title="LAUNCH CRACKR SPEED DRILL"
             variant="secondary"
@@ -126,7 +96,7 @@ export default function HomeScreen() {
 
         {/* Subject Modules */}
         <View style={styles.modulesSection}>
-          <Text style={styles.sectionHeader}>// JEE SUBJECT MASTERY MATRIX</Text>
+          <Text style={styles.sectionHeader}>{'// JEE SUBJECT MASTERY MATRIX'}</Text>
 
           {/* Physics Card */}
           <BrutalistCard>
@@ -140,7 +110,7 @@ export default function HomeScreen() {
             </View>
             <TouchableOpacity
               style={styles.cardBtn}
-              onPress={() => router.push('/practice')}
+              onPress={() => router.push('/crackr')}
             >
               <Text style={styles.cardBtnText}>PRACTICE MODULE →</Text>
             </TouchableOpacity>
@@ -158,7 +128,7 @@ export default function HomeScreen() {
             </View>
             <TouchableOpacity
               style={styles.cardBtn}
-              onPress={() => router.push('/practice')}
+              onPress={() => router.push('/crackr')}
             >
               <Text style={styles.cardBtnText}>PRACTICE MODULE →</Text>
             </TouchableOpacity>
@@ -176,7 +146,7 @@ export default function HomeScreen() {
             </View>
             <TouchableOpacity
               style={styles.cardBtn}
-              onPress={() => router.push('/practice')}
+              onPress={() => router.push('/crackr')}
             >
               <Text style={styles.cardBtnText}>PRACTICE MODULE →</Text>
             </TouchableOpacity>

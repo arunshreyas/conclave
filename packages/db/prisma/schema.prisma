@@ -8,16 +8,26 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  profile      UserProfile?
+}
+
 model UserProfile {
   id        String   @id @default(uuid())
-  clerkId   String   @unique
-  email     String   @unique
+  userId    String   @unique
   name      String
   userName  String   @unique
-  birthday  DateTime
-  school    String 
+  birthday  DateTime?
+  school    String
   grade     String
   stream    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
