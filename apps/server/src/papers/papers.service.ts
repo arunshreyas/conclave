@@ -25,12 +25,15 @@ export class PapersService {
     const duration = dto.durationMinutes && dto.durationMinutes > 0 ? dto.durationMinutes : 45;
     const difficulty = dto.difficulty || 'MIXED';
 
-    const where: any = {};
+    const where: any = {
+      is_usable: true,
+      question_quality: { in: ['high', 'medium'] },
+    };
     if (dto.subject && dto.subject !== 'ALL' && dto.subject !== 'Mixed') {
-      where.subject = dto.subject;
+      where.subject = { equals: dto.subject, mode: 'insensitive' };
     }
     if (dto.chapter && dto.chapter !== 'Mixed') {
-      where.chapter = dto.chapter;
+      where.chapter = { equals: dto.chapter, mode: 'insensitive' };
     }
     if (difficulty !== 'MIXED') {
       where.difficulty = difficulty;
@@ -50,9 +53,16 @@ export class PapersService {
     });
 
     if (candidates.length < totalCount) {
-      // Fallback: relax difficulty constraint
+      // Fallback: relax difficulty/chapter constraints but preserve subject & usability
+      const fallbackWhere: any = {
+        is_usable: true,
+        question_quality: { in: ['high', 'medium'] },
+      };
+      if (dto.subject && dto.subject !== 'ALL' && dto.subject !== 'Mixed') {
+        fallbackWhere.subject = { equals: dto.subject, mode: 'insensitive' };
+      }
       candidates = await this.prisma.questions.findMany({
-        where: dto.subject && dto.subject !== 'ALL' ? { subject: dto.subject } : {},
+        where: fallbackWhere,
         take: totalCount * 4,
       });
     }

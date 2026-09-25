@@ -94,15 +94,42 @@ def parse_raw_text_to_questions(raw_file_path: Path, source_filename: str) -> Li
 
         # Subject detection per question
         q_upper = q_text.upper()
-        if any(w in q_upper for w in ["FORCE", "VELOCITY", "MASS", "WAVE", "ELECTRIC", "MAGNETIC", "OPTICS", "DENSITY", "GRAVITATIONAL"]):
-            subj = "Physics"
-        elif any(w in q_upper for w in ["MOLE", "REACTION", "ORGANIC", "ACID", "PH ", "BENZENE", "EQUILIBRIUM", "ATOM"]):
+
+        chem_keywords = [
+            "CHEMISTRY", "MOLE", "REACTION", "ORGANIC", "INORGANIC", "ACID", "BASE", "PH ", "BENZENE", "EQUILIBRIUM",
+            "ATOM", "ORBITAL", "ELEMENT", "COMPOUND", "SOLUTE", "SOLVENT", "SOLUTION", "BOND", "OXIDATION", "REDUCTION",
+            "HYBRIDIZATION", "ISOMER", "ALCOHOL", "PHENOL", "ETHER", "ALDEHYDE", "KETONE", "CARBOXYLIC", "AMINE", "POLYMER",
+            "BIOMOLECULE", "THERMODYNAMICS", "ENTHALPY", "ENTROPY", "ELECTROCHEMISTRY", "KINETICS", "CATALYST", "TITRATION",
+            "CH3", "COOH", "NH2", "NO2", "H2SO4", "HNO3", "NAOH", "MOLAR", "MOLARITY", "MOLALITY"
+        ]
+        phys_keywords = [
+            "PHYSICS", "FORCE", "VELOCITY", "ACCELERATION", "MASS", "MOMENTUM", "WAVE", "ELECTRIC", "MAGNETIC", "OPTICS",
+            "DENSITY", "GRAVITATIONAL", "GRAVITY", "TORQUE", "FRICTION", "CAPACITOR", "RESISTOR", "INDUCTOR", "CURRENT",
+            "VOLTAGE", "POTENTIAL", "CIRCUIT", "REFRACTION", "REFLECTION", "LENS", "MIRROR", "FREQUENCY", "WAVELENGTH",
+            "WORK", "ENERGY", "POWER", "KINETIC", "ROTATIONAL", "RIGID BODY", "FLUID", "PRESSURE", "VISCOSITY",
+            "THERMAL", "HEAT", "CONDUCTION", "RADIATION", "FIELD", "FLUX", "INDUCTION", "DIPOLE", "CHARGE"
+        ]
+        math_keywords = [
+            "MATHEMATICS", "MATH", "MATRIX", "DETERMINANT", "INTEGRAL", "INTEGRATION", "DERIVATIVE", "DIFFERENTIAL",
+            "PROBABILITY", "VECTOR", "EQUATION", "PARABOLA", "HYPERBOLA", "ELLIPSE", "CIRCLE", "LIMIT", "CONTINUITY",
+            "FUNCTION", "DOMAIN", "RANGE", "PERMUTATION", "COMBINATION", "SEQUENCE", "SERIES", "COMPLEX NUMBER",
+            "QUADRATIC", "POLYNOMIAL", "TRIGONOMETRY", "SINE", "COSINE", "TANGENT", "LOGARITHM", "STATISTICS"
+        ]
+
+        # Calculate keyword match scores
+        chem_score = sum(1 for w in chem_keywords if w in q_upper)
+        phys_score = sum(1 for w in phys_keywords if w in q_upper)
+        math_score = sum(1 for w in math_keywords if w in q_upper)
+
+        if chem_score > phys_score and chem_score > math_score:
             subj = "Chemistry"
-        elif any(w in q_upper for w in ["MATRIX", "INTEGRAL", "DERIVATIVE", "PROBABILITY", "VECTOR", "EQUATION", "PARABOLA"]):
+        elif math_score > phys_score and math_score > chem_score:
             subj = "Mathematics"
+        elif phys_score > chem_score and phys_score > math_score:
+            subj = "Physics"
         else:
             subj = current_subject or "Physics"
-            
+
         current_subject = subj
 
         # Estimate page number from location in raw text

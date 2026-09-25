@@ -30,7 +30,7 @@ export class RapidFireService {
     };
 
     if (filterSubject && filterSubject !== 'Mixed' && filterSubject !== 'ALL') {
-      where.subject = filterSubject;
+      where.subject = { equals: filterSubject, mode: 'insensitive' };
     }
 
     if (mode === 'WEAK_TOPICS' || mode === 'ADAPTIVE') {
@@ -56,13 +56,20 @@ export class RapidFireService {
     });
 
     if (candidates.length === 0) {
-      // Fallback to usable questions
+      // Fallback: relax topic constraint but ALWAYS preserve subject & usability!
+      const fallbackWhere: any = {
+        is_usable: true,
+        question_quality: { in: ['high', 'medium'] },
+      };
+      if (filterSubject && filterSubject !== 'Mixed' && filterSubject !== 'ALL') {
+        fallbackWhere.subject = { equals: filterSubject, mode: 'insensitive' };
+      }
       const fallback = await this.prisma.questions.findMany({
-        where: { is_usable: true },
+        where: fallbackWhere,
         take: limit,
       });
       if (fallback.length === 0) {
-        throw new NotFoundException('No usable questions available in database');
+        throw new NotFoundException(`No usable ${filterSubject || ''} questions available in database`);
       }
       candidates.push(...fallback);
     }
